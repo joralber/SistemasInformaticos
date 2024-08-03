@@ -1,0 +1,215 @@
+ <!-- Content Wrapper. Contains page content -->
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Proveedores</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a routerLink="/dashboard/listado-proveedor">Regresar</a></li>
+              <li class="breadcrumb-item active">Modificar Proveedor</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+
+     <section class="content">
+             <div class="container-fluid">
+        <div class="row match-height">
+            <div class="col-12">
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <div class="row">
+          <div class="col-sm-10">
+            <h4 card-title><b>Modificar Proveedor</b></h4>
+          </div>
+          <div class="col-sm-2">
+            <a  routerLink="/dashboard/listado-proveedor" class="btn btn-success back"><i class='fas fa-arrow-circle-left'></i>
+              &nbsp;Regresar</a>
+          </div>
+        </div>
+                    </div>
+
+                     <div class="card-content ">
+          <div class="card-body formulario">
+                             <form [formGroup]="form" (ngSubmit)="submit()">
+
+              <div class="row ">
+
+                <div class="col-md-6 col-12">
+                  <label for="nombre">Nombre</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text border border-dark"> <i class="fa-solid fa-signature"></i> </span>
+                    </div>
+                    <input type="text" id="nombre"  formControlName="nombre" required [(ngModel)]="proveedor.nombre" class="form-control border border-dark" placeholder="Nombre"
+                    >
+
+                  </div>
+                   <div *ngIf="f.nombre.touched && f.nombre.invalid" class="alert alert-danger">
+                  <div *ngIf="f.nombre.errors.required">*Nombre es requerido.</div>
+                  <div *ngIf="f.nombre.errors.pattern">*El Nombre solo debe contener letras..</div>
+              </div>
+                </div>
+
+
+   
+
+
+
+                <div class="col-md-6 col-12">
+                  <label for="nit">NIT</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text border border-dark"> <i class="fa-solid fa-pager"></i> </span>
+                    </div>
+                    <input type="text" formControlName="nit" mask="0000-000000-000-0" [(ngModel)]="proveedor.nit" id="nit" class="form-control border border-dark" placeholder="NIT" >
+                  </div>
+                  <div *ngIf="f.nit.touched && f.nit.invalid" class="alert alert-danger">
+                   <div *ngIf="f.nit.errors.mask">*NIT no valido.</div>
+                  <div *ngIf="f.nit.errors.pattern">*El NIT solo debe contener números..</div>
+              </div>
+                </div>
+
+                <div class="col-md-6 col-12">
+                  <label for="nrc">NRC</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text  border border-dark"><i class="fa-solid fa-pager"></i> </span>
+                    </div>
+                    <input type="text" formControlName="nrc" mask="00000-0" [(ngModel)]="proveedor.nrc"  id="nrc" class="form-control border border-dark" placeholder="NRC" >
+
+                  </div>
+                  <div *ngIf="f.nrc.touched && f.nrc.invalid" class="alert alert-danger">
+                  <div *ngIf="f.nrc.errors.pattern">*El NRC solo debe contener números..</div>
+              </div>
+                </div>
+
+
+                <div class="col-md-6 col-12">
+                  <label for="dui">DUI</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text border border-dark"> <i class="fa-sharp fa-solid fa-id-card"></i> </span>
+                    </div>
+                    <input type="text" formControlName="dui" 
+                    mask="00000000-0"
+                    [(ngModel)]="proveedor.dui"
+
+                    id="dui" class="form-control border border-dark" 
+                      placeholder="DUI" >
+                  </div>
+                  <div *ngIf="f.dui.touched && f.dui.invalid" class="alert alert-danger">
+                                     <div *ngIf="f.dui.errors.mask">*DUI no valido.</div>
+                  <div *ngIf="f.dui.errors.pattern">*El DUI solo debe contener números..</div>
+              </div>
+                </div>
+
+
+
+                <div class="col-md-6 col-12">
+                  <label for="celular">Teléfono</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text border border-dark"><i class="fa-sharp fa-solid fa-phone "></i>
+                      </span>
+                    </div>
+
+                    <input type="text" formControlName="celular"
+                    prefix="+503" mask=" 0000 0000"
+                    [(ngModel)]="proveedor.celular"
+                     id="celular" class="form-control border border-dark" name="company-column"
+                      placeholder="teléfono" >
+                  </div>
+
+                  <div *ngIf="f.celular.touched && f.celular.invalid" class="alert alert-danger">
+                  <div *ngIf="f.celular.errors.required">*Teléfono es requerido.</div>
+                                    <div *ngIf="f.celular.errors.mask">*Teléfono no valido.</div>
+                  <div *ngIf="f.celular.errors.pattern">*El Teléfono solo debe contener números..</div>
+              </div>
+                </div>
+
+
+                <div class="col-md-6 col-12">
+                  <label for="email">Email</label>
+
+                  <div class="input-group mb-3">
+
+                    <div class="input-group-prepend">
+                      <span class="input-group-text border border-dark"><i class="fas fa-envelope"></i></span>
+                    </div>
+
+                    <input type="email" formControlName="email"
+                    [(ngModel)]="proveedor.email"
+                     id="email" class="form-control border border-dark" placeholder="Email">
+                  </div>
+                   <div *ngIf="f.email.touched && f.email.invalid" class="alert alert-danger">
+                  <div *ngIf="f.email.errors.required">*Email es requerido.</div>
+                  <div *ngIf="f.email.errors.email">*El email debe ser valido.</div>
+              </div>
+                </div>
+
+                <div class="col-md-6 col-12">
+                  <label for="dirección">Dirección</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text border border-dark"> <i class="fa-sharp fa-solid fa-route"></i>
+
+                      </span>
+                    </div>
+                    <input type="text" formControlName="direccion" 
+                    [(ngModel)]="proveedor.direccion"
+                    id="direccion" class="form-control border border-dark" 
+                      placeholder="Dirección" >
+                  </div>
+                     <div *ngIf="f.direccion.touched && f.direccion.invalid" class="alert alert-danger">
+                  <div *ngIf="f.direccion.errors.required">*Dirección es requerida.</div>
+              </div>
+                </div>
+
+                <div class="col-md-6 col-12">
+                  <label for="limite_credito">Límite de Crédito</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text border border-dark"> <i class="fa-sharp fa-solid fa-credit-card"></i>
+
+                      </span>
+                    </div>
+                    <input type="number" formControlName="limite_credito" id="limite_credito"
+                [(ngModel)]="proveedor.limite_credito"
+                     class="form-control border border-dark" name="company-column"
+                      placeholder="0" >
+                  </div>
+                  <div *ngIf="f.limite_credito.touched && f.limite_credito.invalid" class="alert alert-danger">
+                  <div *ngIf="f.limite_credito.errors.required">*Límite de Crédito es requerido.</div>
+                                    <div *ngIf="f.limite_credito.errors.pattern">*El limite de credito solo debe contener números.</div>
+
+              </div>
+                </div>
+
+                <input type="hidden"  formControlName="estado" id="estado"
+                [(ngModel)]="proveedor.estado">
+
+                <input type="hidden" formControlName="N_creditos" id="N_creditos"
+                [(ngModel)]="proveedor.N_creditos">
+
+
+                <div class="col-12 d-flex justify-content-end">
+                  <button type="submit" [disabled]="!form.valid" class="btn btn-primary me-1 mb-1 m-1 border border-dark" >Guardar</button>
+                   <button type="reset" class="btn btn-danger  mb-1 mb-1 m-1  border-dark">Limpiar</button>               
+                </div>
+              </div>
+                            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+</section>
+<!-- /.content -->

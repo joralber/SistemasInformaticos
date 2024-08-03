@@ -1,0 +1,13 @@
+.btn.btn-primary:hover {
+  background-color:#5927CD ; /* Cambia el color de fondo al pasar el mouse */
+  color: white; /* Cambia el color del texto al pasar el mouse */
+}
+
+.menu li {
+  margin-bottom: 10px; /* Ajusta la cantidad de margen inferior según tus necesidades */
+}
+
+
+.formulario{
+background-color:rgb(232, 248, 245 );
+}

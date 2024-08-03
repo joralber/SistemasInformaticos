@@ -1,0 +1,106 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Ventas</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a routerLink="/dashboard">Inicio</a></li>
+                    <li class="breadcrumb-item active">Listado de Ventas</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card  table-responsive">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <h4 card-title><b>Listado de Ventas</b></h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display nowrap  table table-bordered table-hover"
+                            style="width:100%">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Cliente</th>
+                                    <th>N° Documento</th>
+                                    <th>Tipo Venta</th>
+                                    <th>Tipo Documento</th>
+                                    <th>Precio Aplicado</th>
+                                    <th>Total</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of listaventas; let i = index;">
+                                    <td>{{item.fecha}}</td>
+                                    <td>{{item.nombre}}</td>
+                                    <td>{{item.n_factura}}</td>
+                                    <td>{{item.tipocompra}}</td>
+                                    <td>{{item.tipodocumento}}</td>
+                                    <td>{{item.tipoprecio}}</td>
+                                    <td>{{item.total}}</td>
+                                    <td>
+                                        <button type="button" name="button" class="btn btn-success mr-3"
+                                            data-toggle="modal" data-target="#modaldtventa" (click)="detalleventa(item)"><i
+                                            class="fa-sharp fa-solid fa-eye"></i></button>
+                                            <button type="button" title="Imprimir Comprobante" name="button" class="btn bg-purple border border-dark mr-1" (click)="printcomprobante(item.id_venta)" ><i class="fa-solid fa-print"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="modaldtventa">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Detalle de la Venta</h4>
+        </div>
+        <div class="modal-body">
+          <div class="card-body formulario table-responsive">
+  
+            <table class="display nowrap  table table-bordered table-hover" style="width:100%">
+                    <thead class="thead-dark">
+                        <tr>          
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                     <tr *ngFor="let item of listadetalleventa; index as i">          
+                            <td>{{item.estilo}} {{item.nombre_cat}} # {{item.nombre_talla}} {{item.nombre_color}}</td>
+                            <td>{{item.cantunidad}}</td>
+                            <td>{{item.preciounidad}}</td>
+                            <td>{{item.subtunidad}}</td>
+                     </tr>
+                    </tbody>
+                </table>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="submit" class="btn btn-secondary float-left" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>

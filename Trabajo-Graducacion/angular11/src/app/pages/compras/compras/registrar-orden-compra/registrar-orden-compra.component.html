@@ -1,0 +1,293 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Compras</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a routerLink="/dashboard/lista-orden-compra">Lista Orden Compra</a></li>
+                    <li class="breadcrumb-item active">Registrar Ordenes de Compra</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <h4 card-title><b>Agregar Detalle de Orden Compra</b></h4>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="card-content">
+                        <div class="card-body">
+                            <form class="form" [formGroup]="form">
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <label for="last-name-column">Fecha</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i class="fa-solid fa-calendar"></i>
+                                                </span>
+                                            </div>
+                                            <input type="date" id="last-name-column" class="form-control" formControlName="fechaform"
+                                                name="lname-column" [(ngModel)]="datostotal.fecha">
+                                        </div>
+                                        <div *ngIf="f.fechaform.touched && f.fechaform.invalid" class="alert alert-danger">
+                                            <div *ngIf="f.fechaform.errors.required">Fecha es requerida.</div>
+                                          </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Proveedor</label>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"> <i
+                                                                    class="fa-solid fa-signature"></i>
+                                                            </span>
+                                                        </div>
+                                                        <select class="form-control mr-2" [(ngModel)]="datostotal.proveedorid" formControlName="proveedorform" id="idproveedor">
+                                                            <option value="" disabled selected>--Seleccione Proveedor--</option>
+                                                            <option [value]="item.id_proveedor" *ngFor="let item of listaproveedores;">{{item.nombre}}</option>
+                                                        </select>
+                                                    </div>
+                                                    <div *ngIf="f.proveedorform.touched && f.proveedorform.invalid" class="form-control alert alert-danger">
+                                                        <div *ngIf="f.proveedorform.errors.required">*Seleccione el proveedor.</div>
+                                                      </div>
+                                                </div>
+                                                <!-- <div class="col-2">
+                                                    <button type="button" class="btn btn-block btn-success"
+                                                        routerLink="/dashboard/registrar-proveedor"
+                                                        >
+                                                        <i class='fas fa-plus-circle'></i>
+                                                    </button>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="col-md-6 col-12">
+                                        <label for="last-name-column">Buscar Materia Prima</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i class="fa-solid fa-search"></i>
+                                                </span>
+                                            </div>
+                                            <input type="text" id="last-name-column" class="form-control"
+                                                placeholder="Ingrese nombre de materia prima" name="lname-column">
+                                        </div>
+                                    </div> -->
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label for="city-column">Seleccionar Materia Prima</label>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i
+                                                                    class="fa-solid fa-pager"></i> </span>
+                                                        </div>
+                                                        <select class="form-control mr-2" formControlName="materiaform" id="mtp" (change)="agregarprecio($event)">
+                                                            <option value="" disabled selected>---Seleccionar Materia Prima---</option>
+                                                            <option [value]="item.id_mp" *ngFor="let item of listamateriaprima; let i = index;">{{item.nombre_producto}}</option>
+                                                        </select>
+                                                    </div>
+                                                    <div *ngIf="f.materiaform.touched && f.materiaform.invalid" class="alert alert-danger">
+                                                        <div *ngIf="f.materiaform.errors.required">*Seleccione Materia Prima.</div>
+                                                      </div>
+                                                </div>
+                                                <!-- <div class="col-2">
+                                                    <button type="button" class="btn btn-block btn-success"
+                                                        routerLink="/dashboard/registro-materia"
+                                                        >
+                                                        <i class='fas fa-plus-circle'></i>
+                                                    </button>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-12">
+                                        <label for="last-name-column">Cantidad</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i class="fa-solid fa-plus"></i>
+                                                </span>
+                                            </div>
+                                            <input type="number" id="last-name-column" class="form-control" formControlName="cantidadform"
+                                                placeholder="0" name="lname-column" [(ngModel)]="cantidad">
+                                        </div>
+                                        <div *ngIf="f.cantidadform.touched && f.cantidadform.invalid" class="alert alert-danger">
+                                            <div *ngIf="f.cantidadform.errors.required">Cantidad es requerida.</div>
+                                            <div *ngIf="f.cantidadform.errors.pattern">*El Precio solo debe contener números.</div>
+                                          </div>
+                                    </div>
+                                    <div class="col-md-3 col-12">
+                                        <label for="last-name-column">Precio</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i class="fa-solid fa-dollar"></i>
+                                                </span>
+                                            </div>
+                                            <input type="number" id="last-name-column" class="form-control" formControlName="preciounit"
+                                                placeholder="0" name="lname-column" [(ngModel)]="precio">
+                                        </div>
+                                        <div *ngIf="f.preciounit.touched && f.preciounit.invalid" class="alert alert-danger">
+                                            <div *ngIf="f.preciounit.errors.required">Precio es requerido.</div>
+                                            <div *ngIf="f.preciounit.errors.pattern">*El Precio solo debe contener números.</div>
+                                          </div>
+                                    </div>
+                                    <div class="col-md-3 col-12">
+                                        <label for="last-name-column">Descripción</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i class="fa-solid fa-signature"></i>
+                                                </span>
+                                            </div>
+                                            <input type="text" id="last-name-column" class="form-control" formControlName="descripcionform"
+                                                placeholder="..." name="lname-column" [(ngModel)]="descripcion">
+                                        </div>
+                                        <div *ngIf="f.descripcionform.touched && f.descripcionform.invalid" class="form-control alert alert-danger">
+                                            <div *ngIf="f.descripcionform.errors.required">Descripción es requerida.</div>
+                                          </div>
+                                    </div>
+                                    <div class="col-md-2 col-12">
+                                        <label for="last-name-column">Agregar Detalle</label>
+                                        <div class="input-group mb-3">
+                                            <button type="button" type="submit" [disabled]="!form.valid" (click)="anadirProducto()" id="btndetalle" class="btn btn-block btn-success"
+                                                >
+                                                <i class='fas fa-plus-circle'></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="card table-responsive">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-sm-10">
+                                            <h4 card-title><b>Detalle Orden de Compra</b></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <table id="dtbdetalleorden" class="display nowrap  table table-bordered table-hover" 
+                                        style="width:100%">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th>Materia Prima</th>
+                                                <th>Precio</th>
+                                                <th>Cantidad</th>
+                                                <th>Descripción</th>
+                                                <th>Subtotal</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of arreglodetalleoc;">
+                                                <td>{{item.nombrematerial}}</td>
+                                                <td>$ {{item.precio}}</td>
+                                                <td>{{item.cantidad}}</td>
+                                                <td>{{item.descripcion}}</td>
+                                                <th>$ {{item.subtotal}}</th>
+                                                <td>
+                                                    <button type="button" name="button" class="btn btn-danger" (click)="borrarfila(item.posicion)"><i
+                                                            class="fa-sharp fa-solid fa-trash"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-sm-10">
+                                            <h4 card-title><b>Total Detalle de Orden Compra</b></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <form class="form">
+                                            <div class="row">
+                                                <div class="col-md-3 col-12">
+                                                    <label for="last-name-column">Total Items</label>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"> <i
+                                                                    class="fa-solid fa-calculator"></i>
+                                                            </span>
+                                                        </div>
+                                                        <input type="number" id="totalitems" [(ngModel)]="items" class="form-control" name="totalitems" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5 col-12">
+                                                    <label for="last-name-column">Total Orden Compra</label>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"> <i
+                                                                    class="fa-solid fa-dollar"></i>
+                                                            </span>
+                                                        </div>
+                                                        <input type="number" id="last-name-column" [(ngModel)]="datostotal.totalorden" class="form-control" name="lname-column" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 d-flex justify-content-end">
+                                                    <button type="button"
+                                                        class="btn btn-danger me-1 mb-1 m-1" (click)="eliminadetalle()">Eliminar Detalle</button>
+                                                    <button type="submit"
+                                                        class="btn btn-primary me-1 mb-1 m-1" (click)="guardarOrdenCompra()">Guardar</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</section>
+
+<!-- modal -->
+<div class="modal fade" id="modal-danger">
+    <div class="modal-dialog">
+        <div class="modal-content bg-danger">
+            <div class="modal-header">
+                <h4 class="modal-title">Eliminar Orden de Compra</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro de eliminar el registro?&hellip;</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-outline-light">Si</button>
+            </div>
+        </div>
+    </div>
+</div>

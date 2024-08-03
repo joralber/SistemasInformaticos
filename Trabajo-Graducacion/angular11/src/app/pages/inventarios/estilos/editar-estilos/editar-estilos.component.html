@@ -1,0 +1,198 @@
+ <!-- Content Wrapper. Contains page content -->
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Estilos de Zapatos</h1>
+          </div>
+           <div  class="col-md-6 col-12">
+   <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a routerLink="/dashboard/listado-estilo">Regresar</a></li>
+              <li class="breadcrumb-item active">Modificar Materiales por Estilos</li>
+            </ol>
+            </div>
+       
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+
+       <section class="content">
+          <div class="container-fluid">
+
+          <div class="row match-height">
+              <div class="col-12">
+                  <div class="card card-secondary ">
+                      <div class="card-header">
+                          <div class="row">
+            <div class="col-sm-10">
+              <h4 card-title><b>Modificar Materiales por Estilos</b></h4>
+            </div>
+          
+          </div>
+                      </div>
+  
+                      <div class="card-content">
+                          <div class="card-body formulario">
+                
+                <form [formGroup]="form" (ngSubmit)="submit()">
+              <div class="row ">
+                     <div class="col-md-4 col-12">
+
+
+                                              <label >Código</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text border border-dark"> <i class="fa-solid fa-signature"></i> </span>
+                    </div>
+                    <input type="text" formControlName="codigo" [(ngModel)]="codigoEst.codigo"  class="form-control border border-dark" disabled>
+                  </div>
+              </div>
+                                <div class="col-md-8 col-12">
+
+                   <label >Estilo</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text border border-dark">
+                       
+                          <i class="fa-sharp fa-solid fa-shoe-prints"></i>
+                      </span>
+                    </div>
+                    <input type="text"  formControlName="estilo" [(ngModel)]="codigoEst.estilo" id="estilo" class="form-control border border-dark" disabled>
+                  </div>
+ <div *ngIf="f.estilo.touched && f.estilo.invalid" class="alert alert-danger">
+                  <div *ngIf="f.estilo.errors.required">*Estilo es requerido.</div>
+              </div>
+
+                                            
+                  </div>
+                 
+  <input type="hidden"  formControlName="estado" id="estado"
+                [(ngModel)]="codigoEst.estado">
+
+
+ <div class="col-md-12 col-12">
+ <label >Agregar Materia Prima</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text border border-dark">
+                    <i class="fas fa-search fa-fw"></i>
+                      </span>
+                    </div>
+
+     <select id="id_mp" name="id_mp" class='mi-selector  form-select form-control mr-2 border border-dark'  multiple='multiple' >
+
+           <option [value]="m.id_mp" *ngFor="let m of materiaprima;">{{m.nombre_producto}} <strong> => </strong> {{m.color}}</option>
+           </select>
+
+
+
+                </div>
+            </div>
+       
+
+
+              
+
+
+   
+
+
+             
+
+<!--fin col-->
+<div class="col-12">
+                    <div class="row">
+                        <div class="col-md-8 col-12">
+                            <div class="card  card-secondary table-responsive">
+                                <div class="card-header ">
+                                    <div class="row">
+                                        <div class="col-sm-10">
+                                            <h4 card-title><b>Materiales Seleccionados</b></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body formulario table-responsive">
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display nowrap  table table-bordered table-hover" style="width:100%">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Materia Prima</th>
+                                                <th>Color</th>
+                                               
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                          
+                                            <tr *ngFor="let d of detallecodigo; index as i">
+                                                <td scope="row">{{i+1}}</td>
+                                                <td>{{d.nombre_producto}}</td>
+                                                <td>{{d.color}}</td>
+                                                <td>
+                                                    <button type="button" name="button" class="btn btn-danger"
+                                                       (click)="deleteMOCodigo(d.nombre_producto, d.iddetalle_codigo_estilo, d.idcodigo_estilo, d.id_mp)"><i
+                                                            class="fa-sharp fa-solid fa-trash"></i></button>
+                                                </td>
+                                            </tr>
+                                    
+                                        
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-12">
+                            <br> 
+
+                            <div class="row">
+                                 <div class="col-12 d-flex align-items-center justify-content-center">
+      <div *ngIf="loading else l" > 
+                                          <div class="form-group">
+                                          <div class="text-center">
+      <div class="spinner-border " role="status">
+        <span class="sr-only">Cargando...</span>
+      </div>
+      <p>Cargando...</p>
+ </div>
+                                            </div>
+                                      </div>
+
+                                      </div>
+
+  
+                                        <ng-template #l>
+
+                         <div class="col-6">
+                                <button type="reset" class="btn btn-danger  float-right border-dark">Limpiar</button>
+                            </div>
+                                <div class="col-6">   
+                                <button type="submit" [disabled]="!form.valid" class="btn btn-primary  border border-dark">Guardar</button>
+                            </div>
+</ng-template>
+                            
+                            </div>           
+                        
+                        </div>
+
+                    </div>
+                </div>
+                <!--fin row-->
+
+          </div>
+
+
+
+
+        </form>
+          </div>
+          </div>
+          </div>
+          </div>
+        </div>
+          </div>
+          
+</section>

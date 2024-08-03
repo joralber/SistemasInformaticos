@@ -1,0 +1,205 @@
+ <!-- Content Wrapper. Contains page content -->
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-md-6 col-12">
+              <h4>Categorías de Materia Prima</h4>
+            </div>
+
+          
+
+        <div  class="col-md-6 col-12">
+
+                                <div *ngIf="regresarService.estado else mp">
+
+
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a routerLink="/dashboard/registro-materia">Regresar</a></li>
+                <li class="breadcrumb-item active">Registro de Categorías de Materia Prima</li>
+              </ol>
+            </div>
+            </div>
+              <div  class="col-md-6 col-12">
+
+            <ng-template #mp>
+
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Inicio</a></li>
+                <li class="breadcrumb-item active">Registro de Categorías de Materia Prima</li>
+              </ol>
+</ng-template>
+            </div>
+
+
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+  
+      <section class="content">
+      <div class="container-fluid">
+      <div class="row">
+<div class="col-md-6">
+            <!-- general form elements -->
+            <div class="card card-secondary ">
+              <div class="card-header">
+                <h3 class="card-title">Categorías</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+                 <form [formGroup]="form" (ngSubmit)="submit()">
+                <div class="card-body formulario">
+
+      <div class="form-group">
+                    <label for="">Categoría</label>
+                      <div class="input-group mb-3">
+
+                               <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark"><i class="fa-sharp fa-solid fa-folder-tree"></i> </span>
+                              </div>
+                    <input type="text" class="form-control border border-dark" formControlName="nombre" [(ngModel)]="categ.nombre" id="nombre"  placeholder="Digite la categoría">
+                  </div>
+                    <div *ngIf="f.nombre.touched && f.nombre.invalid" class="alert alert-danger">
+                  <div *ngIf="f.nombre.errors.required">*Nombre es requerido.</div>
+              </div>
+                  </div>
+
+                   <input type="hidden"  formControlName="estado" id="estado"
+                [(ngModel)]="categ.estado">
+
+      <div *ngIf="loading else l" > 
+                <div class="col-12 d-flex align-items-center justify-content-center">
+
+                                          <div class="form-group">
+                                          <div class="text-center">
+      <div class="spinner-border " role="status">
+        <span class="sr-only">Cargando...</span>
+      </div>
+      <p>Cargando...</p>
+ </div>
+                                            </div>
+
+
+                                      </div>
+
+
+                                      </div>
+
+             <ng-template #l>
+              
+                <!-- /.card-body -->
+ <div *ngIf="update else insert">
+    
+
+            <div class="card-footer ">
+
+                  <button type="submit" [disabled]="!form.valid" class="btn btn-success border border-dark ">Modificar</button>
+                   <button type="reset" class="btn btn-danger float-right border border-dark">Limpiar</button>
+
+                </div>
+   
+ </div>
+<ng-template #insert>
+
+            <div class="card-footer">
+                  <button type="submit" [disabled]="!form.valid" class="btn btn-primary border border-dark ">Guardar</button>
+                   <button type="reset" class="btn btn-danger float-right border border-dark">Limpiar</button>
+
+                </div>
+      </ng-template>
+    </ng-template>
+                </div>
+
+              </form>
+            </div>
+            <!-- /.card -->
+        
+
+          </div>
+
+
+<!-- right column -->
+          <div class="col-md-6">
+            <!-- Form Element sizes -->
+            <div class="card card-secondary">
+              <div class="card-header">
+             <div *ngIf="update else insert2">
+
+            <div class="row">
+          <div class="col-sm-8">
+                <h3 class="card-title">Listado de Categorías</h3>
+          </div>
+          <div class="col-sm-4">
+            <button  (click)="cambio()" class="btn btn-block btn-success btn-flat">
+              <i class='fas fa-plus-circle'></i><span> Nueva Categoría</span>
+            </button>
+          </div>
+        </div>
+           </div>
+           <ng-template #insert2>
+                            <h3 class="card-title">Listado de Categorías</h3>
+
+</ng-template>
+              </div>
+
+              <div class="card-body formulario table-responsive">
+               
+              
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display nowrap  table table-bordered table-hover" style="width:100%">
+
+              	            
+
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Categorías</th>
+                      <th style="width: 40px">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+          <tr *ngFor="let cate of categorias; index as i">
+                  <th scope="row">{{i+1}}</th>                     
+                   <td>{{cate.nombre}}</td>
+                    
+   				<td >
+                 <div class="btn-group">
+                     
+                     
+           
+                <button type="button" class="btn btn-primary mr-1 border border-dark" (click)="getAcualizar(cate.id_categoria)"><i class="fa-sharp fa-solid fa-pen-to-square"  ></i></button>
+
+                 <button type="button"  name="button" class="btn btn-danger border border-dark " (click)="deleteCategoriamp(cate.id_categoria)"><i class="fa-sharp fa-solid fa-trash"></i></button>
+                      </div>
+
+                </td>                  
+                  </tr>
+
+                 
+
+             
+             
+                  </tbody>
+                </table>
+              </div>
+              
+
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            
+   
+          </div>
+
+
+      </div>
+      </div>
+  
+
+      </section>
+
+            

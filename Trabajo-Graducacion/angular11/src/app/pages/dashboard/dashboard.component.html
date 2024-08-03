@@ -1,0 +1,175 @@
+    
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Inicio</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a  routerLink="/dashboard">Inicio</a></li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+ <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3>{{venta}}</h3>
+
+                <p>Ventas</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-bag"></i>
+              </div>
+              <a class="small-box-footer" routerLink="/dashboard/lista-ventas">Más información <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>{{cliente}}</h3>
+
+                <p>Clientes</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-person-stalker"></i>
+              </div>
+              <a  routerLink="/dashboard/listar-cliente" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-secondary">
+              <div class="inner">
+                <h3>{{producto}}</h3>
+
+                <p>Productos Terminados</p>
+              </div>
+              <div class="icon">
+                <i class="footsteps-sharp"></i>
+              </div>
+              <a  routerLink="/dashboard/listado-prod-final" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h3>{{compra}}</h3>
+
+                <p>Compras</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-bag"></i>
+              </div>
+              <a routerLink="/dashboard/lista-compra" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+        </div>
+        <!-- /.row -->
+        <!-- Main row -->
+        <div class="row">
+          <!-- Left col -->
+          <section class="col-lg-7 connectedSortable">
+            <!-- Custom tabs (Charts with tabs)-->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-chart-pie mr-1"></i>
+                  Productos Más Vendidos
+                </h3>
+           
+              </div><!-- /.card-header -->
+              <div class="card-body">
+                <div class="tab-content p-0">
+              
+                     <div class="chart" style="position: relative; height: 300px;">
+                      <canvas #barChart style="min-height: 270px; height: 270px; max-height: 270px; max-width: 100%;"></canvas>
+                   </div>
+                </div>
+              </div><!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+<!-- Custom tabs (Charts with tabs)-->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-chart-pie mr-1"></i>
+                  Clientes Más Frecuentes
+                </h3>
+           
+              </div><!-- /.card-header -->
+              <div class="card-body">
+                <div class="tab-content p-0">
+              
+                     <div class="chart" style="position: relative; height: 300px;">
+                      <canvas #barChart2 style="min-height: 275px; height: 275px; max-height: 270px; max-width: 100%;"></canvas>
+                   </div>
+                </div>
+              </div><!-- /.card-body -->
+            </div>
+       
+            <!-- /.card -->
+          </section>
+          <!-- /.Left col -->
+          <!-- right col (We are only adding the ID to make the widgets sortable)-->
+          <section class="col-lg-5 connectedSortable">
+
+            <!-- venta card -->
+            <div class="card ">
+              <div class="card-header border-0">
+                <h3 class="card-title">
+                  <i class="fas fa-chart-pie mr-1"></i>
+                  Ventas Crédito/Contado
+                </h3>
+                <!-- card tools -->
+              
+                <!-- /.card-tools -->
+              </div>
+              <div class="card-body">
+                <canvas #grafica style="min-height: 270px; height: 270px; max-height: 270px; max-width: 100%;"></canvas>
+              </div>
+              <!-- /.card-body-->
+       
+            </div>
+            <!-- /.card -->
+         <!-- compra card -->
+            <div class="card ">
+              <div class="card-header border-0">
+                <h3 class="card-title">
+                  <i class="fas fa-chart-pie mr-1"></i>
+                  Compras Crédito/Contado
+                </h3>
+                <!-- card tools -->
+              
+                <!-- /.card-tools -->
+              </div>
+              <div class="card-body">
+                <canvas #graficac style="min-height: 270px; height: 270px; max-height: 270px; max-width: 100%;"></canvas>
+              </div>
+              <!-- /.card-body-->
+       
+            </div>
+       
+            <!-- /.card -->
+          </section>
+          <!-- right col -->
+        </div>
+        <!-- /.row (main row) -->
+      </div><!-- /.container-fluid -->
+    </section>

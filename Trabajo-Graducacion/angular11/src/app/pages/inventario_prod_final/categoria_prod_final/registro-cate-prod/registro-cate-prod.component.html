@@ -1,0 +1,195 @@
+ <!-- Content Wrapper. Contains page content -->
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-md-6 col-12">
+              <h4>Categorías de Producto Terminado</h4>
+            </div>
+
+          
+
+    <div  class="col-md-6 col-12">
+
+            
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Inicio</a></li>
+                <li class="breadcrumb-item active">Registro Categoría de Producto Terminado</li>
+              </ol>
+
+  </div>
+
+
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+
+
+
+  <section class="content">
+      <div class="container-fluid">
+      <div class="row">
+<div class="col-md-6">
+            <!-- general form elements -->
+            <div class="card card-secondary ">
+              <div class="card-header">
+                <h3 class="card-title">Categorías</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+                 <form [formGroup]="form" (ngSubmit)="submit()">
+                <div class="card-body formulario">
+
+      <div class="form-group">
+                    <label for="">Categoría</label>
+                      <div class="input-group mb-3">
+
+                               <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark"><i class="fa-sharp fa-solid fa-folder-tree"></i> </span>
+                              </div>
+                    <input type="text" class="form-control border border-dark" formControlName="nombre_cat" [(ngModel)]="categ.nombre_cat" id="nombre_cat"  placeholder="Digite la categoría">
+                  </div>
+                    <div *ngIf="f.nombre_cat.touched && f.nombre_cat.invalid" class="alert alert-danger">
+                  <div *ngIf="f.nombre_cat.errors.required">*Categoría es requerida.</div>
+                  <div *ngIf="f.nombre_cat.errors.pattern">*La categoría solo debe contener letras..</div>
+              </div>
+                  </div>
+
+                   <input type="hidden"  formControlName="estado" id="estado"
+                [(ngModel)]="categ.estado">
+    
+    <div *ngIf="loading else l" > 
+                <div class="col-12 d-flex align-items-center justify-content-center">
+
+                                          <div class="form-group">
+                                          <div class="text-center">
+      <div class="spinner-border " role="status">
+        <span class="sr-only">Cargando...</span>
+      </div>
+      <p>Cargando...</p>
+ </div>
+                                            </div>
+
+
+                                      </div>
+
+
+                                      </div>
+
+             <ng-template #l>          
+                <!-- /.card-body -->
+ <div *ngIf="update else insert">
+    
+
+            <div class="card-footer ">
+
+                  <button type="submit" [disabled]="!form.valid" class="btn btn-success border border-dark">Modificar</button>
+                   <button type="reset" class="btn btn-danger float-right border border-dark">Limpiar</button>
+
+                </div>
+   
+ </div>
+<ng-template #insert>
+
+            <div class="card-footer">
+                  <button type="submit" [disabled]="!form.valid" class="btn btn-primary border border-dark">Guardar</button>
+                   <button type="reset" class="btn btn-danger float-right border border-dark">Limpiar</button>
+
+                </div>
+      </ng-template>
+    </ng-template>
+                </div>
+
+              </form>
+            </div>
+            <!-- /.card -->
+        
+
+          </div>
+
+
+<!-- right column -->
+          <div class="col-md-6">
+            <!-- Form Element sizes -->
+            <div class="card card-secondary">
+              <div class="card-header">
+             <div *ngIf="update else insert2">
+
+            <div class="row">
+          <div class="col-sm-8">
+                <h3 class="card-title">Listado de Categorías de Producto Terminado</h3>
+          </div>
+          <div class="col-sm-4">
+            <button  (click)="cambio()" class="btn btn-block btn-success btn-flat">
+              <i class='fas fa-plus-circle'></i><span> Nueva Categoría</span>
+            </button>
+          </div>
+        </div>
+           </div>
+           <ng-template #insert2>
+                            <h3 class="card-title">Listado de Categorías de Producto Terminado</h3>
+
+</ng-template>
+              </div>
+
+              <div class="card-body formulario table-responsive">
+               
+              
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display nowrap  table table-bordered table-hover" style="width:100%">
+
+                            
+
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Categorías</th>
+                      <th style="width: 40px">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+          <tr *ngFor="let cate of categorias; index as i">
+                  <th scope="row">{{i+1}}</th>                     
+                   <td>{{cate.nombre_cat}}</td>
+                    
+          <td >
+                 <div class="btn-group">
+                     
+                     
+           
+                <button type="button" class="btn btn-primary mr-1 border border-dark" (click)="getAcualizar(cate.id_cat_pt)"><i class="fa-sharp fa-solid fa-pen-to-square"  ></i></button>
+
+                 <button type="button"  name="button" class="btn btn-danger border border-dark " (click)="deleteCategoriapt(cate.id_cat_pt)"><i class="fa-sharp fa-solid fa-trash"></i></button>
+                      </div>
+
+                </td>                  
+                  </tr>
+
+                 
+
+             
+             
+                  </tbody>
+                </table>
+              </div>
+              
+
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            
+   
+          </div>
+
+
+      </div>
+      </div>
+  
+
+      </section>
+
+            

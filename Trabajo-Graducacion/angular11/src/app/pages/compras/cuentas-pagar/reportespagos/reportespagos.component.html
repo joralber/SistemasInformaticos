@@ -1,0 +1,434 @@
+<!-- Content Wrapper. Contains page content -->
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Cuentas por Pagar</h1>
+            </div>
+
+
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a routerLink="/dashboard/listado-proveedor">Proveedor</a></li>
+                    <li class="breadcrumb-item active">Cuentas por Pagar</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Color -->
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-4">
+                <h3>Proveedor: <strong>{{proveedor.nombre}}</strong></h3>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-4">
+
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title">Abono a Cuentas</h3>
+                    </div>
+
+                    <form method="post">
+                        <div class="row">
+
+                            <div class="col-md-12 col-12">
+                                <div class="form-group">
+                                    <label>Seleccione la Cuenta:</label>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa-solid fa-bag-shopping"></i>
+                                            </span>
+                                        </div>
+                                        <select class="form-control mr-2" (change)="cambiarcuenta($event, '')">
+                                            <option disabled selected>---Seleccionar Cuenta---</option>
+                                            <option [value]="item.id_cxp" *ngFor="let item of listacuentasproveedor; index as i">
+                                                {{item.fecha_factura}} --> {{item.saldo}}</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+
+
+                            <div class="card-body">
+
+                                <nav>
+                                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                        <a class="nav-item nav-link active" (click)="alerta=false" data-toggle="tab"
+                                            href="#nav-waytopay" role="tab" aria-selected="true">Datos de Cuenta</a>
+                                        <a class="nav-item nav-link " (click)="alerta=true" data-toggle="tab"
+                                            href="#nav-fee" role="tab" aria-selected="true">Realizar Abonos</a>
+
+
+                                    </div>
+                                </nav>
+
+                                <div class="tab-content" id="nav-tabContent">
+                                    <div class="tab-pane fade " id="nav-fee" role="tabpanel">
+                                        <form [formGroup]="formabono">
+                                            <div class="col-md-10">
+                                                <div class="row">
+
+                                                    <div class="col-md-6 col-12">
+                                                        <label for="last-name-column">Abonos a Realizar</label>
+                                                        <div class="input-group mb-3">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"> <i
+                                                                        class="fa-solid fa-plus"></i>
+                                                                </span>
+                                                            </div>
+                                                            <input type="number" id="last-name-column"
+                                                                class="form-control" placeholder="0" name="lname-column"
+                                                                FormControlName="abonos"
+                                                                [(ngModel)]="dataabono.cuantospagos" [ngModelOptions]="{standalone: true}"
+                                                                (keyup)="validarcuotas($event)" (change)="validarcuotas($event)">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-12">
+                                                        <label for="last-name-column">Fecha Pago</label>
+                                                        <div class="input-group mb-3">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"> <i
+                                                                        class="fa-solid fa-plus"></i>
+                                                                </span>
+                                                            </div>
+                                                            <input type="date" id="last-name-column"
+                                                                class="form-control" name="lname-column"
+                                                                FormControlName="fechapago"
+                                                                [(ngModel)]="dataabono.fechapago" [ngModelOptions]="{standalone: true}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-12">
+                                                        <label for="last-name-column">Forma Pago</label>
+                                                        <div class="input-group mb-3">
+                                                            <select class="form-control" name="" id="formapago"
+                                                                FormControlName="formapago"
+                                                                [(ngModel)]="dataabono.formapago" [ngModelOptions]="{standalone: true}">
+                                                                <option disabled selected>---Seleccionar---</option>
+                                                                <option value="TRANSFERENCIA">TRANSFERENCIA</option>
+                                                                <option value="EFECTIVO">EFECTIVO</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-12">
+                                                        <label for="last-name-column">Monto Abono</label>
+                                                        <div class="input-group mb-3">
+                                                            <input type="number" id="last-name-column"
+                                                                class="form-control" placeholder="0" name="lname-column"
+                                                                [value]="dataabono.montopago"  disabled>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-12">
+                                                    <button type="submit" id="payment" class="btn btn-success btn-block"
+                                                        (click)="realizarabono()">
+                                                        <li class="fa fa-money"></li>Efectuar Pago
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="tab-pane fade show active" id="nav-waytopay" role="tabpanel">
+                                        <div class="col-md-10">
+                                            <div class="row">
+                                                <p>Deuda Total: </p>
+                                                &nbsp;
+                                                <p class="text-danger">$ {{cuentainfor.deudatotal}}</p>
+                                            </div>
+                                            <div class="row">
+                                                <p>Periodo de Pago: </p>
+                                                &nbsp;
+                                                <p class="text-info">{{cuentainfor.formapago}}</p>
+                                            </div>
+                                            <div class="row">
+                                                <p id="fees">Monto por Cuota:</p>
+                                                &nbsp;
+                                                <p class="text-success">$ {{cuentainfor.valorcuota}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+
+
+                </div>
+
+            </div>
+
+            <!-- right column -->
+            <div class="col-md-8">
+                <div class="card  card-secondary  ">
+
+
+                    <div class="card-header">
+                        <h3 class="card-title">Lista de pagos Realizados</h3>
+                    </div>
+                    <div class="card-body table-responsive">
+
+                        <div class="card-body">
+                            <nav>
+                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                    <a class="nav-item nav-link active" data-toggle="tab" href="#nav-fee2" role="tab"
+                                        aria-selected="true">Abonos</a>
+
+                                </div>
+                            </nav>
+
+                            <table class="display nowrap  table table-bordered table-hover"
+                                style="width:100%">
+
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Fecha Abono
+                                        </th>
+                                        <th>
+                                            Forma de Abono
+
+                                        </th>
+                                        <th>
+                                            Saldo Anterior
+                                        </th>
+                                        <th>
+                                            Cuota
+                                        </th>
+                                        <th>
+                                            Saldo Fin
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr *ngFor="let item of listaabonos; let i = index;">
+                                        <td>{{item.fecha_abono}}</td>
+                                        <td>{{item.forma_pago}}</td>
+                                        <td>{{item.saldo_anterior}}</td>
+                                        <td>{{item.cuota}}</td>
+                                        <td>{{item.saldo_fin}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</section>
+
+<!-- <div class="modal fade" id="modalcuentaxp">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="card card-info">
+                <div class="modal-header card-header">
+
+                    <h3 class="card-title">Nueva Cuenta por Pagar</h3>
+                </div>
+                    <div class="modal-body">
+
+                        <label for="codigo">Compra:</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa-solid fa-barcode"></i> </span>
+                            </div>
+                            <select class="form-control mr-2" id="idcompra" (change)="addcamposcuenta($event)" [(ngModel)]="datoscuentasxp.id_compra">
+                                <option value="" disabled selected>--Seleccione Compra--</option>
+                                <option [value]="item.idcompra" *ngFor="let item of listacomprasadd;">{{item.fechacompra}} ->
+                                    $ {{item.credito}}</option>
+                            </select>
+                        </div>
+
+                        <label for="nombre">Monto Credito:</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa-solid fa-dollar"></i> </span>
+                            </div>
+                            <input type="number" id="montodeuda" class="form-control" name="" disabled
+                                [value]="datoscuentasxp.deuda" [(ngModel)]="datoscuentasxp.deuda">
+                        </div>
+
+                        <label for="stocka">Fecha Factura:</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa-solid fa-calendar"></i> </span>
+                            </div>
+                            <input type="date" id="stocka" class="form-control" name="country-floating" disabled
+                                [value]="datoscuentasxp.fecha_factura" [(ngModel)]="datoscuentasxp.fecha_factura">
+                        </div>
+
+                        <label for="astock">Cantidad de cuotas</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa-solid fa-cubes-stacked"></i> </span>
+                            </div>
+                            <input type="number" id="astocka" class="form-control" name="country-floating"
+                                placeholder="0" (keyup)="calcularcuota($event)" (change)="calcularcuota($event)" [value]="datoscuentasxp.numero_cuotas" [(ngModel)]="datoscuentasxp.numero_cuotas">
+                        </div>
+
+                        <label for="nstock">Valor por cuota:</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa-solid fa-dollar"></i> </span>
+                            </div>
+                            <input type="text" id="nstock" class="form-control" name="country-floating" placeholder="0"
+                                disabled [value]="datoscuentasxp.montocuota" [(ngModel)]="datoscuentasxp.montocuota" [ngModelOptions]="{standalone: true}">
+                        </div>
+
+                        <label for="nstock">Periodo de pago:</label>
+                        <div class="input-group mb-3">
+                            <input type="radio" class="form-control" id="periodopago" name="fav_language"
+                                value="QUINCENAL" (change)="addperiodo($event)">
+                             <label for="quincenal">Quincenal</label><br>
+                             <input type="radio" class="form-control" id="periodopago" name="fav_language" checked
+                                value="MENSUAL" (change)="addperiodo($event)">
+                             <label for="mensual">Mensual</label><br>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+
+                        <button type="submit" class="btn btn-info" (click)="guardarcxp()">Guardar</button>
+                        <button type="submit" class="btn btn-default float-right" data-dismiss="modal">Volver</button>
+                    </div>
+            </div>
+        </div>
+
+    </div>
+</div> -->
+
+<!-- <div class="modal fade" id="modal-cxp">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="card card-secondary">
+                <div class="modal-header">
+
+                    <h3 class="card-title">Reporte de Pago</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+
+
+            <div class="modal-body">
+
+
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm ">
+                            <div class="card text-center">
+
+                                <div class="card-body">
+                                    <div class="col-md-10">
+                                        <div class="row">
+                                            <h5>Factura</h5>
+                                        </div>
+                                        <div class="row">
+                                            <p>Ticket: </p>
+                                            &nbsp;
+                                            <p>0000000001</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Proveedor: </p>
+                                            &nbsp;
+                                            <p>proveedor1</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Usuario: </p>
+                                            &nbsp;
+                                            <p>User1</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Fecha deuda: </p>
+                                            &nbsp;
+                                            <p>01/02/2023</p>
+                                        </div>
+                                        <div class="row">
+                                            Cuotas por mes
+                                            &nbsp;
+                                            <p>$1000.00</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Cuotas pagadas</p>
+                                            &nbsp;
+                                            <p>1</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Importe pagado : </p>
+                                            &nbsp;
+                                            <p>$1000.00</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Deuda anterior: </p>
+                                            &nbsp;
+                                            <p>$9000.00 </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Pago: </p>
+                                            &nbsp;
+                                            <p>$1050.00</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Cambio: </p>
+                                            &nbsp;
+                                            <p>$50.00</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Fecha del pago: </p>
+                                            &nbsp;
+                                            <p>01/03/2023</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Cuotas por pagar: </p>
+                                            &nbsp;
+                                            <p>8</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>Deuda actual: </p>
+                                            &nbsp;
+                                            <p>$8000 </p>
+                                        </div>
+                                        <div class="row">
+                                            <input type="submit" value="Imprimir" class="btn btn-outline-info btn-sm">
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div> -->

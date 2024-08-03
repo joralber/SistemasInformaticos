@@ -1,0 +1,20 @@
+
+.formulario{
+background-color:rgb(232, 248, 245 );
+border: 7px solid gray;
+}
+
+
+canvas {
+  width: 200px;
+  height: 100px;
+}
+
+
+
+#barcode-title {
+  display: block;
+  text-align: center;
+  font-size: 16px;
+  margin-top: 10px;
+}

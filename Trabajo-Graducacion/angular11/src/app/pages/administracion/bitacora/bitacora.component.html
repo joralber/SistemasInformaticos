@@ -1,0 +1,152 @@
+    
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Bitácora
+</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a routerLink="/dashboard/">Inicio</a></li>
+              <li class="breadcrumb-item active">Listado de la Bitácora </li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+
+
+
+
+       <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card card-secondary table-responsive">
+              <div class="card-header">
+                    <div class="row">
+          <div class="col-sm-12">
+            <h4 card-title><b>Listado de la Bitácora</b></h4>
+          </div>
+       
+        </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body formulario table-responsive">
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display nowrap  table table-bordered table-hover" style="width:100%">
+        <thead class="thead-dark">
+            <tr>
+              <th>#</th>
+                <th>Usuarios</th>
+                <th>Correos</th>
+                <th>Roles</th>
+                <th>Entro</th>
+                <th>Salió</th> 
+                <th>Acciones</th>
+
+            </tr>
+        </thead>
+        <tbody>
+  <tr *ngFor="let bit of bitacora; index as i">
+                  <th scope="row">{{i+1}}</th>
+                    <td>{{bit.name}}</td>
+                <td>{{bit.email}}</td>
+                <td>{{bit.role}}</td>
+                <td>{{bit.inicio}}</td>
+                <td>{{bit.salida}}</td>
+            
+                 <td >
+                <button  (click)="ver(bit.id_bitacora)"  data-toggle="modal" data-target="#modal-ver"  class="btn btn-success mr-2" ><i class="fa-solid fa-eye"></i></button>
+                
+                </td>
+         </tr>
+
+
+        
+        </tbody>
+       
+    </table>
+
+       </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+
+    
+    </section>
+
+
+
+
+
+
+
+  <!-- modal -->
+
+        <div data-controls-modal="your_div_id" data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-ver">
+
+        <div class="modal-dialog">
+          <div class="modal-content">
+
+            <div class="card card-info">
+              <div class="modal-header card-header">
+
+                <h1 class="card-title">Bitácora</h1>
+              </div>
+
+                 <div class="modal-body ">
+
+
+               <h4 card-title><b>Listado de acciones realizadas</b></h4>
+
+            <div class="overflow-auto">   
+              <div class="table-wrapper-scroll-y my-custom-scrollbar">
+
+<table  class="display nowrap  table table-bordered table-hover" id="idTable">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Acciones</th>
+      <th scope="col">Fecha/Hora</th>
+     
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let d of detBit index as i">
+      <th scope="row">{{i+1}}</th>
+      <td>{{d.acciones}}</td>
+      <td>{{d.hora}}</td>
+    </tr>
+  
+  </tbody>
+</table>
+</div>
+</div>
+
+                </div>
+
+
+                              <div class="modal-footer">
+
+                  <button (click)="salir()" class="btn btn-default float-right border border-dark" data-dismiss="modal">Volver</button>
+                </div>
+
+
+        </div>
+      </div>
+
+      </div>
+      </div>
+

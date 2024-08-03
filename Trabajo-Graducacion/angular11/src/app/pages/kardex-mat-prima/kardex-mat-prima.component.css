@@ -1,0 +1,19 @@
+
+.formulario{
+background-color:rgb(232, 248, 245 );
+border: 7px solid gray;
+}
+
+
+    table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        /* setting the text-align property to center*/
+        td,
+        th {
+            padding: 5px;
+            text-align: center;
+        }

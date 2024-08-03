@@ -1,0 +1,196 @@
+ <!-- Content Wrapper. Contains page content -->
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Pedido de Materia Prima</h1>
+          </div>
+           <div  class="col-md-6 col-12">
+
+                                <div *ngIf="regresarService.estado else mp">
+
+
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a routerLink="/dashboard/listado-pedido">Regresar</a></li>
+                <li class="breadcrumb-item active">Registrar Pedidos de Materia Prima</li>
+              </ol>
+            </div>
+            </div>
+              <div  class="col-md-6 col-12">
+
+            <ng-template #mp>
+
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Inicio</a></li>
+                <li class="breadcrumb-item active">Registrar Pedidos de Materia Prima</li>
+              </ol>
+</ng-template>
+            </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+
+       <section class="content">
+          <div class="container-fluid">
+
+          <div class="row match-height">
+              <div class="col-12">
+                  <div class="card card-secondary ">
+                      <div class="card-header">
+                          <div class="row">
+            <div class="col-sm-10">
+              <h4 card-title><b>Registrar Pedidos de Materia Prima</b></h4>
+            </div>
+          
+          </div>
+                      </div>
+  
+                      <div class="card-content">
+                          <div class="card-body formulario">
+                          	          <form class="form">
+              <div class="row ">
+                                    <div class="col-md-6 col-12">
+                                     <h1  style="color: red;" ># {{numero_pedido}}</h1>
+             
+                                        </div>
+                                        
+                                      <div class="col-md-4 col-12">
+                 <label for="first-name-column">Fecha</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text border border-dark"> <i class="fa-solid fa-calendar-days"></i> </span>
+                    </div>
+                    <input type="text"  class="form-control border border-dark" [(ngModel)]="fechaActual"
+                      name="fname-column">
+                  </div>
+                </div>
+                     <div class="col-12">
+                                          <div class="form-group">
+                                              <label for="company-column">Descripción </label>
+                                                 <div class="input-group mb-3">
+                                                <div class="input-group-prepend" >
+                                <span class="input-group-text border border-dark"> <i class="fa-sharp fa-solid fa-file-waveform"></i>
+                              </span>
+                              </div>
+                                              <input type="text"  class="form-control border border-dark"  id="descripcion"
+                                                  placeholder="Descripción" [(ngModel)]="descripcion" [ngModelOptions]="{standalone: true}">
+                                          </div>
+                                            </div>
+                                                  
+
+                                      </div>
+                          
+             </div>
+
+
+                
+      
+
+       
+
+             <br>        <br>
+
+<!--fin col-->
+<div class="col-12">
+             
+                            <div class="card  card-secondary table-responsive">
+                                <div class="card-header ">
+                                    <div class="row">
+                                        <div class="col-sm-10">
+                                            <h4 card-title><b>Listado de Pedidos</b></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body formulario table-responsive">
+                                 <div class="modal-body table-responsive " style="height: 500px;">
+
+<table  datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display nowrap  table table-bordered table-hover" style="width:100%">
+
+                                        <thead class="thead-dark">
+
+                                            <tr>
+                                                <th>Categoría</th>
+                                                <th>Medida</th>
+                                                 <th>Color</th>
+                                                <th>Materiales</th>
+                                                <th>Stock</th>
+                                                  <th>Cantidad</th>
+                                                  <th>Disponible</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                                                
+                                           
+
+                                            <tr *ngFor= "let m of mp2;" >
+                                                <td>{{m.nombre}}</td>
+                                                <td>{{m.medida}}</td>
+                                                <td>{{m.color}}</td>
+                                                <td>{{m.nombre_producto}}</td>
+                                                 <td>{{m.cantidad}}</td>
+                                             <td><input type="number" [(ngModel)]="m.cantidad2" [ngModelOptions]="{standalone: true}" style="width: 80px"></td>
+                             <td>{{m.cantidad2 && m.cantidad2 <= m.cantidad ? 'Sí' : 'No'}}
+</td>
+
+      <td  style="color: red;" *ngIf="m.cantidad2 > m.cantidad">Stock insuficiente</td>
+
+                                              
+                                            </tr>
+                                           
+                                           
+                                        
+                                        </tbody>
+                                    </table>
+                                </div>
+                                </div>
+                            </div>
+
+         
+                </div>
+
+
+<div class="col-12 d-flex align-items-center justify-content-center">
+      <div *ngIf="loading else l" > 
+                                          <div class="form-group">
+                                          <div class="text-center">
+      <div class="spinner-border " role="status">
+        <span class="sr-only">Cargando...</span>
+      </div>
+      <p>Cargando...</p>
+ </div>
+                                            </div>
+                                      </div>
+
+                                      </div>
+
+  
+  <ng-template #l>
+  <div class="col-12 d-flex justify-content-end">
+                                          <button type="submit" (click)="submit()"  class="btn btn-primary me-1 mb-1 border-dark m-1" >Guardar</button>
+
+                                      </div>
+                                    </ng-template>
+         
+                <!--fin row-->
+
+
+
+        </form>
+          </div>
+          </div>
+          </div>
+          </div>
+        </div>
+          </div>
+          
+</section>
+
+
+
+
+
+
+

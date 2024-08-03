@@ -1,0 +1,14 @@
+p {
+  font-family: Lato;
+}
+button {
+  padding: 10px;
+  background-color: black;
+  border: none;
+  color: white;
+  margin-top: 10px;
+}
+input {
+  padding: 5px;
+  font-size: 15px;
+}

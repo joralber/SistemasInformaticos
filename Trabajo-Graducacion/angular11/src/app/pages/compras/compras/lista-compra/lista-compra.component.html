@@ -1,0 +1,104 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Compras</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a  routerLink="/dashboard">Inicio</a></li>
+                    <li class="breadcrumb-item active">Lista de Compras</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card  table-responsive">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <h4 card-title><b>Lista de Compras</b></h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="dtbordencompra" class="display nowrap  table table-bordered table-hover"
+                            style="width:100%">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>N° Factura</th>
+                                    <th>Tipo Compra</th>
+                                    <th>Proveedor</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of listacompras; let i = index;">
+                                    <td>{{item.fecha}}</td>
+                                    <td>{{item.n_factura}}</td>
+                                    <td>{{item.tipo_compra}}</td>
+                                    <td>{{item.nombre}}</td>
+                                    <td>
+                                        <!-- <button type="button" name="button" class="btn btn-danger mr-3"
+                                            data-toggle="modal" data-target="#modal-danger"><i
+                                            class="fa-sharp fa-solid fa-trash"></i></button> -->
+                                        <button type="button" name="button" class="btn btn-success mr-3"
+                                            data-toggle="modal" data-target="#modaldtcompra" (click)="verdetallecompra(item)"><i
+                                            class="fa-sharp fa-solid fa-eye"></i></button>
+                                        <!-- <a *ngIf="item.tipo_compra=='CREDITO'" [routerLink]="['/dashboard/registrar-cuentas-pagar', item.id_compra]" class="btn btn-warning mr-3"><i
+                                            class="fa-sharp fa-solid fa-credit-card"></i></a> -->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="modaldtcompra">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Detalle de la Compra</h4>
+        </div>
+        <div class="modal-body">
+          <div class="card-body formulario table-responsive">
+  
+            <table class="display nowrap  table table-bordered table-hover" style="width:100%">
+                    <thead class="thead-dark">
+                        <tr>          
+                            <th>Materia Prima</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                     <tr *ngFor="let item of listadetallecompra; index as i">          
+                            <td>{{item.nombre_producto}}</td>
+                            <td>{{item.cantidaddetalle}}</td>
+                            <td>{{item.preciocompra}}</td>
+                            <td>{{item.subtotal}}</td>
+                     </tr>
+                    </tbody>
+                </table>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="submit" class="btn btn-secondary float-left" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>

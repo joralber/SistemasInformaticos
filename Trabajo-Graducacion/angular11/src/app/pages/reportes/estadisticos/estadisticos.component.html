@@ -1,0 +1,139 @@
+ <!-- Content Wrapper. Contains page content -->
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-md-6 col-12">
+              <h4>Reportes Estadísticos</h4>
+            </div>
+
+              
+          
+
+              <div  class="col-md-6 col-12">
+
+
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Inicio</a></li>
+                <li class="breadcrumb-item active">Reportes Estadísticos</li>
+              </ol>
+            </div>
+
+
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+  
+              <!-- Color -->
+
+<div class="hold-transition register-page">
+<div class="register-box " >
+  <div class="card card-outline card-primary">
+             <!-- general form elements -->
+            <div class="card card-secondary">
+              <div class="card-header">
+                <h3 class="card-title">Reportes Estadísticos</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+
+
+                <div class="card-body formulario">
+   <!--
+                  <table>
+  <thead>
+    <tr>
+      <th>Año</th>
+      <th>Total de Ingresos</th>
+      <th>Índice de Crecimiento</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let ingreso of ingresosPorAnio; let i = index">
+      <td>{{ ingreso.anio }}</td>
+      <td>{{ ingreso.totalIngresos }}</td>
+      <td>{{ indiceCrecimientoPorAnio[i] }}</td>
+    </tr>
+  </tbody>
+</table>
+
+-->                <ul class="nav nav-pills flex-column">
+               
+                  <li class="nav-item">
+                    <a type="button" routerLink="/dashboard/comparacion"   class="btn btn-primary btn-block">
+                    Comparación de Ingresos con Gastos Mensualmente o Anual
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a type="button" (click)="generarPDF()" class="btn btn-primary btn-block">
+                     Índice de Crecimiento de Ventas Anual Promedio
+                    </a>
+                  </li>
+
+                        <li class="nav-item">
+               <a type="button"  routerLink="/dashboard/productoMasF" class="btn btn-primary btn-block">
+                 El Producto Terminado más Vendido en Determinada Fecha
+                    </a>
+                  </li>
+                  <li class="nav-item">
+               <a type="button" routerLink="/dashboard/productoMC" class="btn btn-primary btn-block">
+                   Colores de Zapatos más Demandados en Determinada Fecha por Estilos
+                    </a>
+                  </li>
+                    <li class="nav-item">
+               <a type="button" routerLink="/dashboard/productoMT" class="btn btn-primary btn-block">
+                   Tallas de Zapatos más Demandadas en Determinada Fecha por Estilos
+                    </a>
+                  </li>
+                        <li class="nav-item">
+               <a type="button" routerLink="/dashboard/productoMenF"  class="btn btn-primary btn-block">
+                 El Producto Terminado Menos Vendido En Determinada Fecha
+                    </a>
+                  </li>
+
+                        <li class="nav-item">
+               <a type="button" routerLink="/dashboard/ventaMuni"  class="btn btn-primary btn-block">
+                 Ventas por Municipios
+                    </a>
+                  </li>
+                  
+                         <li class="nav-item">
+                    <a type="button" (click)="generateReportPresEst()" class="btn btn-primary btn-block">
+                     Reporte de Precio de Producción por Estilos
+                    </a>
+                  </li>
+                
+                </ul>
+  
+   <div class="card-footer">
+
+                </div>
+
+
+                </div>
+                <!-- /.card-body -->
+
+            </div>
+            <!-- /.card -->
+        
+
+
+
+
+
+
+
+      </div>
+  
+      </div>
+
+</div>
+<!-- fin color -->
+
+
+
+
+  
+                    
+
+

@@ -1,0 +1,532 @@
+ <!-- Content Wrapper. Contains page content -->
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Modificar Producto Terminado</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a routerLink="/dashboard/listado-prod-final">Regresar</a></li>
+              <li class="breadcrumb-item active">Listado Producto Final</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+
+   <section class="content">
+                <div class="container-fluid">
+
+        <div class="row match-height">
+            <div class="col-12">
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <div class="row">
+          <div class="col-sm-10">
+            <h4 card-title><b>Modificar Producto Terminado</b></h4>
+          </div>
+        
+        </div>
+                    </div>
+
+                    <div class="card-content">
+                        <div class="card-body formulario">
+                                <form [formGroup]="form" (ngSubmit)="submit()">
+                                <div class="row">
+
+
+                                <div class="col-md-6 col-12">
+                                  <div class="row">
+                                    <div class="col-10">
+                                    <label for="first-name-column"> Código de Barra</label>
+                            
+                                    <div class="input-group mb-3">
+
+                                <svg id="barcode"></svg>
+</div>
+</div>
+
+<div *ngIf="barra">
+<div class="col-2">
+ <button type="button" class="btn btn-success mr-1" (click)="generarCodigoBarra()" title="Nuevo codigo de barra">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                      </button>
+                    </div>
+                        </div>
+                            </div>
+
+                            </div>
+
+
+
+                            <div class="col-md-6 col-12">
+                                    <label for="first-name-column"> Código de Estilo de Producto</label>
+                                    <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark"> <i class="fa-sharp fa-solid fa-arrow-up-1-9"></i></span>
+                              </div>
+
+         <input type="text" class="form-control border border-dark"  id="codigoest" formControlName="codigoest" disabled>
+                                      
+                            
+                                    </div>
+                                     <div *ngIf="f.idcodigo_estilo.touched && f.idcodigo_estilo.invalid" class="alert alert-danger">
+                                          <div *ngIf="f.idcodigo_estilo.errors.required">*Seleccione el Código de Estilo.</div>
+                                                  </div>
+                            </div>
+
+
+
+                                   
+                              <div class="col-md-6 col-12">
+                                <div class="row">
+                                        <div class="col-6">
+
+                                            <label for="country-floating">Precio a Consumidor</label>
+                                             <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark"> <i class="fa-solid fa-dollar-sign"></i>  </span>
+                              </div>
+                                       <input type="text"  class="form-control border border-dark" 
+                                                placeholder="Precio Consumidor" id="total_iva_consumidorf" formControlName="total_iva_consumidorf" [(ngModel)]="costo.total_iva_consumidorf" disabled>
+                                              </div>
+
+                                        </div>
+                                        <div class="col-6">
+                                             <label for="country-floating">Precio a Mayoreo</label>
+                                             <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark"> <i class="fa-solid fa-dollar-sign"></i>  </span>
+                              </div>
+                                       <input type="text" id="total_iva_mayoreo" formControlName="total_iva_mayoreo" class="form-control border border-dark" name="country-floating" [(ngModel)]="costo.total_iva_mayoreo"
+                                                placeholder="Precio Mayoreo" disabled>
+                                              </div>
+                                              </div>
+                                    </div> 
+                                       <div *ngIf="f.id_costo_produccion.touched && f.id_costo_produccion.invalid" class="alert alert-danger">
+                                          <div *ngIf="f.id_costo_produccion.errors.required">*Los precios son requeridos.</div>
+                                                  </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-12">
+                                            <label for="city-column">Nombre Producto Terminado</label>
+                                                     <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark"><i class="fa-solid fa-signature"></i> </span>
+                              </div>
+                                            <input type="text" id="nombre_producto" formControlName="nombre_producto" class="form-control border border-dark" placeholder="Nombre producto terminado" [(ngModel)]="codigoEst.estilo" disabled>
+                                        </div>
+                                    </div>
+
+
+
+
+
+                            
+
+
+
+                               
+
+
+
+
+                                      <div class="col-md-6 col-12">
+                                    <label for="last-name-column">Color</label>
+                                    <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark"> <i class="fa-sharp fa-solid fa-palette"></i>  </span>
+                              </div>
+                                   <select class="form-control mr-2 border border-dark" id="id_color_pt" formControlName="id_color_pt" [(ngModel)]="producto.id_color_pt" >
+                               <option value="" disabled selected>--Seleccione--</option>
+
+                                    <option [value]="c.id_color_pt" *ngFor="let c of color;">{{c.nombre_color}}</option>
+                                    </select>
+                                    <button type="button" class="btn btn-success mr-1" data-toggle="modal" data-target="#modal-color">
+                        <i class="fa-solid fa-plus"></i>
+                      </button>
+                                        </div>
+                                         <div *ngIf="f.id_color_pt.touched && f.id_color_pt.invalid" class="alert alert-danger">
+                                          <div *ngIf="f.id_color_pt.errors.required">*Seleccione el color.</div>
+                                                  </div>
+
+                                    </div>
+
+
+
+                                     <div class="col-md-6 col-12">
+                                    <label for="last-name-column">Categoría</label>
+                                    <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark"> <i class="fa-solid fa-folder-tree"></i>  </span>
+                              </div>
+                               <select class="form-control mr-2 border border-dark" id="id_cat_pt" formControlName="id_cat_pt" [(ngModel)]="producto.id_cat_pt">
+                               <option value="" disabled selected>--Seleccione--</option>
+
+                                    <option [value]="ca.id_cat_pt" *ngFor="let ca of categorias;">{{ca.nombre_cat}}</option>
+                                    </select>
+                                    <button type="button" class="btn btn-success mr-1" data-toggle="modal" data-target="#modal-categoria">
+                        <i class="fa-solid fa-plus"></i>
+                      </button>
+                                        </div>
+                                         <div *ngIf="f.id_cat_pt.touched && f.id_cat_pt.invalid" class="alert alert-danger">
+                                          <div *ngIf="f.id_cat_pt.errors.required">*Seleccione la categoría.</div>
+                                                  </div>
+
+                                    </div>
+
+
+
+
+
+                                     <div class="col-md-6 col-12">
+                                    <label for="last-name-column">Talla</label>
+                                    <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark"> <i class="fa-sharp fa-solid fa-hashtag"></i>  </span>
+                              </div>
+                                  <select class="form-control mr-2 border border-dark" id="id_talla_pt" formControlName="id_talla_pt" [(ngModel)]="producto.id_talla_pt">
+                               <option value="" disabled selected>--Seleccione--</option>
+
+                                    <option [value]="t.id_talla_pt" *ngFor="let t of talla;">#{{t.nombre_talla}}</option>
+                                    </select>
+                                    <button type="button" class="btn btn-success mr-1" data-toggle="modal" data-target="#modal-talla">
+                        <i class="fa-solid fa-plus"></i>
+                      </button>
+                                        </div>
+                                         <div *ngIf="f.id_talla_pt.touched && f.id_talla_pt.invalid" class="alert alert-danger">
+                                          <div *ngIf="f.id_talla_pt.errors.required">*Seleccione la talla.</div>
+                                                  </div>
+
+                                    </div>
+
+
+
+
+                                      <div class="col-md-6 col-12">
+
+                                      <div class="row">
+
+                                      <div class="col-6">
+                                          <div class="form-group">
+                                          <label for="company-column">Stock</label>
+                                         <div *ngIf="stokKX else s">
+
+                                                     <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark"> <i class="fa-solid fa-cubes-stacked"></i>
+                              </span>
+                              </div>
+                                              <input type="number"  class="form-control border border-dark" formControlName="cantidad" id="cantidad" [(ngModel)]="producto.cantidad"
+                                                  placeholder="Cantidad" >
+                                          </div>         
+                                          </div>
+                                         <ng-template #s>
+                                                <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark"> <i class="fa-solid fa-cubes-stacked"></i>
+                              </span>
+                              </div>
+                                              <input type="number"  class="form-control border border-dark" formControlName="cantidad" id="cantidad" [(ngModel)]="producto.cantidad"
+                                                  placeholder="Cantidad" disabled >
+                                          </div> 
+                                         </ng-template>
+
+                                          </div>
+      <div *ngIf="f.cantidad.touched && f.cantidad.invalid" class="alert alert-danger">
+                                    <div *ngIf="f.cantidad.errors.required">*Stock es requerido.</div>
+                                    <div *ngIf="f.cantidad.errors.pattern">*El stock solo debe contener números.</div>
+
+                                    </div>
+                                     <div *ngIf="checarSiEsMayor()" class="alert alert-danger">*El stock debe ser mayor al stock mínimo.</div>
+
+                                      </div>
+
+                                         <div class="col-6">
+                                          <div class="form-group">
+                                              <label for="company-column">Stock Mínimo</label>
+                                                     <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark"> <i class="fa-solid fa-cubes-stacked"></i>
+                              </span>
+                              </div>
+                                              <input type="number" class="form-control border border-dark" formControlName="stock_minimo" id="stock_minimo" [(ngModel)]="producto.stock_minimo"
+                                                  placeholder="Cantidad" >
+                                          </div>                                          </div>
+
+                                            <div *ngIf="f.stock_minimo.touched && f.stock_minimo.invalid" class="alert alert-danger">
+                                    <div *ngIf="f.stock_minimo.errors.required">*Stock mínimo es requerido.</div>
+                                    <div *ngIf="f.stock_minimo.errors.pattern">*El stock mínimo solo debe contener números.</div>
+                                    </div>
+                                     <div *ngIf="checarSiEsMayor()" class="alert alert-danger">*EL stock mínimo debe ser menor al stock.</div>
+
+
+                                      </div>
+<input type="hidden"  formControlName="estado" id="estado"
+                         [(ngModel)]="producto.estado">
+                           
+                           <input type="hidden"  formControlName="idcodigo_estilo" id="idcodigo_estilo"
+                         [(ngModel)]="producto.idcodigo_estilo">
+
+                           <input type="hidden"  formControlName="codigo_barra" id="codigo_barra"
+                         [(ngModel)]="producto.codigo_barra">
+
+                                          </div>
+                                        </div>
+                         <div class="col-12 d-flex align-items-center justify-content-center">
+      <div *ngIf="loading else lo" > 
+                                          <div class="form-group">
+                                          <div class="text-center">
+      <div class="spinner-border " role="status">
+        <span class="sr-only">Cargando...</span>
+      </div>
+      <p>Cargando...</p>
+ </div>
+                                            </div>
+                                      </div>
+
+                                      </div>
+
+                            
+                                     <ng-template #lo>
+
+                                    <div class="col-12 d-flex justify-content-end">
+                                      
+                                         <button type="submit" [disabled]="!form.valid" class="btn btn-primary me-1 mb-1 border-dark m-1">Guardar</button>
+                                          <button type="reset" class="btn btn-danger  mb-1 mb-1 m-1  border-dark">Limpiar</button> 
+                                    </div>
+                                  </ng-template>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </section>
+    <!-- /.content -->
+
+
+
+
+
+<!-- modal agregar nuevo color -->
+
+<div data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-color">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="card card-info">
+        <div class="modal-header card-header">
+
+          <h3 class="card-title">Agregar nuevo color</h3>
+        </div>
+               <form [formGroup]="formColor" (ngSubmit)="submit3()">
+
+          <div class="modal-body">
+
+         
+
+              <div class="form-group">
+                    <label for="">Color</label>
+                      <div class="input-group mb-3">
+
+                               <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark"><i class="fa-sharp fa-solid fa-palette"></i> </span>
+                              </div>
+                       <input type="text" class="form-control border border-dark" formControlName="nombre_color"  id="nombre_color"  placeholder="Digite el color">
+                  </div>
+                    <div *ngIf="fCol.nombre_color.touched && fCol.nombre_color.invalid" class="alert alert-danger">
+                  <div *ngIf="fCol.nombre_color.errors.required">*Color es requerido.</div>
+                  <div *ngIf="fCol.nombre_color.errors.pattern">*El color solo debe contener letras..</div>
+              </div>
+
+                  </div>
+
+          </div>
+
+<div class="col-12 d-flex align-items-center justify-content-center">
+      <div *ngIf="loading3 else l3" > 
+                                          <div class="form-group">
+                                          <div class="text-center">
+      <div class="spinner-border " role="status">
+        <span class="sr-only">Cargando...</span>
+      </div>
+      <p>Cargando...</p>
+ </div>
+                                            </div>
+
+
+                                      </div>
+
+
+                                      </div>
+
+             <ng-template #l3>
+
+          <div class="modal-footer justify-content-between">
+                <button type="submit" [disabled]="!formColor.valid"  class="btn btn-info">Guardar</button>
+            <button  (click)="limpiar()" class="btn btn-default float-right" data-dismiss="modal">Volver</button>
+          </div>
+      </ng-template>
+
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+    <!-- modal agregar nueva categoria -->
+
+<div data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-categoria">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="card card-info">
+        <div class="modal-header card-header">
+
+          <h3 class="card-title">Agregar nueva categoría</h3>
+        </div>
+               <form [formGroup]="formCategoria" (ngSubmit)="submit2()">
+
+          <div class="modal-body">
+
+         
+<div class="form-group">
+                    <label for="">Categoría</label>
+                      <div class="input-group mb-3">
+
+                               <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark"><i class="fa-sharp fa-solid fa-folder-tree"></i> </span>
+                              </div>
+                    <input type="text" class="form-control border border-dark" formControlName="nombre_cat"  id="nombre_cat"  placeholder="Digite la categoría">
+                  </div>
+                    <div *ngIf="fCat.nombre_cat.touched && fCat.nombre_cat.invalid" class="alert alert-danger">
+                  <div *ngIf="fCat.nombre_cat.errors.required">*Categoría es requerida.</div>
+                  <div *ngIf="fCat.nombre_cat.errors.pattern">*La categoría solo debe contener letras..</div>
+              </div>
+                  </div>
+             
+
+
+          </div>
+
+<div class="col-12 d-flex align-items-center justify-content-center">
+      <div *ngIf="loading2 else l2" > 
+                                          <div class="form-group">
+                                          <div class="text-center">
+      <div class="spinner-border " role="status">
+        <span class="sr-only">Cargando...</span>
+      </div>
+      <p>Cargando...</p>
+ </div>
+                                            </div>
+
+
+                                      </div>
+
+
+                                      </div>
+
+             <ng-template #l2>
+
+          <div class="modal-footer justify-content-between">
+             <button type="submit" [disabled]="!formCategoria.valid"  class="btn btn-info">Guardar</button>
+            <button  (click)="limpiar()" class="btn btn-default float-right" data-dismiss="modal">Volver</button>
+          </div>
+      </ng-template>
+
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+    <!-- modal agregar nueva talla -->
+
+<div data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-talla">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="card card-info">
+        <div class="modal-header card-header">
+
+          <h3 class="card-title">Agregar nueva talla</h3>
+        </div>
+               <form [formGroup]="formTalla" (ngSubmit)="submit4()">
+
+          <div class="modal-body">
+
+         
+  <div class="form-group">
+                    <label for="">Tallas</label>
+                      <div class="input-group mb-3">
+
+                               <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark"><i class="fa-sharp fa-solid fa-folder-tree"></i> </span>
+                              </div>
+                    <input type="text" class="form-control border border-dark" formControlName="nombre_talla"  id="nombre_talla"  placeholder="Digite la talla">
+                  </div>
+                    <div *ngIf="fTall.nombre_talla.touched && fTall.nombre_talla.invalid" class="alert alert-danger">
+                  <div *ngIf="fTall.nombre_talla.errors.required">*Talla es requerida.</div>
+                  <div *ngIf="fTall.nombre_talla.errors.pattern">*La talla solo debe contener números..</div>
+              </div>
+                  </div>
+
+
+          </div>
+<div class="col-12 d-flex align-items-center justify-content-center">
+      <div *ngIf="loading4 else l4" > 
+                                          <div class="form-group">
+                                          <div class="text-center">
+      <div class="spinner-border " role="status">
+        <span class="sr-only">Cargando...</span>
+      </div>
+      <p>Cargando...</p>
+ </div>
+                                            </div>
+
+
+                                      </div>
+
+
+                                      </div>
+
+             <ng-template #l4>
+
+          <div class="modal-footer justify-content-between">
+           <button type="submit" [disabled]="!formTalla.valid"  class="btn btn-info">Guardar</button>
+            <button  (click)="limpiar()" class="btn btn-default float-right" data-dismiss="modal">Volver</button>
+          </div>
+      </ng-template>
+
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+</div>

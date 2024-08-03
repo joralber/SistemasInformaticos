@@ -1,0 +1,17 @@
+.modal .modal-dialog { width: 850px !important; }
+
+.my-custom-scrollbar {
+position: relative;
+height: 300px;
+overflow: auto;
+}
+.table-wrapper-scroll-y {
+display: block;
+}
+
+
+
+.formulario{
+background-color:rgb(232, 248, 245 );
+border: 7px solid gray;
+}

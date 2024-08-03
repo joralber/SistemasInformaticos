@@ -1,0 +1,101 @@
+    
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Costo de Producción
+</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a routerLink="/dashboard/">Inicio</a></li>
+              <li class="breadcrumb-item active">Listado de Costos</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+
+
+
+
+       <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card card-secondary table-responsive">
+              <div class="card-header">
+                    <div class="row">
+          <div class="col-sm-10">
+            <h4 card-title><b>Listado de Costos de Producción</b></h4>
+          </div>
+          <div class="col-sm-2">
+            <button routerLink="/dashboard/registrar-costo" class="btn btn-success " (click)="regresar()" >
+              <i class='fas fa-plus-circle'></i><span> Nuevo Costo</span>
+            </button>
+          </div>
+        </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body formulario table-responsive">
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display nowrap  table table-bordered table-hover" style="width:100%">
+        <thead class="thead-dark">
+            <tr>
+                <th>#</th>
+                <th>Código</th>
+                <th>Estilo</th>
+                <th>Precio a Consumidor Final</th>
+                <th>Precio a Mayoreo</th>
+                
+                <th>Acciones</th>
+
+            </tr>
+        </thead>
+        <tbody>
+         <tr *ngFor="let c of costoP; index as i;">
+          <th scope="row">{{i+1}}</th>
+                <td>{{c.codigo.toString().padStart(4, '0')}}</td>
+                <td>{{c.estilo}} </td>
+                <th>$ {{c.total_iva_consumidorf}}</th>
+                <th>$ {{c.total_iva_mayoreo}}</th>
+                 <td >
+                <a [routerLink]="['/dashboard/editar-costo', c.id_costo_produccion]" class="btn btn-primary mr-2" ><i class="fa-sharp fa-solid fa-pen-to-square" ></i></a>
+                 <button type="button"  name="button" class="btn btn-danger mr-2" (click)=" deleteCosto(c.codigo.toString().padStart(4, '0'), c.id_costo_produccion)" ><i class="fa-sharp fa-solid fa-trash"></i></button>
+          
+
+                </td>
+         </tr>
+
+
+        
+        </tbody>
+       
+    </table>
+
+       </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+
+    
+    </section>
+
+
+
+
+
+
+
+  <!-- modal -->
+

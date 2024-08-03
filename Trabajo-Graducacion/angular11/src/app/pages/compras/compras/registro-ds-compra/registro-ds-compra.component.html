@@ -1,0 +1,223 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Agregar Devolución Sobre Compra</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a routerLink="/dashboard">Inicio</a></li>
+                    <li class="breadcrumb-item active">Agregar Devolución Sobre Compra</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-12">
+                <div class="card-content">
+                    <div class="card-body">
+                        <form class="form" [formGroup]="formdevolucion">
+                            <div class="row">
+                                <div class="col-md-3 col-12">
+                                    <label for="last-name-column">Fecha Devolución</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"> <i class="fa-solid fa-calendar"></i>
+                                            </span>
+                                        </div>
+                                        <input type="date" id="last-name-column" class="form-control"
+                                            name="lname-column" [(ngModel)]="materiadevolver.fecha"
+                                            formControlName="fechadev">
+                                    </div>
+                                    <div *ngIf="f.fechadev.touched && f.fechadev.invalid" class="alert alert-danger">
+                                        <div *ngIf="f.fechadev.errors.required">Fecha es requerida.</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-12">
+                                    <label>Motivo de devolución</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"> <i class="fa-solid fa-signature"></i>
+                                            </span>
+                                        </div>
+                                        <input type="text" id="last-name-column" class="form-control"
+                                            name="lname-column" [(ngModel)]="materiadevolver.motivo"
+                                            formControlName="motivo">
+                                    </div>
+                                    <div *ngIf="f.motivo.touched && f.motivo.invalid" class="alert alert-danger">
+                                        <div *ngIf="f.motivo.errors.required">Motivo es requerido.</div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-5 col-12">
+                                    <label for="city-column">Observaciones</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"> <i class="fa-solid fa-signature"></i>
+                                            </span>
+                                        </div>
+                                        <input type="text" id="observaciones" class="form-control" name="lname-column"
+                                            [value]="materiadevolver.observaciones"
+                                            [(ngModel)]="materiadevolver.observaciones"
+                                            [ngModelOptions]="{standalone: true}">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card table-responsive">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label>Proveedor</label>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"> <i
+                                                                class="fa-solid fa-signature"></i>
+                                                        </span>
+                                                    </div>
+                                                    <select class="form-control" id="idproveedor"
+                                                        (change)="cargarcompras($event)" [(ngModel)]="proveedor"
+                                                        [ngModelOptions]="{standalone: true}">
+                                                        <option value="" disabled selected>--Seleccione Proveedor--
+                                                        </option>
+                                                        <option [value]="item.id_proveedor"
+                                                            *ngFor="let item of listaproveedores;">{{item.nombre}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <label>Compras del proveedor</label>
+                        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                            <table class="display nowrap  table table-bordered table-hover" style="width:100%">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Total Compra</th>
+                                        <th>Seleccionar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of listacompras; let i = index;">
+                                        <td>{{data.fecha}}</td>
+                                        <td>$ {{data.total}}</td>
+                                        <td><input type="checkbox" id="checkcompra{{data.id_compra}}"
+                                                class="form-control" [value]="data.id_compra"
+                                                (change)="cargardetallecompra($event, data.id_compra)"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-8">
+                <div class="card table-responsive">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <h4 card-title><b>Materiales Adquiridos de la Compra</b></h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="dtbmateriadev" class="display nowrap  table table-bordered table-hover"
+                            style="width:100%">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Seleccionar</th>
+                                    <th>Material</th>
+                                    <th>Cantidad en Compra</th>
+                                    <th>Cantidad a Devolver</th>
+                                    <th>Precio Materia</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of listadetallecompra; let i = index;">
+                                    <td><input type="checkbox" id="checkmateria{{i}}" class="form-control"
+                                            [value]="data.id_mp" (change)="checkmaterial($event, i)"></td>
+                                    <td>{{data.nombre_producto}}</td>
+                                    <td>{{data.dvdisponible}}</td>
+                                    <td><input type="number" id="cant_devolver{{i}}" class="form-control" min="0"
+                                            disabled (keyup)="cantidadevolver($event, i)"
+                                            (change)="cantidadevolver($event, i)"></td>
+                                    <td><input type="number" id="preciomateria{{i}}" class="form-control" disabled
+                                            value="{{data.preciocompra}}" [(ngModel)]="data.preciocompra"></td>
+                                    <td><input type="number" id="subtotal{{i}}" class="form-control" disabled></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-5">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <h4 card-title><b>Total Detalle Devolución de Compra</b></h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <form class="form">
+                                <div class="row">
+                                    <div class="col-md-3 col-12">
+                                        <label for="last-name-column">Total Items</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i class="fa-solid fa-calculator"></i>
+                                                </span>
+                                            </div>
+                                            <input type="text" id="last-name-column" class="form-control"
+                                                placeholder="0" name="lname-column" disabled
+                                                [value]="materiadevolver.totalitems">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 col-12">
+                                        <label for="last-name-column">Valor Monetario a Devolver</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i class="fa-solid fa-dollar"></i>
+                                                </span>
+                                            </div>
+                                            <input type="text" id="last-name-column" class="form-control"
+                                                placeholder="0.00" name="lname-column" disabled
+                                                [value]="materiadevolver.total">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-primary me-1 mb-1 m-1"
+                                            (click)="guardardevolucion()">Guardar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

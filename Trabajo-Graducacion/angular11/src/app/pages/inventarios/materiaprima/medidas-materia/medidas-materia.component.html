@@ -1,0 +1,232 @@
+ <!-- Content Wrapper. Contains page content -->
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+          <div class="row md-2">
+            <div class="col-md-6 col-12 ">
+              <h4>Unidades de Medidas de Materia Prima</h4>
+            </div>
+
+
+
+                       <div  class="col-md-6 col-12">
+
+                                <div *ngIf="regresarService.estado else mp">
+
+
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a routerLink="/dashboard/registro-materia">Regresar</a></li>
+                <li class="breadcrumb-item active">Registro de Unidades de Medidas de Materia Prima</li>
+              </ol>
+            </div>
+            </div>
+              <div  class="col-md-6 col-12">
+
+            <ng-template #mp>
+
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Inicio</a></li>
+                <li class="breadcrumb-item active">Registro de Unidades de Medidas de Materia Prima</li>
+              </ol>
+</ng-template>
+            </div>
+
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+  
+  
+              <!-- Medidas -->
+
+    <section class="content">
+      <div class="container-fluid">
+      <div class="row">
+
+<div class="col-md-6">
+            <!-- general form elements -->
+            <div class="card card-secondary">
+              <div class="card-header">
+                <h3 class="card-title">Unidades de Medidas</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+               <form [formGroup]="form" (ngSubmit)="submit()">
+                <div class="card-body formulario">
+
+
+                   
+
+                  <div class="form-group">
+                    <label >Unidad de Medida</label>
+                      <div class="input-group mb-3">
+
+                               <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark"><i class="fa-solid fa-ruler"></i> </span>
+                              </div>
+                     <input type="text" class="form-control border border-dark" formControlName="medida" [(ngModel)]="med.medida" id="medida"  placeholder="Digite la unidad de medida">
+                  </div>
+                    <div *ngIf="f.medida.touched && f.medida.invalid" class="alert alert-danger">
+                  <div *ngIf="f.medida.errors.required">*Unidad de medida es requerido.</div>
+                  <div *ngIf="f.medida.errors.pattern">*La Unidad de medida solo debe contener letras..</div>
+
+                  
+              </div>
+                  </div>
+              
+            <input type="hidden"  formControlName="estado" id="estado"
+                [(ngModel)]="med.estado">
+
+                <div *ngIf="loading else l" > 
+                <div class="col-12 d-flex align-items-center justify-content-center">
+
+                                          <div class="form-group">
+                                          <div class="text-center">
+      <div class="spinner-border " role="status">
+        <span class="sr-only">Cargando...</span>
+      </div>
+      <p>Cargando...</p>
+ </div>
+                                            </div>
+
+
+                                      </div>
+
+
+                                      </div>
+
+             <ng-template #l>
+
+                <div *ngIf="update3 else insert4">
+            <div class="card-footer">
+                  <button type="submit" [disabled]="!form.valid" class="btn btn-success border border-dark">Modificar</button>
+                   <button type="reset" class="btn btn-danger float-right border border-dark">Limpiar</button>
+
+                </div>
+   
+ </div>
+<ng-template #insert4>
+            <div class="card-footer">
+                  <button type="submit" [disabled]="!form.valid"  class="btn btn-primary border border-dark">Guardar</button>
+                   <button type="reset" class="btn btn-danger float-right border border-dark">Limpiar</button>
+
+                </div>
+      </ng-template>
+    </ng-template>
+          </div>
+                <!-- /.card-body -->
+
+              </form>
+            </div>
+            <!-- /.card -->
+        
+
+          </div>
+
+
+<!-- right column -->
+          <div class="col-md-6">
+            <!-- Form Element sizes -->
+            <div class="card card-secondary">
+              <div class="card-header">
+
+                       <div *ngIf="update3 else insert5">
+
+            <div class="row">
+          <div class="col-sm-8">
+                <h3 class="card-title">Listado de Unidades de Medidas</h3>
+          </div>
+          <div class="col-sm-4">
+            <button  type="reset" (click)="cambio()"  class="btn btn-block btn-success btn-flat">
+              <i class='fas fa-plus-circle'></i><span> Nueva Unidad de Medida</span>
+            </button>
+          </div>
+        </div>
+           </div>
+           <ng-template #insert5>
+                            <h3 class="card-title">Listado de Unidades de Medidas</h3>
+
+</ng-template>
+              </div>
+              <div class="card-body formulario table-responsive">
+               
+              
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display nowrap  table table-bordered table-hover" style="width:100%">
+
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Unidades de Medidas</th>
+                      <th style="width: 40px">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let m of medidas; index as i" >
+                    <th scope="row">{{i+1}}</th>                     
+
+                      <td>{{m.medida}}</td>
+                    
+          <td >
+                 <div class="btn-group">
+                     
+                     
+                <button type="button" class="btn btn-primary mr-1 border border-dark"><i class="fa-sharp fa-solid fa-pen-to-square" (click)="getAcualizar(m.id_medida)" ></i></button>
+                 <button type="button"  name="button" class="btn btn-danger border border-dark" (click)="deleteMedidamp(m.id_medida)"><i class="fa-sharp fa-solid fa-trash"></i></button>
+                      </div>
+
+                </td>                  
+                  </tr>
+
+         
+
+      
+
+                  </tbody>
+                </table>
+              </div>
+              
+
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            
+   
+          </div>
+
+
+      </div>
+      </div>
+  
+
+      </section>
+<!-- fin comedidas -->
+
+
+  <!-- modal danger3 -->
+
+      <div class="modal fade" id="modal-danger3">
+        <div class="modal-dialog">
+          <div class="modal-content bg-danger">
+            <div class="modal-header">
+              <h4 class="modal-title">Eliminar Medida</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>¿Estás seguro de eliminar el registro?&hellip;</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-outline-light">Si</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+                    

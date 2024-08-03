@@ -1,0 +1,253 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Devolución</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a routerLink="/dashboard">Inicio</a></li>
+          <li class="breadcrumb-item active">Devolución Sobre Compras</li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+
+
+
+
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card  table-responsive">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-sm-10">
+                <h4 card-title><b>Devoluciones Sobre Compras</b></h4>
+              </div>
+              <div class="col-sm-2">
+                <button routerLink="/dashboard/registro-ds-compra" class="btn btn-success ">
+                  <i class='fas fa-plus-circle'></i><span> Agregar devolución</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="example" class="display nowrap  table table-bordered table-hover" style="width:100%">
+              <thead class="thead-dark">
+                <tr>
+                  <th>Fecha</th>
+                  <th>Motivo</th>
+                  <th>Proveedor</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+                <tr *ngFor="let item of listadevcompra; let i = index;">
+                  <td>{{item.fechadevolucion}}</td>
+                  <td>{{item.motivo}}</td>
+                  <td>{{item.nombre}}</td>
+                  <td><h5><span *ngIf="item.status==1" class="badge badge-success">Efectuado</span>
+                    <span *ngIf="item.status==0" class="badge badge-warning">Pendiente</span></h5></td>
+                  <td>
+                    <div class="btn-group">
+                      <!-- <button type="button" class="btn btn-success mr-1" data-toggle="modal" data-target="#modal-stock">
+                        <i class="fa-solid fa-plus"></i>
+                      </button>
+                      <a routerLink="/dashboard/editar-proveedor" class="btn btn-primary mr-1"><i
+                          class="fa-sharp fa-solid fa-pen-to-square"></i></a>
+                      <button type="button" name="button" class="btn btn-danger" data-toggle="modal"
+                        data-target="#modal-danger"><i class="fa-sharp fa-solid fa-trash"></i></button> -->
+                        <button type="button" name="button" class="btn btn-info mr-2" data-toggle="modal" data-target="#modaldetalle" (click)="verdetalle(item)"><i class="fa fa-eye"></i></button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+
+            </table>
+
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+
+        <!-- /.card -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+
+
+</section>
+
+<div class="modal fade" id="modaldetalle">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Detalle devolución de compra</h4>
+      </div>
+      <div class="modal-body">
+        <div class="card-body formulario table-responsive">
+
+          <table class="display nowrap  table table-bordered table-hover" style="width:100%">
+                  <thead class="thead-dark">
+                      <tr>          
+                          <th>Materia Prima</th>
+                          <th>Cantidad</th>
+                          <th>Costo Unitario</th>
+                          <th>Subtotal</th>
+                          <!-- <th>Acciones</th> -->
+                      </tr>
+                  </thead>
+                  <tbody>
+                   <tr *ngFor="let ddev of listadetalledevolucion; index as i">          
+                          <td>{{ddev.nombre_producto}}</td>
+                          <td>{{ddev.cantidaddetalle}}</td>
+                          <td>$ {{ddev.preciodetalle}}</td>
+                          <td>$ {{ddev.subtotal}}</td>
+                           <!-- <td> -->
+                          <!-- <a [routerLink]="['/dashboard/editar-proveedor', prove.id_proveedor]" class="btn btn-primary mr-2"><i class="fa-sharp fa-solid fa-pen-to-square" ></i></a> -->
+                           <!-- <button type="button"  name="button" class="btn btn-danger mr-2" (click)="deleteProveedor(prove.id_proveedor)" ><i class="fa-sharp fa-solid fa-trash"></i></button> -->
+                            <!-- <a routerLink="/dashboard/reportespagos" class="btn bg-purple "> <i class="fa-solid fa-money-bill"></i></a> -->
+                            
+                          <!-- </td> -->
+                   </tr>
+                  </tbody>
+              </table>
+              <!-- <div class="col-md-5 col-12"> -->
+                <label for="last-name-column">Total</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i
+                                class="fa-solid fa-dollar"></i>
+                        </span>
+                    </div>
+                    <input type="number" id="last-name-column" [(ngModel)]="totalmodal" class="form-control col-3" name="lname-column" disabled>
+                </div>
+            <!-- </div> -->
+        </div>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="submit" class="btn btn-secondary float-left" data-dismiss="modal">Volver</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+
+
+
+
+
+<!-- modal -->
+
+<div class="modal fade" id="modal-danger">
+  <div class="modal-dialog">
+    <div class="modal-content bg-danger">
+      <div class="modal-header">
+        <h4 class="modal-title">Eliminar Materia Prima</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>¿Estás seguro de eliminar el registro?&hellip;</p>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-outline-light">Si</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+
+<!-- modal nagrar stock -->
+
+<div class="modal fade" id="modal-stock">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="card card-info">
+        <div class="modal-header card-header">
+
+          <h3 class="card-title">Agregar Stock</h3>
+        </div>
+        <form>
+
+          <div class="modal-body">
+
+            <label for="codigo">Codigo:</label>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa-solid fa-barcode"></i> </span>
+              </div>
+              <input type="text" id="codigo" class="form-control" name="country-floating" placeholder="1231">
+            </div>
+
+            <label for="nombre">Nombre:</label>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa-solid fa-signature"></i> </span>
+              </div>
+              <input type="text" id="nombre" class="form-control" name="country-floating" placeholder="tacones">
+            </div>
+
+
+            <label for="stocka">Stock Actual:</label>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa-solid fa-cubes-stacked"></i> </span>
+              </div>
+              <input type="text" id="stocka" class="form-control" name="country-floating" placeholder="0">
+            </div>
+
+            <label for="astock">Agregar Stock</label>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa-solid fa-cubes-stacked"></i> </span>
+              </div>
+              <input type="number" id="astocka" class="form-control" name="country-floating" placeholder="0">
+            </div>
+
+            <label for="nstock">Nuevo Stock:</label>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa-solid fa-cubes-stacked"></i> </span>
+              </div>
+              <input type="text" id="nstock" class="form-control" name="country-floating" placeholder="0">
+            </div>
+
+
+          </div>
+
+
+          <div class="modal-footer justify-content-between">
+
+            <button type="submit" class="btn btn-info">Guardar</button>
+            <button type="submit" class="btn btn-default float-right" data-dismiss="modal">Volver</button>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+</div>

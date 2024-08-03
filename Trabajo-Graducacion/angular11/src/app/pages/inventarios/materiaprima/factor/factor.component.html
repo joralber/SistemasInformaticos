@@ -1,0 +1,372 @@
+ <!-- Content Wrapper. Contains page content -->
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-md-6 col-12">
+              <h4>Factor de Materia Prima</h4>
+            </div>
+
+              
+          
+  <div  class="col-md-6 col-12">
+
+
+
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a routerLink="/dashboard/listado-materia">Regresar</a></li>
+                <li class="breadcrumb-item active">Calcular el Factor de Materia Prima</li>
+              </ol>
+            </div>
+       
+
+
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+  
+
+    <section class="content">
+      <div class="container-fluid">
+      <div class="row">
+<div class="col-md-6">
+            <!-- general form elements -->
+            <div class="card card-secondary">
+              <div class="card-header">
+                <h3 class="card-title">Factor</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+               <form [formGroup]="form" (ngSubmit)="submit()">
+                <div class="card-body formulario">
+
+ <!--Inicio actualizar-->
+                 <div *ngIf="update2 else insert3">
+<div class="row">
+
+  <div class="col-8">
+<div class="form-group">
+                    <label for="">Materia Prima</label>
+                      <div class="input-group mb-3">
+
+                               <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark">  <i class="fa-sharp fa-solid fa-truck-ramp-box"></i> </span>
+                              </div>
+                    <input type="text" disabled class="form-control border border-dark"  value="{{materiaprima.nombre_producto}}" placeholder="Materia Prima">
+                  </div>
+                  </div>
+
+                  </div>
+                  <div class="col-4">
+                    <div class="form-group">
+                    <label for="">Tipo de Medida</label>
+                      <div class="input-group mb-3">
+
+                               <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark">  <i class="fa-solid fa-ruler"></i> </span>
+                              </div>
+                    <input type="text" disabled class="form-control border border-dark" value="{{medidamp.medida}}" placeholder="medida">
+                  </div>
+                  </div>
+                  </div>
+</div>
+                  <div class="row" >
+               
+                    <div class="col-4">
+
+
+                  <div class="form-group">
+                    <label for="">Precio</label>
+                      <div class="input-group mb-3">
+
+                               <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark"><i class="fa-solid fa-dollar"></i></span>
+                              </div>
+                    <input type="text" disabled class="form-control border border-dark"  value="{{materiaprima.precio_unitario}}" placeholder="0">
+                  </div>
+                  </div>
+
+                </div>
+
+              <!---->  
+                     <div class="col-4">
+
+
+                  <div class="form-group">
+                    <label for="">Unidades</label>
+                      <div class="input-group mb-3">
+
+                               <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark"><i class="fa-solid fa-ruler"></i></span>
+                              </div>
+                    <input type="number" #unidad class="form-control border border-dark" formControlName="unidades" [(ngModel)]='fac.unidades' (ngModelChange)="cambiofactor()" id="unidades" placeholder="0" (keyup)="factor(unidad.value)">
+                  </div>
+                  </div>
+            
+                </div>
+                 
+
+                    <div class="col-4">
+
+
+                  <div class="form-group">
+                    <label for="">Factor</label>
+                      <div class="input-group mb-3">
+
+                               <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark"><i class="fa-sharp fa-solid fa-calculator"></i> </span>
+                              </div>
+                    <input type="text" disabled  class="form-control border border-dark" formControlName="factor"  [(ngModel)]='fac.factor'  id="factor"   placeholder="0">
+                  </div>
+                  </div>
+
+                </div>
+
+ <div *ngIf="f.unidades.touched && f.unidades.invalid" class="alert alert-danger">
+                  <div *ngIf="f.unidades.errors.required">*Unidades es requerido.</div>
+                  <div *ngIf="f.unidades.errors.pattern">*Las unidades solo debe contener números y como máximo 2 decimales.</div>
+                 <div *ngIf="f.unidades.errors.min">*Las unidades deben ser mayor a 0.</div>
+
+
+                </div>
+                <input type="hidden" formControlName="id_mp" [(ngModel)]='materiaprima.id_mp' id="id_mp" value="{{materiaprima.id_mp}}" >
+                 <input type="hidden"  formControlName="fecha" id="fecha" [(ngModel)]="fac.fecha">
+                 <input type="hidden"  formControlName="estado" id="estado" [(ngModel)]="fac.estado">
+
+                
+                </div>
+ <div *ngIf="loading else l" > 
+                <div class="col-12 d-flex align-items-center justify-content-center">
+
+                                          <div class="form-group">
+                                          <div class="text-center">
+      <div class="spinner-border " role="status">
+        <span class="sr-only">Cargando...</span>
+      </div>
+      <p>Cargando...</p>
+ </div>
+                                            </div>
+
+
+                                      </div>
+
+
+                                      </div>
+
+             <ng-template #l>
+  <div class="card-footer">
+                  <button type="submit" [disabled]="!form.valid" class="btn btn-success border border-dark">Modificar</button>
+                   <button type="submit" routerLink="/dashboard/listado-materia" class="btn btn-danger float-right border border-dark">Cancelar</button>
+
+                </div>
+</ng-template>
+</div><!--fin ngIf de Actualizar-->
+<ng-template #insert3>
+  <div class="row">
+
+  <div class="col-8">
+<div class="form-group">
+                    <label for="">Materia Prima</label>
+                      <div class="input-group mb-3">
+
+                               <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark">  <i class="fa-sharp fa-solid fa-truck-ramp-box"></i> </span>
+                              </div>
+                    <input type="text" disabled class="form-control border border-dark"  value="{{materiaprima.nombre_producto}}" placeholder="Materia Prima">
+                  </div>
+                  </div>
+
+                  </div>
+                  <div class="col-4">
+                    <div class="form-group">
+                    <label for="">Tipo de Medida</label>
+                      <div class="input-group mb-3">
+
+                               <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark">  <i class="fa-solid fa-ruler"></i> </span>
+                              </div>
+                    <input type="text" disabled class="form-control border border-dark" value="{{medidamp.medida}}" placeholder="medida">
+                  </div>
+                  </div>
+                  </div>
+</div>
+                  <div class="row" >
+               
+                    <div class="col-4">
+
+
+                  <div class="form-group">
+                    <label for="">Precio</label>
+                      <div class="input-group mb-3">
+
+                               <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark"><i class="fa-solid fa-dollar"></i></span>
+                              </div>
+                    <input type="text" disabled class="form-control border border-dark"  value="{{materiaprima.precio_unitario}}" placeholder="0">
+                  </div>
+                  </div>
+
+                </div>
+
+              <!---->  
+                     <div class="col-4">
+
+
+                  <div class="form-group">
+                    <label for="">Unidades</label>
+                      <div class="input-group mb-3">
+
+                               <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark"><i class="fa-solid fa-ruler"></i></span>
+                              </div>
+                    <input type="number" #unidad class="form-control border border-dark" formControlName="unidades"  id="unidades" placeholder="0" (keyup)="factor(unidad.value)">
+                  </div>
+                  </div>
+            
+                </div>
+                 
+
+                    <div class="col-4">
+
+
+                  <div class="form-group">
+                    <label for="">Factor</label>
+                      <div class="input-group mb-3">
+
+                               <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark"><i class="fa-sharp fa-solid fa-calculator"></i> </span>
+                              </div>
+                    <input type="text" disabled  class="form-control border border-dark" formControlName="factor"  [(ngModel)]='fact' value="{{fact}}"  placeholder="0">
+                  </div>
+                  </div>
+
+                </div>
+
+ <div *ngIf="f.unidades.touched && f.unidades.invalid" class="alert alert-danger">
+                  <div *ngIf="f.unidades.errors.required">*Unidades es requerido.</div>
+                  <div *ngIf="f.unidades.errors.pattern">*Las unidades solo debe contener números y como máximo 2 decimales.</div>
+                 <div *ngIf="f.unidades.errors.min">*Las unidades deben ser mayor a 0.</div>
+
+
+                </div>
+                <input type="hidden" formControlName="id_mp" [(ngModel)]='materiaprima.id_mp' id="id_mp" value="{{materiaprima.id_mp}}" >
+
+
+                
+                </div>
+ <div *ngIf="loading else l" > 
+                <div class="col-12 d-flex align-items-center justify-content-center">
+
+                                          <div class="form-group">
+                                          <div class="text-center">
+      <div class="spinner-border " role="status">
+        <span class="sr-only">Cargando...</span>
+      </div>
+      <p>Cargando...</p>
+ </div>
+                                            </div>
+
+
+                                      </div>
+
+
+                                      </div>
+
+             <ng-template #l>
+  <div class="card-footer">
+   
+                  <button type="submit" [disabled]="!form.valid" class="btn btn-primary border border-dark">Guardar</button>
+                   <button type="submit" routerLink="/dashboard/listado-materia" class="btn btn-danger float-right border border-dark">Cancelar</button>
+
+
+                </div>
+                  </ng-template>
+</ng-template>
+
+<!--FIN registrar-->
+       
+
+
+                </div>
+                <!-- /.card-body -->
+
+              </form>
+            </div>
+            <!-- /.card -->
+        
+
+          </div>
+
+
+<!-- right column -->
+          <div class="col-md-6">
+            <!-- Form Element sizes -->
+            <div class="card card-secondary">
+              <div class="card-header">
+                               
+                <h3 class="card-title">Listado de Factores</h3>
+
+              </div>
+              <div class="card-body formulario table-responsive">
+               
+              
+              <!-- /.card-header -->
+              <div class="card-body p-0 table-responsive">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display nowrap  table table-bordered table-hover" style="width:100%">
+
+                  <thead>
+                    <tr >
+                      <th>Materia Prima</th>
+                      <th>Unidades</th>
+                      <th>Factor</th>
+
+                      <th style="width: 40px">Acciones</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                     <tr *ngFor="let factor of factores; index as i" >
+
+                      <td>{{factor.nombre_producto}}</td>
+                      <td>{{factor.unidades}}</td>
+                      <th>{{factor.factor}}</th>
+                    
+   				<td >
+                 <div class="btn-group">
+                     
+                     
+                <button type="button" class="btn btn-primary mr-1 border border-dark"><i class="fa-sharp fa-solid fa-pen-to-square" (click)="getAcualizar(factor.id_factor)" ></i></button>
+                      </div>
+
+                </td>                  
+                  </tr>
+                 
+                   
+
+                  </tbody>
+                </table>
+              </div>
+              
+
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            
+   
+          </div>
+
+
+      </div>
+      </div>
+  
+
+      </section>
+<!-- fin color -->
+
+
+
+
+
+

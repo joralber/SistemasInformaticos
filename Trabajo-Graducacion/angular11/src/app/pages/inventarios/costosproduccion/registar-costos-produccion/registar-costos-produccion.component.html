@@ -1,0 +1,631 @@
+ <!-- Content Wrapper. Contains page content -->
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Costo de Producción</h1>
+          </div>
+           <div  class="col-md-6 col-12">
+
+                                <div *ngIf="regresarService.estado else mp">
+
+
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a routerLink="/dashboard/listado-costo">Regresar</a></li>
+                <li class="breadcrumb-item active">Costo de Producción</li>
+              </ol>
+            </div>
+            </div>
+              <div  class="col-md-6 col-12">
+
+            <ng-template #mp>
+
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Inicio</a></li>
+                <li class="breadcrumb-item active">Costo de Producción</li>
+              </ol>
+</ng-template>
+            </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+
+
+     
+       <section class="content">
+          <div class="container-fluid">
+
+          <div class="row match-height">
+              <div class="col-12">
+                  <div class="card card-secondary ">
+                      <div class="card-header">
+                          <div class="row">
+            <div class="col-sm-10">
+              <h4 card-title><b>Registrar Costo de Produción</b></h4>
+            </div>
+          
+          </div>
+                      </div>
+  
+                      <div class="card-content">
+                          <div class="card-body formulario">
+              <div class="row ">
+   <div class="col-md-12 col-12">
+
+                                       <div class="form-group">
+                                            <label>Seleccione Estilo</label>
+                                            
+
+                              
+
+                                           <ng-select class="custom " id="idcodigo_estilo" name="idcodigo_estilo" (change)="changeSelect()" [(ngModel)]="selectedEstilo">
+                                           <ng-option *ngFor="let cod of codigoE;" [value]="cod.idcodigo_estilo">{{cod.codigo.toString().padStart(4, '0')}} => {{cod.estilo}}</ng-option>
+                                    </ng-select>  
+
+            
+                                            </div>                                      
+
+                                          </div>
+   
+
+
+<!--fin col-->
+<div class="col-12">
+                    <div class="row">
+                     <div class="col-12">
+                                                 <form [formGroup]="detalleForm" (ngSubmit)="costos()">
+
+                        <div class="row" *ngIf="ar">
+
+
+
+                        <div class="col-md-12 col-12">
+                            <div class="card  card-secondary table-responsive">
+                                <div class="card-header ">
+                                    <div class="row">
+                                        <div class="col-sm-10">
+                                            <h4 card-title><b>Costo de Producción</b></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body formulario table-responsive">
+                                                        <div class=" table-wrapper-scroll-y my-custom-scrollbar">
+
+                                    <table  id="table" class="display nowrap  table table-bordered table-hover"
+
+                                        style="width:100%">
+                                         <thead class="thead-dark" >
+
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Materia Prima</th>
+                                                <th>Medida 1</th>
+                                                <th>Medida 2</th>
+                                                <th>Total Medida</th>
+                                                <th>Factor</th>
+                                                <th>Precio</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody formArrayName="Rows">
+                                            <tr *ngFor="let mpc of detalle; let i=index; let itemrow of detalleForm.get('Rows')['controls'];"
+                                            [formGroupName]="i"  >
+                                            <th scope="row">{{i+1}}</th>
+                   <td style="visibility:collapse; display:none;"><input type="text"  id="id_costo_produccion" formControlName="id_costo_produccion" [(ngModel)]="id">  </td>
+
+                                                <td>
+
+                                         <div *ngIf="mpc.cortesmp else cort">
+                                              <small class="text-muted">Material: </small>  {{mpc.nombre_producto}}
+                                                </div>
+                                              <ng-template #cort>
+                                           <p class="fs-6"> <small class="text-muted">Material: {{mpc.nombre_producto}}</small></p>
+
+                                                
+                                              <small class="text-muted">Corte: </small> {{mpc.cortes}}
+
+                                   <td style="visibility:collapse; display:none;"><input type="text"  id="id_cortes" formControlName="id_cortes" [(ngModel)]="mpc.id_cortes">  </td>
+
+                                             
+                                              </ng-template>
+                                                </td>
+
+                                                 <td>
+                                                  <div *ngIf="mpc.factor else e1">
+
+                                                            <div *ngIf="detalle"> 
+
+                    <input type="number" (keyup)="calcular()" (click)="calcular()" style="width: 80px" id="medida1" formControlName="medida1"             class="form-control">
+
+                     <div *ngIf="formArr.at(i).get('medida1').touched && formArr.at(i).get('medida1').invalid" class="alert alert-danger">
+                        <!--
+                                    <div *ngIf="formArr.at(i).get('medida1').errors.required">*La medida 1 es requerida.</div>
+                                -->
+
+                                        <div *ngIf="formArr.at(i).get('medida1').errors.pattern">*La medida 1 no deben ser negativa</div>
+                                  
+</div>
+
+                                    </div>
+                </div>
+
+                        <ng-template #e1>
+                        <input type="number" disabled style="width: 80px" id="medida1" formControlName="medida1"         class="form-control">
+                   </ng-template>
+
+        </td>
+      <td>
+                                      <div *ngIf="mpc.factor else e2">
+                                                <div *ngIf="detalle"> 
+
+
+                    <input type="number" (keyup)="calcular()" (click)="calcular()" style="width: 80px" id="medida2" formControlName="medida2"  class="form-control">
+   <div *ngIf="formArr.at(i).get('medida2').touched && formArr.at(i).get('medida2').invalid" class="alert alert-danger">
+                                   
+
+                                        <div *ngIf="formArr.at(i).get('medida2').errors.pattern">*La medida 2 no deben ser negativa</div>       
+
+                                      
+
+
+                                    </div>     
+
+
+</div>
+                            
+                </div>
+                <ng-template #e2>
+
+                         <input type="number" disabled style="width: 80px" id="medida2" formControlName="medida2"  class="form-control">
+                </ng-template>
+        </td>
+        <td> <input type="text" style="width: 80px" id="total_m" formControlName="total_m"   class="form-control" disabled></td>
+
+        <td style="visibility:collapse; display:none;"><input type="text"  id="id_factor" formControlName="id_factor" [(ngModel)]="mpc.id_factor">  </td>
+
+         <td style="visibility:collapse; display:none;"><input type="text"  id="id_mp" formControlName="id_mp" [(ngModel)]="mpc.id_mp">  </td>
+                                                <td>
+                                                    <div *ngIf="mpc.factor else e">
+                                                       
+                                <input type="text"   id="factor" formControlName="factor" [(ngModel)]="mpc.factor" disabled>
+                                              </div>
+                                                <ng-template #e>
+                                                 <button  type="button" title="Agregar Factor" (click)="factores(mpc.id_mp)" data-toggle="modal" data-target="#modal-factores"  class="btn bg-purple border border-dark mr-1"><i class="fa-sharp fa-solid fa-calculator"></i></button>
+                                                </ng-template>
+
+                                                </td>
+                                                <td>
+                                                    <div *ngIf="mpc.factor else pre">
+
+                                                 <input type="text" style="width: 80px" id="precio" formControlName="precio"  class="form-control precios" disabled>
+                                                         <div *ngIf="formArr.at(i).get('precio').touched && formArr.at(i).get('precio').invalid && formArr.at(i).get('precio').statusChanges" class="alert alert-danger">
+                            <!--
+                                    <div *ngIf="formArr.at(i).get('precio').errors.required">*El precio es requerida.</div>
+                                     <div *ngIf="formArr.at(i).get('precio').errors.min">*El precio debe ser mayor a 0.</div>
+                                -->
+
+                                        <div *ngIf="formArr.at(i).get('precio').errors.pattern">*El precio no deben ser negativo</div>
+                                    
+</div>
+                                             </div>
+  <ng-template #pre>
+<input type="text" style="width: 80px" id="precio" formControlName="precio"    class="form-control precios" >
+             <div *ngIf="formArr.at(i).get('precio').touched && formArr.at(i).get('precio').invalid " class="alert alert-danger">
+                <div *ngIf="formArr.at(i).get('precio').errors.required">*El precio es requerida.</div>
+                <!--
+                                    
+                                     <div *ngIf="formArr.at(i).get('precio').errors.min">*El precio debe ser mayor a 0.</div>
+-->
+                                        <div *ngIf="formArr.at(i).get('precio').errors.pattern">*El precio no deben ser negativo</div>
+                                    
+</div>
+  </ng-template>
+
+
+                                          </td>
+                                          
+                                            </tr>
+                                            
+                                        
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                                        <div class="col-12 d-flex justify-content-end ">
+                                            <button [disabled]="!detalleForm.valid" class="btn btn-success btn-block me-5 mb-1 m-1 border border-dark" (click)="costos()">Cálcular</button>
+                                        </div>
+                    </div>
+
+
+</form>
+</div>
+
+                <form [formGroup]="form" (ngSubmit)="submit()">
+
+
+                        <div class="col-md-12 col-12">
+                            <div class="card card-secondary">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h4 card-title><b>Cálculos del Costo de Producción</b></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body formulario">
+                                        
+                                            <div class="row">
+                                              <div class="col-12">
+
+                                                 <table class="display nowrap  table-bordered  table-hover">
+                                                     <tbody>
+                                                        <tr  >      
+                                                <td class="col-8 ">                                                        
+
+                                                        <label class="col-form-label">Total de Materiales:</label>
+                                                </td>
+
+                                                 <td class="col-4">
+                                                        
+                                                        <div class="input-group ">
+
+                                                            <div class="input-group-prepend">
+                                                          <span class="input-group-text border border-dark">  <i class="fa-solid fa-dollar"></i>
+                                                          </span>
+                                                        </div>
+                                                          <input disabled type="text" id="totalmedida" formControlName="totalmedida" class="form-control border border-dark"  placeholder="0">
+                                                        </div>
+                                                  </td>
+
+                                                 </tr>
+                                                            
+                    <!--      
+                                                    <tr >
+                                                    <td class="col-8">
+                                                        <label class="col-form-label">Mano de Obra:</label>
+                                                       </td> 
+                                                        <td class="col-4">
+                                                               <div class="input-group ">
+
+                                                            <div class="input-group-prepend">
+                                                          <span class="input-group-text border border-dark">  <i class="fa-solid fa-dollar"></i>
+                                                          </span>
+                                                        </div>
+                                                          <input type="text" #n2 id="mano_obra" formControlName="mano_obra" class="form-control border border-dark"  placeholder="0" (keyup)="costos2(n1.value, n2.value)">
+                                                        </div>
+
+                                                               <div *ngIf="f.mano_obra.touched && f.mano_obra.invalid" class="alert alert-danger">
+                                    <div *ngIf="f.mano_obra.errors.required">*Mano obra  es requerida.</div>
+                                        <div *ngIf="f.mano_obra.errors.pattern">*Mano obra solo debe contener números.</div>
+                                        <div *ngIf="f.mano_obra.errors.min">*Mano obra debe ser mayor a 0.</div>
+
+
+                                    </div>
+
+                                                    </td>
+                                                </tr>
+                                -->
+
+
+                                                <tr >
+                                                    <td class="col-8">
+
+                                                        <label class="col-form-label">CDF Y CIF:</label>
+                                                    </td>
+                                                        <td class="col-4">
+                                                        <div class="input-group">
+
+                                                            <div class="input-group-prepend">
+                                                          <span class="input-group-text border border-dark">  <i class="fa-solid fa-dollar"></i>
+                                                          </span>
+                                                        </div>
+                                                          <input type="text" #n1  id="cdf_cif" formControlName="cdf_cif" class="form-control border border-dark"   placeholder="0" (keyup)="costos2(n1.value)">
+                                                        </div>
+
+
+                                                       <div *ngIf="f.cdf_cif.touched && f.cdf_cif.invalid" class="alert alert-danger">
+                                    <div *ngIf="f.cdf_cif.errors.required">*Cdf_cif  es requerido.</div>
+                                        <div *ngIf="f.cdf_cif.errors.pattern">*El Cdf_cif solo debe contener números.</div>
+                                            <div *ngIf="f.cdf_cif.errors.min">*El Cdf_cif debe ser mayor a 0.</div>
+
+
+                                    </div>
+
+                                                    </td>
+                                                    </tr>
+
+                                                    <tr >
+                                                        <td class="col-8">
+
+                                                        <label class="col-form-label">Costo de Producción:</label>
+                                                    </td>
+
+                                                        <td class="col-4">
+                                                        <div class="input-group ">
+
+                                                            <div class="input-group-prepend">
+                                                          <span class="input-group-text border border-dark">  <i class="fa-solid fa-dollar"></i>
+                                                          </span>
+                                                        </div>
+                                                          <input disabled type="text" id="costo_produccion" formControlName="costo_produccion" class="form-control border border-dark"  placeholder="0">
+                                                        </div>
+                                                    
+                                                    </td>
+                                                </tr>
+
+                                                <tr >
+                                                    <td class="col-8">
+                                                        <label  class="col-form-label">Margen de Contribución 10%:</label>
+                                                    </td>
+                                                        <td class="col-4">
+                                                                              <div class="input-group ">
+
+                                                            <div class="input-group-prepend">
+                                                          <span class="input-group-text border border-dark">  <i class="fa-solid fa-dollar"></i>
+                                                          </span>
+                                                        </div>
+                                                          <input type="text" disabled class="form-control border border-dark" id="margen_contribucion" formControlName="margen_contribucion"  placeholder="0">
+                                                        </div>
+                                                      
+                                                </td>
+                                            </tr>
+
+                                            <tr >
+                                                <td class="col-8">
+                                                        <label class="col-form-label">Consumidor Final 100%:</label>
+                                                    </td>
+                                                        <td class="col-4">
+                                                        <div class="input-group ">
+
+                                                            <div class="input-group-prepend">
+                                                          <span class="input-group-text border border-dark">  <i class="fa-solid fa-dollar"></i>
+                                                          </span>
+                                                        </div>
+                                                          <input type="text" disabled class="form-control border border-dark" id="consumidor_final" formControlName="consumidor_final" placeholder="0">
+                                                        </div>
+                                                  
+                                                </td>
+                                            </tr>
+
+                                            <tr >
+                                                <td class="col-8">
+
+                                                        <label class="col-form-label">Precio de Venta con IVA 13% a Mayoreo:</label>
+                                                    </td>
+                                                        <td class="col-4">
+                                                    
+                                                       <div class="input-group ">
+
+                                                            <div class="input-group-prepend">
+                                                          <span class="input-group-text border border-dark">  <i class="fa-solid fa-dollar"></i>
+                                                          </span>
+                                                        </div>
+                                                          <input type="text" disabled class="form-control border border-dark bg-success text-white" id="total_iva_mayoreo" formControlName="total_iva_mayoreo"  placeholder="0">
+                                                        </div>
+                                                      
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="col-8">
+
+                                                        <label class="col-form-label">Precio de Venta con IVA 13% a Consumidor Final:</label>
+                                                        <td class="col-4">
+                                                                              <div class="input-group ">
+
+                                                            <div class="input-group-prepend">
+                                                          <span class="input-group-text border border-dark">  <i class="fa-solid fa-dollar"></i>
+                                                          </span>
+                                                        </div>
+                                                          <input type="text" disabled class="form-control border border-dark bg-success text-white" id="total_iva_consumidorf" formControlName="total_iva_consumidorf" placeholder="0">
+                                                        </div>
+                                                  
+                                              
+                                                </td>
+
+                                            </tr>
+</tbody>
+
+
+
+                                                </table>
+
+                                                    </div>  
+                                                     <div class="col-12 d-flex align-items-center justify-content-center">
+      <div *ngIf="loading else l" > 
+                                          <div class="form-group">
+                                          <div class="text-center">
+      <div class="spinner-border " role="status">
+        <span class="sr-only">Cargando...</span>
+      </div>
+      <p>Cargando...</p>
+ </div>
+                                            </div>
+                                      </div>
+
+                                      </div>
+
+  
+                                        <ng-template #l>
+
+
+                                                  <div class="col-12 d-flex justify-content-end ">
+                                                    <button type="submit" [disabled]="!form.valid"
+                                                        class="btn btn-primary me-5 mb-1 m-1 border border-dark">Guardar</button>
+                                                        <button type="reset" class="btn btn-danger  mb-1 m-1 border-dark">Limpiar</button>
+
+                                                </div>
+                                            </ng-template>
+
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+                <!--fin row-->
+
+          </div>
+
+
+
+
+          </div>
+          </div>
+          </div>
+          </div>
+        </div>
+          </div>
+          
+</section>
+
+
+  <!-- modal Factor -->
+
+      <div class="modal fade" id="modal-factores">
+        <div class="modal-dialog">
+          <div class="modal-content">
+
+            <div class="card card-info">
+              <div class="modal-header card-header">
+
+                <h3 class="card-title">Cálcular Factor</h3>
+              </div>
+                <form [formGroup]="formfactor" >
+
+                 <div class="modal-body">
+ <div class="row">
+
+  <div class="col-8">
+<div class="form-group">
+                    <label for="">Materia Prima</label>
+                      <div class="input-group mb-3">
+
+                               <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark">  <i class="fa-sharp fa-solid fa-truck-ramp-box"></i> </span>
+                              </div>
+                    <input type="text" disabled class="form-control border border-dark"  value="{{materiaprima.nombre_producto}}" placeholder="Materia Prima">
+                  </div>
+                  </div>
+
+                  </div>
+                  <div class="col-4">
+                    <div class="form-group">
+                    <label for="">Tipo de Medida</label>
+                      <div class="input-group mb-3">
+
+                               <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark">  <i class="fa-solid fa-ruler"></i> </span>
+                              </div>
+                    <input type="text" disabled class="form-control border border-dark" value="{{medidamp.medida}}" placeholder="medida">
+                  </div>
+                  </div>
+                  </div>
+</div>
+                  <div class="row" >
+               
+                    <div class="col-4">
+
+
+                  <div class="form-group">
+                    <label for="">Precio</label>
+                      <div class="input-group mb-3">
+
+                               <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark"><i class="fa-solid fa-dollar"></i></span>
+                              </div>
+                    <input type="text" disabled class="form-control border border-dark"  value="{{materiaprima.precio_unitario}}" placeholder="0">
+                  </div>
+                  </div>
+
+                </div>
+
+              <!---->  
+                     <div class="col-4">
+
+
+                  <div class="form-group">
+                    <label for="">Unidades</label>
+                      <div class="input-group mb-3">
+
+                               <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark"><i class="fa-solid fa-ruler"></i></span>
+                              </div>
+                    <input type="text" #unidad class="form-control border border-dark" formControlName="unidades"  id="unidades" placeholder="0" (keyup)="Caculofactor(unidad.value)">
+                  </div>
+                  </div>
+            
+                </div>
+                 
+
+                    <div class="col-4">
+
+
+                  <div class="form-group">
+                    <label for="">Factor</label>
+                      <div class="input-group mb-3">
+
+                               <div class="input-group-prepend">
+                                <span class="input-group-text border border-dark"><i class="fa-sharp fa-solid fa-calculator"></i> </span>
+                              </div>
+                    <input type="text" disabled  class="form-control border border-dark" formControlName="factor"   value="{{fact}}"  placeholder="0">
+                  </div>
+                  </div>
+
+                </div>
+
+ <div *ngIf="ff.unidades.touched && ff.unidades.invalid" class="alert alert-danger">
+                  <div *ngIf="ff.unidades.errors.required">*Unidades es requerida.</div>
+                  <div *ngIf="ff.unidades.errors.pattern">*Las unidades solo debe contener números y como máximo 2 decimales.</div>
+                   <div *ngIf="ff.unidades.errors.min">*Las unidades deben ser mayor a 0.</div>
+
+                </div>
+
+
+                
+                </div>
+
+        
+
+                </div>
+
+ <div class="col-12 d-flex align-items-center justify-content-center">
+      <div *ngIf="loading else l2" > 
+                                          <div class="form-group">
+                                          <div class="text-center">
+      <div class="spinner-border " role="status">
+        <span class="sr-only">Cargando...</span>
+      </div>
+      <p>Cargando...</p>
+ </div>
+                                            </div>
+                                      </div>
+
+                                      </div>
+
+  
+                                        <ng-template #l2>
+
+                              <div class="modal-footer justify-content-between">
+
+                  <button type="submit"[disabled]="!formfactor.valid" (click)="submit2()" class="btn btn-info border border-dark"  data-dismiss="modal" >Guardar</button>
+                  <button (click)="limpiar()" type="reset" class="btn btn-default float-right border border-dark"   data-dismiss="modal">Volver</button>
+                </div>
+            </ng-template>
+
+                   </form>
+
+        </div>
+      </div>
+
+      </div>
+      </div>
+

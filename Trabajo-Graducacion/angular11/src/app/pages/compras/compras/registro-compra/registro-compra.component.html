@@ -1,0 +1,331 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Compras</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a routerLink="/dashboard">Inicio</a></li>
+                    <li class="breadcrumb-item active">Lista de Ordenes de Compra</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <h5 card-title><b>Nueva Compra del Proveedor:</b></h5>
+                            </div>
+                            <div class="col-md-7">
+                                <h5>
+                                    <strong class="text-primary"
+                                        *ngFor="let odc of ordendata;">{{odc.nombre}}{{odc.id_proveedor}}</strong>
+                                    <input type="hidden" id="idproveedor" class="form-control" name="lname-column"
+                                        value="{{dp.id_proveedor}}" *ngFor="let dp of ordendata;let i = index;">
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <input type="text" *ngFor="let orden of ordendata; index as i" value="{{orden.total}}"> -->
+                    <div class="card-content">
+                        <div class="card-body">
+                            <form class="form" [formGroup]="formcompra">
+                                <div class="row">
+                                    <div class="col-md-4 col-12">
+                                        <label for="last-name-column">Fecha</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i class="fa-solid fa-calendar"></i>
+                                                </span>
+                                            </div>
+                                            <input type="date" id="last-name-column" class="form-control"
+                                                formControlName="fechacompra" name="lname-column"
+                                                [(ngModel)]="datoscompra.fecha">
+                                        </div>
+                                        <div *ngIf="f.fechacompra.touched && f.fechacompra.invalid"
+                                            class="alert alert-danger">
+                                            <div *ngIf="f.fechacompra.errors.required">Fecha es requerida.</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-12">
+                                        <label>N° Factura / C.C.F</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i class="fa-solid fa-receipt"></i>
+                                                </span>
+                                            </div>
+                                            <input type="text" id="last-name-column" class="form-control"
+                                                formControlName="numerofactura" name="lname-column"
+                                                [(ngModel)]="datoscompra.numerofactura">
+                                        </div>
+                                        <div *ngIf="f.numerofactura.touched && f.numerofactura.invalid"
+                                            class="alert alert-danger">
+                                            <div *ngIf="f.numerofactura.errors.required">Número Factura es requerida.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-12">
+                                        <label for="city-column">Tipo de Compra</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa-solid fa-pager"></i>
+                                                </span>
+                                            </div>
+                                            <select class="form-control" id="tipocompra" formControlName="tipocompra"
+                                                (change)="verificarcreditos($event)">
+                                                <option disabled selected>---Seleccionar---</option>
+                                                <option [value]="compracredito">CRÉDITO</option>
+                                                <option [value]="compracontado">CONTADO</option>
+                                            </select>
+                                        </div>
+                                        <div *ngIf="f.tipocompra.touched && f.tipocompra.invalid"
+                                            class="alert alert-danger">
+                                            <div *ngIf="f.tipocompra.errors.required">Tipo de compra es requerida.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="card table-responsive">
+                    <div class="card-body">
+                        <table id="dtbdetalleorden" class="display nowrap  table table-bordered table-hover"
+                            style="width:100%">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Materia Prima</th>
+                                    <th>Precio Orden</th>
+                                    <th>Cantidad Solicitada</th>
+                                    <th>Cantidad Recibida</th>
+                                    <th>Unidades</th>
+                                    <th>Costo Real</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let orden of detalledata; let i = index;">
+                                    <td>{{orden.nombre_producto}}</td>
+                                    <td>{{orden.precio_unitario}}</td>
+                                    <td>{{orden.cantidaddetalle}}</td>
+                                    <td>
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa-solid fa-pager"></i>
+                                                </span>
+                                            </div>
+                                            <input type="hidden" id="idmateriaprima{{i}}" class="form-control"
+                                                name="lname-column" [value]="orden.id_mp">
+                                            <select class="form-control" id="selectrecibida{{i}}"
+                                                (change)="onChangeFirst($event, i)">
+                                                <option value="" selected>--Seleccionar--</option>
+                                                <option value="Completa">Completa</option>
+                                                <option value="Otra">Otra</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i class="fa-solid fa-receipt"></i>
+                                                </span>
+                                            </div>
+                                            <input type="number" id="unidades{{i}}" class="form-control"
+                                                name="lname-column" disabled (keyup)="setctrecibida($event, i)"
+                                                (change)="setctrecibida($event, i)" min="0">
+                                            <input type="hidden" id="cantidadcompleta{{i}}" class="form-control"
+                                                name="lname-column" [value]="orden.cantidaddetalle">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i class="fa-solid fa-receipt"></i>
+                                                </span>
+                                            </div>
+                                            <input type="number" id="costoreal{{i}}" class="form-control"
+                                                name="lname-column" disabled (keyup)="setcostoreal($event, i)"
+                                                (change)="setcostoreal($event, i)" min="0">
+                                            <input type="hidden" id="subtotalmat{{i}}" class="form-control"
+                                                name="lname-column" [value]="">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- <tr>
+                                    <td>Tacon suela alta</td>
+                                    <td>$ 2.50</td>
+                                    <td>25</td>
+                                    <td>
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa-solid fa-pager"></i>
+                                                </span>
+                                            </div>
+                                            <select class="form-control">
+                                                <option>Completa</option>
+                                                <option>Otra</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i class="fa-solid fa-receipt"></i>
+                                                </span>
+                                            </div>
+                                            <input type="number" id="last-name-column" class="form-control"
+                                                name="lname-column" disabled>
+                                        </div>
+                                    </td>
+                                </tr> -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-5 col-md-12" *ngIf="visible==true">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5 card-title><b>Datos del crédito:</b></h5>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <input type="text" *ngFor="let orden of ordendata; index as i" value="{{orden.total}}"> -->
+                    <div class="card-content">
+                        <div class="card-body">
+                            <form class="form" [formGroup]="formcompra">
+                                <div class="row">
+                                    <div class="col-md-3 col-12">
+                                        <label for="astock">Cantidad de cuotas</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i
+                                                        class="fa-solid fa-cubes-stacked"></i> </span>
+                                            </div>
+                                            <input type="number" id="astocka" class="form-control"
+                                                name="country-floating" placeholder="0"
+                                                [value]="datoscuentasxp.numero_cuotas" (keyup)="calcularcuota($event)"
+                                                (change)="calcularcuota($event)"
+                                                [(ngModel)]="datoscuentasxp.numero_cuotas"
+                                                [ngModelOptions]="{standalone: true}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-12">
+                                        <label for="nstock">Valor por cuota:</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i class="fa-solid fa-dollar"></i>
+                                                </span>
+                                            </div>
+                                            <input type="text" id="nstock" class="form-control" name="country-floating"
+                                                placeholder="0" disabled [value]="datoscuentasxp.montocuota"
+                                                [(ngModel)]="datoscuentasxp.montocuota"
+                                                [ngModelOptions]="{standalone: true}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 col-12">
+                                        <label for="nstock">Periodo de pago:</label>
+                                        <div class="input-group mb-3">
+                                            <input type="radio" class="form-control" id="periodopago"
+                                                name="fav_language" value="QUINCENAL" (change)="addperiodo($event)">
+                                            <label for="quincenal">Quincenal</label><br>
+                                            <input type="radio" class="form-control" id="periodopago"
+                                                name="fav_language" checked value="MENSUAL"
+                                                (change)="addperiodo($event)">
+                                            <label for="mensual">Mensual</label><br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-7 col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <h4 card-title><b>Total Detalle de Compra</b></h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <form class="form">
+                                <div class="row">
+                                    <div class="col-md-2 col-12">
+                                        <label for="last-name-column">Total Items</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i class="fa-solid fa-calculator"></i>
+                                                </span>
+                                            </div>
+                                            <input type="number" id="last-name-column" class="form-control"
+                                                placeholder="0" name="lname-column" disabled
+                                                [value]="datoscompra.totalitems">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-12">
+                                        <label for="last-name-column">Subtotal Compra</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i class="fa-solid fa-dollar"></i>
+                                                </span>
+                                            </div>
+                                            <input type="number" id="last-name-column" class="form-control"
+                                                placeholder="0.00" name="lname-column" disabled
+                                                [value]="datoscompra.subtotal">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-12">
+                                        <label for="last-name-column">IVA</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i class="fa-solid fa-dollar"></i>
+                                                </span>
+                                            </div>
+                                            <input type="number" id="last-name-column" class="form-control"
+                                                placeholder="0.00" name="lname-column" disabled
+                                                [value]="datoscompra.iva">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-12">
+                                        <label for="last-name-column">Total Compra</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i class="fa-solid fa-dollar"></i>
+                                                </span>
+                                            </div>
+                                            <input type="number" id="last-name-column" class="form-control"
+                                                placeholder="0.00" name="lname-column" disabled
+                                                [value]="datoscompra.total">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-primary me-1 mb-1 m-1"
+                                            (click)="guardarcompra()" [disabled]="disponible">Guardar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

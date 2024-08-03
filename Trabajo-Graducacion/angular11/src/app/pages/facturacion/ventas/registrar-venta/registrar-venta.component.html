@@ -1,0 +1,487 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Ventas</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a routerLink="/dashboard">Inicio</a></li>
+                    <li class="breadcrumb-item active">Registrar Venta</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <h4 card-title><b>Datos Generales de Venta</b></h4>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="card-content">
+                        <div class="card-body">
+                            <form class="form" [formGroup]="formcliente">
+                                <div class="row">
+                                    <div class="col-md-3 col-12">
+                                        <label for="last-name-column">Fecha</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i class="fa-solid fa-calendar"></i>
+                                                </span>
+                                            </div>
+                                            <input type="date" id="last-name-column" class="form-control" formControlName="fechaform"
+                                                name="lname-column" [(ngModel)]="datosventa.fecha">
+                                        </div>
+                                        <div *ngIf="f.fechaform.touched && f.fechaform.invalid" class="alert alert-danger">
+                                            <div *ngIf="f.fechaform.errors.required">Fecha es requerida.</div>
+                                          </div>
+                                    </div>
+                                    <div class="col-md-3 col-12">
+                                        <div class="form-group">
+                                            <label for="city-column">Tipo Documento</label>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i
+                                                                    class="fa-solid fa-pager"></i> </span>
+                                                        </div>
+                                                        <select class="form-control mr-2" formControlName="tipodocform" [(ngModel)]="datosventa.tipo_documento" (change)="documentoemitir($event)">
+                                                            <option value="" disabled selected>---Seleccionar---</option>
+                                                            <option [value]="item.id_tipodocumento" *ngFor="let item of tipodoclist;">{{item.tipodocumento}}</option>
+                                                        </select>
+                                                    </div>
+                                                    <div *ngIf="f.tipodocform.touched && f.tipodocform.invalid" class="alert alert-danger">
+                                                        <div *ngIf="f.tipodocform.errors.required">*Seleccione tipo de documento.</div>
+                                                      </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-12">
+                                        <label for="city-column">Tipo de Precio</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa-solid fa-pager"></i>
+                                                </span>
+                                            </div>
+                                            <select class="form-control" id="tipocompra" formControlName="tipoprecio" [(ngModel)]="datosventa.tipoprecio" (change)="addtipoprecio($event)"  >
+                                                <option value="">--- Seleccionar ---</option>
+                                                <option value="CONSUMIDORFINAL">PRECIO A CONSUMIDOR FINAL</option>
+                                                <option value="MAYOREO">PRECIO A MAYOREO</option>
+                                            </select>
+                                        </div>
+                                        <div *ngIf="f.tipoprecio.touched && f.tipoprecio.invalid" class="alert alert-danger">
+                                            <div *ngIf="f.tipoprecio.errors.required">*Tipo de precio requerido.</div>
+                                          </div>
+                                    </div>
+                                    <div class="col-md-4 col-12">
+                                        <label for="last-name-column">Buscar Cliente</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i class="fa-solid fa-calendar"></i>
+                                                </span>
+                                            </div>
+                                            <input type="text" id="last-name-column" class="form-control"
+                                                name="lname-column" (change)="buscarcliente($event)" (keyup)="buscarcliente($event)">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 col-12">
+                                        <div class="form-group">
+                                            <label for="city-column">Cliente</label>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i
+                                                                    class="fa-solid fa-pager"></i> </span>
+                                                        </div>
+                                                        <select class="form-control mr-2" formControlName="clienteform" id="idcliente" [(ngModel)]="datosventa.cliente" (change)="addverificar($event)">
+                                                            <option value="">---Seleccionar Cliente---</option>
+                                                            <option [value]="item.id_cliente" *ngFor="let item of clientelist; let i = index;">{{item.nombre}}</option>
+                                                        </select>
+                                                    </div>
+                                                    <div *ngIf="f.clienteform.touched && f.clienteform.invalid" class="alert alert-danger">
+                                                        <div *ngIf="f.clienteform.errors.required">*Seleccione el cliente.</div>
+                                                      </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-12">
+                                        <label for="last-name-column">N° CCF / CF / TICKET</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i class="fa-solid fa-calendar"></i>
+                                                </span>
+                                            </div>
+                                            <input type="text" id="last-name-column" class="form-control" formControlName="ndocumentoform"
+                                                name="lname-column" [(ngModel)]="datosventa.n_documento">
+                                        </div>
+                                        <div *ngIf="f.ndocumentoform.touched && f.ndocumentoform.invalid" class="alert alert-danger">
+                                            <div *ngIf="f.ndocumentoform.errors.required">*Ingrese N° Doc.</div>
+                                          </div>
+                                    </div>
+                                    <div class="col-md-4 col-12">
+                                        <label for="last-name-column">Buscar Producto</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i class="fa-solid fa-calendar"></i>
+                                                </span>
+                                            </div>
+                                            <input type="text" id="last-name-column" class="form-control" [value]="busqueda.busq" [(ngModel)]="busqueda.busq"
+                                                name="lname-column" (change)="buscarproducto($event)" (keyup)="buscarproducto($event)"  [ngModelOptions]="{standalone: true}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-12">
+                                        <label for="last-name-column">Filtrar por Categoría / Color / Talla</label>
+                                        <div class="input-group">
+                                            <input type="checkbox" id="last-name-column" class="form-control" name="lname-column" (change)="incluirfiltro($event)">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-12" *ngIf="categoriafield==true">
+                                        <div class="form-group">
+                                            <label for="city-column">Categoría</label>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i
+                                                                    class="fa-solid fa-pager"></i> </span>
+                                                        </div>
+                                                        <select class="form-control mr-2" id="categoriaf" formControlName="selectcategoria" (change)="getcolorf($event, 0)">
+                                                            <option value="">---Seleccionar Categoría---</option>
+                                                            <option [value]="item.id_cat_pt" *ngFor="let item of categoriafilter; let i = index;">{{item.nombre_cat}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-12" *ngIf="colorfield==true">
+                                        <div class="form-group">
+                                            <label for="city-column">Color</label>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i
+                                                                    class="fa-solid fa-pager"></i> </span>
+                                                        </div>
+                                                        <select class="form-control mr-2" id="colorf" formControlName="selectcolor" (change)="gettallaf($event, 0)">
+                                                            <option value="">---Seleccionar Color ---</option>
+                                                            <option [value]="item.id_color_pt" *ngFor="let item of colorfilter; let i = index;">{{item.nombre_color}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-12" *ngIf="tallafield==true">
+                                        <div class="form-group">
+                                            <label for="city-column">Talla</label>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i
+                                                                    class="fa-solid fa-pager"></i> </span>
+                                                        </div>
+                                                        <select class="form-control mr-2" id="tallaf" formControlName="selecttalla" (change)="getproductofilter($event)">
+                                                            <option value="">---Seleccionar Talla---</option>
+                                                            <option [value]="item.id_talla_pt" *ngFor="let item of tallafilter; let i = index;">{{item.nombre_talla}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 col-12">
+                                        <div class="form-group">
+                                            <label for="city-column">Producto</label>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i
+                                                                    class="fa-solid fa-pager"></i> </span>
+                                                        </div>
+                                                        <select class="form-control mr-2" formControlName="productoform" id="mtp" (change)="detalleproducto($event)">
+                                                            <option value="">---Seleccionar Producto---</option>
+                                                            <option [value]="item.id_producto" *ngFor="let item of productolist; let i = index;">{{item.codigo_barra}} - {{item.estilo}}</option>
+                                                        </select>
+                                                    </div>
+                                                    <div *ngIf="f.productoform.touched && f.productoform.invalid" class="alert alert-danger">
+                                                        <div *ngIf="f.productoform.errors.required">*Seleccione producto.</div>
+                                                      </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-12">
+                                        <label for="last-name-column">Precio Unitario</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i class="fa-solid fa-dollar"></i>
+                                                </span>
+                                            </div>
+                                            <input type="number" id="last-name-column" class="form-control" [value]="precioproducto"
+                                                placeholder="0" name="lname-column" disabled [(ngModel)]="precioproducto"  [ngModelOptions]="{standalone: true}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-12">
+                                        <label for="last-name-column">Cantidad</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i class="fa-solid fa-plus"></i>
+                                                </span>
+                                            </div>
+                                            <input type="number" id="last-name-column" class="form-control" formControlName="cantidadform"
+                                                placeholder="0" name="lname-column" min="0" [(ngModel)]="cantidadproducto">
+                                        </div>
+                                        <div *ngIf="f.cantidadform.touched && f.cantidadform.invalid" class="alert alert-danger">
+                                            <div *ngIf="f.cantidadform.errors.required">Cantidad es requerida.</div>
+                                            <div *ngIf="f.cantidadform.errors.pattern">*El Precio solo debe contener números.</div>
+                                          </div>
+                                    </div>
+                                    <div class="col-md-4 col-12">
+                                        <label for="last-name-column">Descripción</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i class="fa-solid fa-plus"></i>
+                                                </span>
+                                            </div>
+                                            <input type="text" id="last-name-column" class="form-control" formControlName="descripcionform"
+                                                placeholder=".." name="lname-column" [(ngModel)]="descripcion">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2 col-12">
+                                        <label for="last-name-column">Agregar Producto</label>
+                                        <div class="input-group mb-3">
+                                            <button type="button" type="submit" [disabled]="!formcliente.valid" (click)="agregardetalle()" id="btndetalle" class="btn btn-block btn-success"
+                                                >
+                                                <i class='fas fa-plus-circle'></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-12">
+                                        <label for="city-column">Tipo de Venta</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa-solid fa-pager"></i>
+                                                </span>
+                                            </div>
+                                            <select class="form-control" id="tipocompra" formControlName="tipocompraform" (change)="creditosdisponible($event)" [(ngModel)]="datosventa.tipocompra">
+                                                <option disabled selected value="">---Seleccionar---</option>
+                                                <option value="CREDITO">CRÉDITO</option>
+                                                <option value="CONTADO">CONTADO</option>
+                                            </select>
+                                        </div>
+                                        <div *ngIf="f.tipocompraform.touched && f.tipocompraform.invalid" class="alert alert-danger">
+                                            <div *ngIf="f.tipocompraform.errors.required">*Tipo de venta es requerida.</div>
+                                          </div>
+                                    </div>
+                                    <div class="col-md-9 col-12"><br>
+                                        <div class="col-5 col-md-12" *ngIf="visible==true">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5 card-title><b>Datos el crédito:</b></h5>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <input type="text" *ngFor="let orden of ordendata; index as i" value="{{orden.total}}"> -->
+                    <div class="card-content">
+                        <div class="card-body">
+                            <form class="form" [formGroup]="formcompra">
+                                <div class="row">
+                                    <div class="col-md-3 col-12">
+                                        <label for="astock">Cantidad de cuotas</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i
+                                                        class="fa-solid fa-cubes-stacked"></i> </span>
+                                            </div>
+                                            <input type="number" id="astocka" class="form-control"
+                                                name="country-floating" placeholder="0"
+                                                [value]="datoscuentasxc.numero_cuotas" 
+                                                [(ngModel)]="datoscuentasxc.numero_cuotas"
+                                                [ngModelOptions]="{standalone: true}" [disabled]="campocuotas" (keyup)="calcularcuota($event)"
+                                                (change)="calcularcuota($event)">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-12">
+                                        <label for="nstock">Valor por cuota:</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i class="fa-solid fa-dollar"></i>
+                                                </span>
+                                            </div>
+                                            <input type="text" id="nstock" class="form-control" name="country-floating"
+                                                placeholder="0" disabled [value]="datoscuentasxc.montocuota"
+                                                [(ngModel)]="datoscuentasxc.montocuota"
+                                                [ngModelOptions]="{standalone: true}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 col-12">
+                                        <label for="nstock">Periodo de pago:</label>
+                                        <div class="input-group mb-3">
+                                            <input type="radio" class="form-control" id="periodopago"
+                                                name="fav_language" value="QUINCENAL" (change)="addperiodo($event)">
+                                            <label for="quincenal">Quincenal</label><br>
+                                            <input type="radio" class="form-control" id="periodopago"
+                                                name="fav_language" checked value="MENSUAL"
+                                                (change)="addperiodo($event)">
+                                            <label for="mensual">Mensual</label><br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="card table-responsive">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-sm-10">
+                                            <h4 card-title><b>Detalle de Venta</b></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <table class="display nowrap  table table-bordered table-hover" style="width:100%">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th>Producto</th>
+                                                <th>Precio</th>
+                                                <th>Cantidad</th>
+                                                <th>Descripción</th>
+                                                <th>Subtotal</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of detalleventavista;">
+                                                <td>{{item.nombreproducto}}</td>
+                                                <td>$ {{item.precio}}</td>
+                                                <td>{{item.cantidad}}</td>
+                                                <td>{{item.descripcion}}</td>
+                                                <th>$ {{item.subtotal}}</th>
+                                                <td>
+                                                    <button type="button" name="button" class="btn btn-danger" (click)="borrarfila(item.posicion)"><i
+                                                            class="fa-sharp fa-solid fa-trash"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-sm-10">
+                                            <h4 card-title><b>Total Detalle de Venta</b></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <form class="form">
+                                            <div class="row">
+                                                <div class="col-md-8 col-12">
+                                                    <label for="last-name-column">Subtotal Venta</label>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"> <i class="fa-solid fa-dollar"></i>
+                                                            </span>
+                                                        </div>
+                                                        <input type="number" id="last-name-column" class="form-control"
+                                                            placeholder="0.00" name="lname-column" disabled [value]="datosventa.subtotal">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-12">
+                                                    <label for="last-name-column">IVA</label>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"> <i class="fa-solid fa-dollar"></i>
+                                                            </span>
+                                                        </div>
+                                                        <input type="number" id="last-name-column" class="form-control"
+                                                            placeholder="0.00" name="lname-column" disabled [value]="datosventa.iva">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-12">
+                                                    <label for="last-name-column">Total Venta</label>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"> <i class="fa-solid fa-dollar"></i>
+                                                            </span>
+                                                        </div>
+                                                        <input type="number" id="last-name-column" class="form-control"
+                                                            placeholder="0.00" name="lname-column" disabled [value]="datosventa.total">
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 d-flex justify-content-end">
+                                                    <button type="button"
+                                                        class="btn btn-danger me-1 mb-1 m-1" (click)="eliminadetalle()">Eliminar Detalle</button>
+                                                    <button type="submit"
+                                                        class="btn btn-primary me-1 mb-1 m-1" (click)="guardarventa()" [disabled]="disponible">Guardar</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</section>
+
+<!-- modal -->
+<div class="modal fade" id="modal-danger">
+    <div class="modal-dialog">
+        <div class="modal-content bg-danger">
+            <div class="modal-header">
+                <h4 class="modal-title">Eliminar Orden de Compra</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro de eliminar el registro?&hellip;</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-outline-light">Si</button>
+            </div>
+        </div>
+    </div>
+</div>

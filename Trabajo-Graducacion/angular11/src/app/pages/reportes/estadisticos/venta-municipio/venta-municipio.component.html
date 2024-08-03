@@ -1,0 +1,96 @@
+ <!-- Content Wrapper. Contains page content -->
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-md-6 col-12">
+              <h4>Reportes Estadísticos</h4>
+            </div>
+
+              
+          
+
+              <div  class="col-md-6 col-12">
+
+
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a routerLink="/dashboard/estadisticos">Regresar</a></li>
+                <li class="breadcrumb-item active">Reportes Estadísticos</li>
+              </ol>
+            </div>
+
+
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+  
+              <!-- Color -->
+
+<div class="hold-transition register-page">
+<div class="register-box " >
+  <div class="card card-outline card-primary">
+             <!-- general form elements -->
+            <div class="card card-secondary">
+              <div class="card-header">
+                <h3 class="card-title">Ventas por Municipios</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+
+
+                <div class="card-body formulario">
+
+
+                                                                    
+
+ <label for="last-name-column">Fecha Inicio</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i class="fa-solid fa-calendar"></i>
+                                                </span>
+                                            </div>
+                                            <input type="date" id="last-name-column" class="form-control"  [(ngModel)]="fechaI"  name="lname-column" >
+                                        </div>
+                                         <label for="last-name-column">Fecha Fin</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"> <i class="fa-solid fa-calendar"></i>
+                                                </span>
+                                            </div>
+                                            <input type="date" id="last-name-column" class="form-control"  [(ngModel)]="fechaF"  name="lname-column" >
+                                        </div>
+                                      
+
+  
+   <div class="card-footer">
+<button type="button" (click)="generateReportVentaZona()" class="btn btn-primary btn-block">Generar Reporte</button>
+                </div>
+
+
+                </div>
+                <!-- /.card-body -->
+
+            </div>
+            <!-- /.card -->
+        
+
+
+
+
+
+
+
+      </div>
+  
+      </div>
+
+</div>
+<!-- fin color -->
+
+
+
+
+  
+                    
+
+
