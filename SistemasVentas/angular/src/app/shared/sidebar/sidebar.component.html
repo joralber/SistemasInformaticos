@@ -1,0 +1,372 @@
+<!-- Main Sidebar Container -->
+
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Brand Logo -->
+  <a routerLink="/dashboard" class="brand-link">
+    <img src="./assets/logo.png" class="me-2" height="50">
+    <span class="brand-text font-weight-light">&nbsp; &nbsp; THERSAN </span>
+  </a>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Sidebar user (optional) -->
+    <div class="user-panel mt-3 pb-6 mb-3 d-flex">
+      <div class="image">
+        <img src="./assets/dist/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
+      </div>
+      <div class="info">
+        <a class="d-block">USUARIO: {{nombre}}</a>
+      </div>
+    </div>
+
+  
+
+
+  <div *ngIf="role === 'ADMINISTRADOR'">
+
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+
+
+
+
+
+
+
+        <li class="nav-header">INVENTARIOS</li>
+
+
+
+ <!-- Inventario  -->
+        <li class="nav-item">
+          <a  class="nav-link">
+            <i class="fa-solid fa-boxes-stacked"></i> 
+            <p> 
+              &nbsp;Inventario
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+
+          <ul class="nav nav-treeview">
+            
+            <li class="nav-item">
+              <a class="nav-link" routerLink="kardex">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Kardex Inventario </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="registrar-productos" >
+                <i class="far fa-circle nav-icon"></i>
+                <p>Registrar Productos</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" routerLink="listar-productos" >
+                <i class="far fa-circle nav-icon"></i>
+                <p>Listado de Productos </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/dashboard/registro-cate">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Categoría de Productos </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/dashboard/registro-col" >
+                <i class="far fa-circle nav-icon"></i>
+                <p>Color de Productos</p>
+              </a>
+            </li>
+
+             <li class="nav-item">
+              <a class="nav-link" routerLink="/dashboard/registro-tall">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Tallas de Productos</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+
+
+
+
+      
+
+
+       
+
+
+
+
+
+
+
+        <!--facturacion-->
+        <li class="nav-header">VENTAS</li>
+
+        <li class="nav-item">
+          <a class="nav-link">
+                  
+            <i class="nav-icon fa-solid fa-people-carry-box"></i>
+            <p>
+              &nbsp;Cliente
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a  class="nav-link"  routerLink="/dashboard/registrar-cliente">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Registrar Cliente</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a  class="nav-link" routerLink="/dashboard/listar-cliente">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Lista de Clientes</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a  class="nav-link">
+                  
+<i class="nav-icon fas fa-file-invoice-dollar"></i>
+            <p>
+              &nbsp;Ventas
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a  class="nav-link" routerLink="registrar-ventas">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Registrar Venta</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a  class="nav-link" routerLink="listar-ventas">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Lista de Ventas</p>
+              </a>
+            </li>
+          
+       
+          </ul>
+        </li>
+        <!--fin F-->
+
+      <li class="nav-header">REPORTES</li>    
+
+
+    <li class="nav-item">
+           <a  class="nav-link" routerLink="/dashboard/principal">
+<i class="nav-icon  fa-sharp fa-solid fas  fa-clipboard-list"></i>
+            <p> Reportes </p>
+          </a>
+
+        </li>
+
+
+        <li class="nav-header">SEGURIDAD</li>
+
+
+       <!--  Admin -->
+        <li class="nav-item">
+           <a  class="nav-link">
+              <i class="nav-icon fa-sharp fa-solid fas fa-user"></i>
+            <p>
+             Usuarios
+            <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+          
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/dashboard/registro-usuario">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Registrar Usuarios</p>
+              </a>
+            </li>
+
+          </ul>
+
+           <ul class="nav nav-treeview">
+          
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/dashboard/listado-usuarios">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Listado de Usuarios</p>
+              </a>
+            </li>
+
+          </ul>
+        </li>
+
+
+
+          
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/dashboard/respaldo">
+                <i class="nav-icon  fa-sharp fa-solid fas fa-database"></i>
+                <p>Respaldo</p>
+              </a>
+            </li>
+
+   <li class="nav-item">
+              <a class="nav-link" routerLink="/dashboard/bitacora">
+<i class="nav-icon  fa-sharp fa-solid fas  fa-clipboard-list"></i>
+                <p>Bitácora</p>
+              </a>
+            </li>
+         <br>
+
+
+
+
+      </ul>
+
+
+
+
+
+
+
+
+    </nav>
+
+
+</div>
+  <div *ngIf="role === 'VENDEDOR'">
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+
+
+
+
+
+
+        <!--facturacion-->
+        <li class="nav-header">VENTAS</li>
+
+        <li class="nav-item">
+          <a class="nav-link">
+                  
+            <i class="nav-icon fa-solid fa-people-carry-box"></i>
+            <p>
+              &nbsp;Cliente
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a  class="nav-link"  routerLink="/dashboard/registrar-cliente">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Registrar Cliente</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a  class="nav-link" routerLink="/dashboard/listar-cliente">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Lista de Clientes</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a  class="nav-link">
+                  
+<i class="nav-icon fas fa-file-invoice-dollar"></i>
+            <p>
+              &nbsp;Ventas
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+       <li class="nav-item">
+              <a  class="nav-link" routerLink="registrar-ventas">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Registrar Venta</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a  class="nav-link" routerLink="listar-ventas">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Lista de Ventas</p>
+              </a>
+            </li>
+          
+       
+          </ul>
+        </li>
+        <!--fin F-->
+
+
+        <li class="nav-header">SEGURIDAD</li>
+
+
+       <!--  Admin -->
+        <li class="nav-item">
+           <a  class="nav-link">
+              <i class="nav-icon fa-sharp fa-solid fas fa-user"></i>
+            <p>
+             Usuarios
+            <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+          
+              <li class="nav-item">
+              <a class="nav-link" routerLink="/dashboard/nuevos-password">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Modificar Usuario</p>
+              </a>
+            </li>
+
+          </ul>
+
+  
+        </li>
+
+
+
+          
+   
+         <br>
+
+
+
+
+      </ul>
+
+
+
+
+
+
+
+
+    </nav>
+
+  </div>
+
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>

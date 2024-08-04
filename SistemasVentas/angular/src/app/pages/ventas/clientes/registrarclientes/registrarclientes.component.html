@@ -1,0 +1,170 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Clientes</h1>
+            </div>
+  <div  class="col-md-6 col-12">
+
+                                <div *ngIf="regresarp.estado else p">
+
+
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a routerLink="/dashboard/listar-cliente">Regresar</a></li>
+                <li class="breadcrumb-item active">Registrar Clientes</li>
+              </ol>
+            </div>
+            </div>
+              <div  class="col-md-6 col-12">
+
+            <ng-template #p>
+
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Inicio</a></li>
+                <li class="breadcrumb-item active">Registrar Clientes</li>
+              </ol>
+</ng-template>
+            </div>
+
+        
+
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+
+        <div class="row match-height">
+            <div class="col-12">
+                <div class="card card-warning">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <h4 card-title><b>Registrar Cliente</b></h4>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="card-content ">
+                        <div class="card-body formulario">
+                                <form [formGroup]="form" (ngSubmit)="submit()">
+  <div class="form-group row">
+    <label for="nombre" class="col-sm-2 col-form-label">Nombre y apellido</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="nombre" formControlName="nombre" placeholder="Nombre y apellido">
+          <div *ngIf="f.nombre.touched && f.nombre.invalid" class="alert alert-danger">
+                  <div *ngIf="f.nombre.errors.required">*Nombre y apellido es requerido.</div>
+                  <div *ngIf="f.nombre.errors.pattern">*El nombre y apellido solo debe contener letras.</div>
+                     <div *ngIf="f.nombre.errors.maxlength">*Tamaño del texto no permitdo..</div>
+
+              </div>
+    </div>
+  </div>
+
+    <div class="form-group row">
+    <label for="dui" class="col-sm-2 col-form-label">DUI</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" formControlName="dui" id="dui"  mask="00000000-0" placeholder="DUI">
+         <div *ngIf="f.dui.touched && f.dui.invalid" class="alert alert-danger">
+                  <div *ngIf="f.dui.errors.required">*DUI es requerido.</div>
+                   <div *ngIf="f.dui.errors.mask">*DUI no valido.</div>
+                  <div *ngIf="f.dui.errors.pattern">*El DUI solo debe contener números.</div>
+              </div>
+    </div>
+  </div>
+    <div class="form-group row">
+    <label for="telefono" class="col-sm-2 col-form-label">Teléfono</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" formControlName="telefono" prefix="+503" mask=" 0000 0000" id="telefono" placeholder="Teléfono">
+        <div *ngIf="f.telefono.touched && f.telefono.invalid" class="alert alert-danger">
+                  <div *ngIf="f.telefono.errors.required">*Teléfono es requerido.</div>
+                  <div *ngIf="f.telefono.errors.mask">*Teléfono no valido.</div>
+                  <div *ngIf="f.telefono.errors.pattern">*El Teléfono solo debe contener números.</div>
+              </div>
+    </div>
+  </div>  <div class="form-group row">
+    <label for="email" class="col-sm-2 col-form-label">Correo electrónico</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" id="email" formControlName="email" placeholder="Correo electrónico">
+         <div *ngIf="f.email.touched && f.email.invalid" class="alert alert-danger">
+                  <div *ngIf="f.email.errors.required">*correo electrónico es requerido.</div>
+                  <div *ngIf="f.email.errors.email">*El correo electrónico debe ser válido.</div>
+                                       <div *ngIf="f.email.errors.maxlength">*Tamaño del texto no permitdo..</div>
+
+              </div>
+    </div>
+  </div>
+    <div class="form-group row">
+    <label for="id_departamento" class="col-sm-2 col-form-label">Departamento</label>
+    <div class="col-sm-10">
+    <select class="form-control mr-2"  id="id_departamento"   (change)="changeSelect()" formControlName="id_departamento">
+          <option value="" disabled selected>--Seleccione--</option>
+         <option [value]="d.id_departamento" *ngFor="let d of dpto;">{{d.nombredepto}}</option>
+
+    </select>
+     <div *ngIf="f.id_departamento.touched && f.id_departamento.invalid" class="alert alert-danger">
+                  <div *ngIf="f.id_departamento.errors.required">*Seleccione el departamento.</div>
+              </div>
+    </div>
+  </div>
+
+    <div class="form-group row">
+    <label for="id_municipios" class="col-sm-2 col-form-label">Municipio</label>
+    <div class="col-sm-10">
+    <select class="form-control mr-2"  id="id_municipios" formControlName="id_municipio">
+          <option value="" disabled selected>--Seleccione--</option>
+                   <option [value]="m.id_municipio" *ngFor="let m of muni;">{{m.nombremunicipio}}</option>
+    </select>
+     <div *ngIf="f.id_municipio.touched && f.id_municipio.invalid" class="alert alert-danger">
+                  <div *ngIf="f.id_municipio.errors.required">*Seleccione el municipio.</div>
+              </div>
+    </div>
+  </div>
+    <div class="form-group row">
+    <label for="direccion" class="col-sm-2 col-form-label">Dirección</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="direccion" formControlName="direccion" placeholder="Dirección">
+          <div *ngIf="f.direccion.touched && f.direccion.invalid" class="alert alert-danger">
+                  <div *ngIf="f.direccion.errors.required">*Dirección es requerida.</div>
+                                       <div *ngIf="f.direccion.errors.maxlength">*Tamaño del texto no permitdo..</div>
+
+              </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-12 d-flex align-items-center justify-content-center">
+      <div *ngIf="loading else l" > 
+                                          <div class="form-group">
+                                          <div class="text-center">
+      <div class="spinner-border " role="status">
+        <span class="sr-only">Cargando...</span>
+      </div>
+      <p>Cargando...</p>
+ </div>
+                                            </div>
+                                      </div>
+
+                                      </div>
+
+  
+                                        <ng-template #l>
+    <div class="col-sm-10">
+                  <button type="submit" [disabled]="!form.valid" class="btn btn-primary me-1 mb-1 m-1" >Guardar</button>
+            <button type="reset"class="btn btn-danger  mb-1 mb-1 m-1 " (click)="limpiar();">Limpiar</button> 
+
+               </div>
+</ng-template>
+  </div>
+</form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+</section>
+<!-- /.content -->

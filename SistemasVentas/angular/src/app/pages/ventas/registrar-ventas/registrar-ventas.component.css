@@ -1,0 +1,5 @@
+.modal-content {
+  max-height: 600px; /* Altura máxima del contenido antes de aparecer el scroll */
+  width: 600px;
+  overflow-y: auto; /* Habilita el scroll vertical si es necesario */
+}

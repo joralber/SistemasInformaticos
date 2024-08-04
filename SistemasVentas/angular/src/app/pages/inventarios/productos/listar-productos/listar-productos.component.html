@@ -1,0 +1,216 @@
+    
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Productos</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a routerLink="/dashboard">Inicio</a></li>
+              <li class="breadcrumb-item active">Listado Productos</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+
+
+
+
+       <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card card-warning table-responsive">
+              <div class="card-header">
+                    <div class="row">
+          <div class="col-sm-9">
+            <h4 card-title><b>Listado de Productos</b></h4>
+          </div>
+          <div class="col-sm-3">
+            <button routerLink="/dashboard/registrar-productos" class="btn btn-block btn-success btn-flat" (click)="regresarmp()" >
+              <i class='fas fa-plus-circle'></i><span> Nuevo Producto </span>
+            </button>
+          </div>
+
+        </div>
+              </div>
+              <!-- /.card-header -->
+   <div class="card-body formulario table-responsive">
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display nowrap  table table-bordered table-hover" style="width:100%">
+        <thead class="thead-dark">
+            <tr>
+
+                 <th>#</th>
+                <th>Código Barras</th>
+              <th>Categorías</th>
+              <th>Nombres</th>
+              <th>Colores</th>
+              <th>Tallas</th>
+              <th>Cantidades</th>
+                <th>Precios</th>
+
+                <th>Acciones</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+    
+ <tr *ngFor= "let m of prod; index as i">
+                  <th scope="row">{{i+1}}</th>
+     <td>{{m.codigo_barra}}</td>
+    <td>{{m.categoria}}</td>
+     <td>{{m.nombre_producto}}</td>
+    <td>{{m.color}}</td>
+    <td>{{m.talla}}</td>
+        <td>{{m.cantidad}}</td>
+                <td>${{m.precio_unitario}}</td>
+           
+
+                 <td >
+                 <div class="btn-group">
+                     
+                        <button type="button" title="Agregar Stock" class="btn btn-success border border-dark mr-1" (click)="agregarPF(m.id_producto)" data-toggle="modal" data-target="#modal-stock">
+                         <i class="fa-solid fa-plus"></i>
+                        </button>
+                <button type="button" title="Modificar"[routerLink]="['/dashboard/modificar-productos', m.id_producto]" class="btn btn-primary border border-dark mr-1"><i class="fa-sharp fa-solid fa-pen-to-square" ></i></button>
+                 <button type="button" title="Dar de Baja" name="button" class="btn btn-danger border border-dark mr-1" (click)="deleteP(m.id_producto)"><i class="fa-sharp fa-solid fa-trash"></i></button>
+
+
+
+
+</div>
+
+
+                </td>
+
+
+            </tr>
+        
+        </tbody>
+
+    </table>
+
+       </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+
+    
+    </section>
+
+
+
+
+
+
+
+
+ 
+
+
+  <!-- modal agregar stock -->
+
+      <div class="modal fade" id="modal-stock">
+        <div class="modal-dialog">
+          <div class="modal-content">
+
+            <div class="card card-warning">
+              <div class="modal-header card-header">
+
+                <h3 class="card-title"><strong>Agregar Stock</strong></h3>
+              </div>
+                 <form [formGroup]="form" >
+
+                 <div class="modal-body">
+
+                
+
+                     <label>Nombre:</label>
+                 <div class="input-group mb-3">
+              
+                  <input type="text"  value="{{producto.nombre_producto}}" class="form-control" disabled >
+                  </div>
+
+
+                     <label>Stock Actual:</label>
+                 <div class="input-group mb-3">
+            
+                  <input type="text" id="stock2" #n1  value="{{producto.cantidad}}" class="form-control" placeholder="0" disabled>
+                  </div>
+
+                      <label >Agregar Stock</label>
+                 <div class="input-group mb-3">
+             
+                  <input type="text" id="cantidad" formControlName="cantidad" #n2  class="form-control" 
+                                                placeholder="0" (keyup)="Sumar(n1.value, n2.value)">
+                  </div>
+                     <div *ngIf="f.cantidad.touched && f.cantidad.invalid" class="alert alert-danger">
+                      <div *ngIf="f.cantidad.errors.required">*Stock es requerido.</div>
+                      <div *ngIf="f.cantidad.errors.pattern">*El stock solo debe contener números.</div>
+                          <div *ngIf="f.cantidad.errors.maxlength">*Tamaño del texto no permitdo..</div>
+
+
+                                    </div>
+
+                    <label >Nuevo Stock:</label>
+                 <div class="input-group mb-3">
+         
+                  <input type="text" disabled id="cantidad2" formControlName="cantidad2" value="{{resultado}}" class="form-control" 
+                                                placeholder="0">
+                  </div>
+     <div *ngIf="msj" class="alert alert-danger">
+            Vuelva a digitar el stock
+          </div> 
+
+                </div>
+
+                <div *ngIf="loading else l" > 
+                <div class="col-12 d-flex align-items-center justify-content-center">
+
+                                          <div class="form-group">
+                                          <div class="text-center">
+      <div class="spinner-border " role="status">
+        <span class="sr-only">Cargando...</span>
+      </div>
+      <p>Cargando...</p>
+ </div>
+                                            </div>
+
+
+                                      </div>
+
+
+                                      </div>
+
+             <ng-template #l>
+
+
+                              <div class="modal-footer justify-content-between">
+
+                  <button type="submit" [disabled]="!form.valid" class="btn btn-info border border-dark" (click)="submit()"  >Guardar</button>
+                  <button type="reset" class="btn btn-default float-right border border-dark" (click)="n2.value=''"  (click)="limpiarModal()" data-dismiss="modal">Volver</button>
+                </div>
+</ng-template>
+                   </form>
+
+        </div>
+      </div>
+
+      </div>
+      </div>
+
+

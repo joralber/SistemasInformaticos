@@ -1,0 +1,64 @@
+/*
+*  MENU HORIZONTAL DASHBOARD
+*-------------------------------------------------------*/
+#wrapperMenu {
+  width: 30%;
+  margin: 20px 50px;
+}
+
+.wrappernav-dashboard {
+    /*background: #d3d3d3;*/
+    /*border: 1px dashed orange;*/
+    width: 100%;
+    padding: 10px;
+    margin: 0;
+}
+#menu-dashboard {
+    /*border: 1px dashed red;*/
+    border-left: 1px solid #bcbcbc; 
+    border-right: 1px solid #bcbcbc;
+    border-top: 1px solid #bcbcbc;
+    border-radius: 5px;
+    overflow: hidden;
+}
+#menu-dashboard .active a {
+    background-color: #F4BD16;
+    border-radius: 0;
+    color: #fff;
+}
+#menu-dashboard li {
+    border-radius: 0;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid #bcbcbc; 
+}
+#menu-dashboard li > a {
+    border-radius: 0;
+    padding: 10px;
+    color: #444;
+}
+#menu-dashboard > li > a:hover,
+#menu-dashboard > li > a:focus {
+    color: #fff;
+    background: #F4BD16;
+  -webkit-transition: all 1ms ease-in-out;
+-moz-transition: all 1ms ease-in-out;
+-ms-transition: all 1ms ease-in-out;
+-o-transition: all 1ms ease-in-out;
+transition: all 1ms ease-in-out;
+}
+#submenu {
+    background: #333;
+}
+#submenu li {
+    border: none;
+}
+#submenu li a {
+    color: #fff;
+    padding: 10px;
+    margin: 0;
+    text-indent: 20px;
+}
+#submenu li a:hover {
+    background: rgba(0,0,0,.5);
+}

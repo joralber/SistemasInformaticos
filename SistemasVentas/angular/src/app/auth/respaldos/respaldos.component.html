@@ -1,0 +1,115 @@
+<div class="hold-transition login-page">
+<div class="login-box">
+  <div *ngIf="cambio else c">
+  <div class="card card-outline card-warning formulario">
+    <div class="card-header text-center">
+      <a  class="h1"><b>THERSAN</b></a>
+    </div>
+    <div class="card-body formulario">
+      <p class="login-box-msg"><strong>Ingresa la clave para tener acceso a la restauración de la base de datos.</strong></p>
+                                                            <form [formGroup]="codigo" (ngSubmit)="verifi()">
+
+                                                             <div class="input-group mb-3">
+                                       
+                                            <input type="password" class="form-control border border-dark" placeholder="Ingresa la clave" id="codigo2" formControlName="codigo2" >
+                                        </div>
+
+                                         <div *ngIf="loading else l2" > 
+    <div class="col-12 d-flex align-items-center justify-content-center">
+
+                                          <div class="form-group">
+                                          <div class="text-center">
+      <div class="spinner-border " role="status">
+        <span class="sr-only">Cargando...</span>
+      </div>
+      <p>Cargando...</p>
+ </div>
+                                            </div>
+                                      </div>
+
+                                      </div>
+
+  
+                                        <ng-template #l2>
+
+        <div class="row">
+          <div class="col-12">
+             <div *ngIf="mensaje" class="alert alert-danger">
+            El clave no es valida
+          </div> 
+            <button type="submit" [disabled]="!codigo.valid" class="btn btn-primary btn-block">Obtener Acceso</button>
+          </div>
+          <!-- /.col -->
+        </div>
+      </ng-template>
+   
+      </form>
+      <p class="mt-3 mb-1">
+        <a routerLink="/login">Login</a>
+      </p>
+  </div>
+        
+    <!-- /.card-body -->
+  </div>
+  <!-- /.card -->
+
+  </div>
+  <ng-template #c>
+<div class="card card-outline card-warning formulario">
+    <div class="card-header text-center">
+      <a  class="h1"><b>THERSAN</b></a>
+    </div>
+    <div class="card-body formulario">
+                          <form [formGroup]="form" (ngSubmit)="submit()">
+
+     <div class="form-group">
+                    <label for="exampleInputFile">Seleccione el Respaldo</label>
+                
+
+                  <div class="input-group mb-3">
+  <input type="file" class="form-control" id="inputGroupFile02" [(ngModel)]="archivoSeleccionado" (change)="onFileSelected($event)" [ngModelOptions]="{standalone: true}">
+  <label class="input-group-text" for="inputGroupFile02">Subir</label>
+</div>
+</div>
+
+<div *ngIf="loading2 else r" > 
+    <div class="col-12 d-flex align-items-center justify-content-center">
+
+                                          <div class="form-group">
+                                          <div class="text-center">
+      <div class="spinner-border " role="status">
+        <span class="sr-only">Cargando...</span>
+      </div>
+      <p>Cargando...</p>
+ </div>
+                                            </div>
+                                      </div>
+
+                                      </div>
+
+  
+                                        <ng-template #r>
+
+        <div class="row">
+          <div class="col-12">
+            
+            <button type="submit" [disabled]="!form.valid" class="btn btn-primary btn-block">Restaurar</button>
+          </div>
+          <!-- /.col -->
+        </div>
+      </ng-template>
+      </form>
+   <p class="mt-3 mb-1">
+        <a routerLink="/login">Login</a>
+      </p>
+  </div>
+   
+    <!-- /.card-body -->
+  </div>
+  <!-- /.card -->
+  </ng-template>
+</div>
+<!-- /.login-box -->
+
+
+</div>

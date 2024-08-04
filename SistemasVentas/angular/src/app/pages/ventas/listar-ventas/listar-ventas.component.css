@@ -1,0 +1,17 @@
+.modal .modal-dialog { width: 850px !important; }
+
+.my-custom-scrollbar {
+position: relative;
+height: 400px;
+overflow: auto;
+}
+.table-wrapper-scroll-y {
+display: block;
+}
+
+
+
+modal-content {
+  max-height: 600px; /* Altura máxima del contenido antes de aparecer el scroll */
+  overflow-y: auto; /* Habilita el scroll vertical si es necesario */
+}

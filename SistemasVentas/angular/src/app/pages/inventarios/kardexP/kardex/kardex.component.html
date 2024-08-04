@@ -1,0 +1,125 @@
+    
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1>Kardex</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Inicio</a></li>
+                <li class="breadcrumb-item active">Kardex</li>
+              </ol>
+            </div>
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+  
+  
+  
+  
+   <section class="content">
+          <div class="container-fluid">
+
+          <div class="row match-height">
+              <div class="col-12">
+                  <div class="card card-warning">
+                      <div class="card-content">
+                          <div class="card-body formulario ">
+              <div class="row ">
+   <div class="col-md-12 col-12">
+
+                                       <div class="form-group">
+                                            <label>Seleccione el Producto</label>
+                                            
+
+                              
+
+                                           <ng-select class="custom " id="id_p" name="id_p" (change)="changeSelect()" [(ngModel)]="select">
+                                           <ng-option *ngFor="let p of pf;" [value]="p.id_producto"><strong>CATEGORIA:</strong> {{p.categoria}} <strong>COLOR:</strong> {{p.color}} <strong>TALLA:</strong> {{p.talla}} <strong>PRODUCTO:</strong> {{p.nombre_producto}}</ng-option>
+                                    </ng-select>  
+
+            
+                                            </div>                                      
+
+                                          </div>
+                                          <br><br>
+   
+
+
+<!--fin col-->
+<div class="col-12">
+
+         <div class="card card-warning table-responsive">
+              <div class="card-header">
+                    <div class="row">
+          <div class="col-sm-9">
+            <h4 card-title><b>Kardex</b></h4>
+          </div>
+      
+
+        </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body formulario  table-responsive">
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display nowrap  table table-bordered table-hover" style="width:100%">
+        <thead class="thead-dark">
+            
+<tr>
+  <th colspan="2">Articulo:</th>
+<th colspan="3">{{productot.nombre_producto}}</th> 
+</tr>
+            <tr>
+
+                 <th  style="width: 10px;">#</th>
+              <th  >Fecha</th>
+              <th >Detalle</th>
+              <th>Inventario Inicial </th>
+              <th >Entrada</th>
+                <th >Salida</th>
+             <th  >Existencia</th>
+
+
+            </tr>
+
+        </thead>
+        <tbody>
+ <tr *ngFor="let k of kx; index as i;">
+<th scope="row">{{i+1}}</th>
+  <td>{{k.fechap}}</td>
+  <td>{{k.descripcionp}}</td>
+  <td>{{k.inv_inicialp}}</td>
+  <td>{{k.entradasp}}</td>
+    <td>{{k.salidap}}</td>
+
+  <td>{{k.inv_finalp}}</td>
+
+ </tr>
+ 
+        </tbody>
+
+    </table>
+
+       </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+                 
+                </div>
+                <!--fin row-->
+
+          </div>
+
+
+
+
+          </div>
+          </div>
+          </div>
+          </div>
+        </div>
+          </div>
+          
+</section>

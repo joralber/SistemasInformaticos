@@ -1,0 +1,43 @@
+/* Estilo para el contenedor del ng-select */
+.mi-ng-select {
+  width: 300px; /* Ancho del ng-select */
+}
+
+/* Estilo para el input de búsqueda */
+.mi-ng-select .ng-input {
+  border: 1px solid #ccc; /* Borde del input de búsqueda */
+  border-radius: 4px; /* Bordes redondeados */
+  padding: 6px; /* Espacio interno */
+}
+
+/* Estilo para la lista desplegable */
+.mi-ng-select .ng-dropdown-panel {
+  border: 1px solid #ccc; /* Borde de la lista desplegable */
+  border-top: none; /* Eliminar el borde superior */
+  border-radius: 0 0 4px 4px; /* Bordes redondeados solo en la parte inferior */
+}
+
+/* Estilo para las opciones de la lista desplegable */
+.mi-ng-select .ng-option {
+  padding: 8px 12px; /* Espacio interno */
+  cursor: pointer; /* Cambiar el cursor al pasar por encima */
+  transition: background-color 0.2s; /* Transición de color de fondo al pasar por encima */
+}
+
+/* Estilo para las opciones seleccionadas */
+.mi-ng-select .ng-tag {
+  background-color: #007bff; /* Color de fondo de las opciones seleccionadas */
+  color: white; /* Color del texto de las opciones seleccionadas */
+  border-radius: 4px; /* Bordes redondeados */
+  margin-right: 4px; /* Margen entre las opciones seleccionadas */
+}
+
+/* Estilo para las opciones seleccionables en la lista desplegable */
+.mi-ng-select .ng-option.selectable {
+  background-color: #f5f5f5; /* Color de fondo de las opciones seleccionables */
+}
+
+/* Estilo para las opciones seleccionables al pasar por encima en la lista desplegable */
+.mi-ng-select .ng-option.selectable:hover {
+  background-color: #e0e0e0; /* Cambio de color al pasar por encima */
+}

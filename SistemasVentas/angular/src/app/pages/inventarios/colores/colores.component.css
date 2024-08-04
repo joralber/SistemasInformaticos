@@ -1,0 +1,4 @@
+/* Estilo para las opciones desplegables del ng-select */
+.ng-select .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+  background-color: lightblue; /* Agrega un fondo de color azul claro a las opciones desplegables */
+}

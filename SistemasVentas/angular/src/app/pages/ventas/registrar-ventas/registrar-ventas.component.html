@@ -1,0 +1,414 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Ventas</h1>
+            </div>
+
+        <div  class="col-md-6 col-12">
+
+                                <div *ngIf="regresarp.estado else p">
+
+
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a routerLink="/dashboard/listar-ventas">Regresar</a></li>
+                <li class="breadcrumb-item active">Registrar Ventas</li>
+              </ol>
+            </div>
+            </div>
+              <div  class="col-md-6 col-12">
+
+            <ng-template #p>
+
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Inicio</a></li>
+                <li class="breadcrumb-item active">Registrar Ventas</li>
+              </ol>
+</ng-template>
+            </div>
+        
+
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+
+        <div class="row match-height">
+            <div class="col-12">
+                <div class="card card-warning">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <h4 card-title><b>Registrar Ventas</b></h4>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="card-content ">
+                        <div class="card-body formulario">
+             <div class=" form-group row ">
+                                    <div class="col-md-2 col-12">
+                                     <h1  style="color: red;" ># {{numeroV}}</h1>
+             
+                                        </div>
+                                        
+              <label  class="col-md-1 col-2 col-form-label">Fecha</label>
+
+                                      <div class="col-md-3 col-10">
+                  <div class="input-group mb-3">
+                 
+
+                        <input type="text" disabled id="fechaActual" class="form-control"
+                                                name="fechaActual" [(ngModel)]="fechaActual">
+                  </div>
+                </div>
+
+                            <label  class="col-md-2 col-2 col-form-label">Empleado</label>
+                 
+                           <div class="col-md-4 col-9">
+
+                            <input type="text" class="form-control" disabled value="{{user}}">
+</div>
+    
+                          
+             </div>
+  <div class="form-group row">
+    <label  class="col-sm-2 col-form-label">Seleccione Cliente</label>
+    <div class="col-sm-9">
+     <ng-select class="custom " id="id_c" name="id_c" [(ngModel)]="selectCli">
+       <ng-option *ngFor="let c of clientes;" [value]="c.id_cliente"><strong>DUI:</strong> {{c.dui}} <strong>Nombre:</strong> {{c.nombre}}</ng-option>
+    </ng-select> 
+      <div *ngIf="msjclie" class="alert alert-danger">
+                   Seleccione el cliente.
+          </div> 
+    </div>
+       <div class="col-sm-1">
+              <button type="button" class="btn btn-success mr-1" data-toggle="modal" title="Agregra nuevo cliente" data-target="#modal-cli">
+                        <i class="fa-solid fa-plus"></i>
+                      </button>
+    </div>
+     
+  </div>
+
+    <div class="form-group row">
+    <label  class="col-sm-2 col-form-label">Seleccione Producto</label>
+    <div class="col-sm-10">
+     <ng-select class="custom " id="id_p" name="id_p" [(ngModel)]="productoSeleccionado">
+       <ng-option *ngFor="let p of prod;" [value]="p"><strong>CÓDIGO BARRAS:</strong> {{p.codigo_barra}} <strong>CATEGORÍA:</strong> {{p.categoria}} <strong>NOMBRE:</strong> {{p.nombre_producto}} <strong>COLOR:</strong> {{p.color}} <strong>TALLA:</strong> {{p.talla}}</ng-option> 
+    </ng-select>  
+    </div>
+    
+  </div>
+  <div class="form-group row">
+    <label  class="col-sm-2 col-form-label">Cantitad</label>
+    <div class="col-sm-3">
+       <input type="number" id="cantidad"  class="form-control"  [(ngModel)]="cantidad" name="cantidad" min="1" step="1">
+    </div>
+      <label  class="col-sm-2 col-form-label">Descuento (%)</label>
+    <div class="col-sm-3">
+  <input type="number" id="descuento"  class="form-control"  [(ngModel)]="descuento" name="descuento" min="0" step="1">
+    </div>
+    <div class="col-sm-2 d-grid gap-2 col-6 mx-auto">
+          <button class="btn btn-primary " (click)="agregarProducto()">Agregar</button>
+
+    </div>
+          <div *ngIf="msj" class="alert alert-danger">
+                   El producto ya está en la lista.
+          </div> 
+          <div *ngIf="agregar1" class="alert alert-danger">
+          La cantidad deseada supera el inventario disponible: {{inventarioDisponible}}
+          </div> 
+  </div>
+
+<div class="row">
+    <div class="col-sm-8 col-8">
+      <table  class="display nowrap  table table-bordered table-hover" style="width:100%">
+        <thead class="thead-dark">
+            <tr>
+      <th>Producto</th>
+      <th>Cantidad</th>
+      <th>Precio</th>
+      <th>Descuento (%)</th>
+      <th>Importe</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let producto of productosSeleccionados; let i = index">
+      <td>{{producto.categoria}} {{ producto.nombre }} {{producto.color}} #{{producto.talla}}</td>
+      <td>
+        <input type="number" [(ngModel)]="productosSeleccionados[i].cantidad" style="width: 80px" min="1" step="1" 
+          (ngModelChange)="actualizarImporte(producto, i)">
+                   <div *ngIf="agregar2" class="alert alert-danger">
+          La cantidad deseada supera el inventario disponible: {{inventarioDisponible}}
+          </div> 
+      </td>
+      <td>{{ producto.precio | currency }}</td>
+            <td>
+        <input type="number" [(ngModel)]="productosSeleccionados[i].descuento" style="width: 80px" min="0" step="1" 
+          (ngModelChange)="actualizarImporte(producto, i)">
+      </td>
+      <td>{{ producto.importe | currency }}</td>
+      <td>
+        <button type="button"  name="button" title="Quitar"class="btn btn-danger mr-2" (click)="eliminarProducto(i)" ><i class="fa-sharp fa-solid fa-trash"></i></button>
+
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
+
+    </div>
+    <div class="col-sm-4 col-4">
+<div *ngIf="efe">
+
+            <table class="display nowrap  table-bordered  table-hover">
+                                                     <tbody>
+                                                        <tr  >      
+                                                <td class="col-6 ">                                                        
+
+                                                        <label class="col-form-label">Total A Pagar:</label>
+                                                </td>
+
+                                                 <td class="col-6">
+                                                        
+
+                                     <h2  style="color: blue;" >{{ total | currency }}</h2>
+
+
+                                                  </td>
+
+                                                 </tr>
+             <tr >
+                                                    <td class="col-6">
+
+                                                        <label class="col-form-label">Efectivo:</label>
+                                                    </td>
+                                                        <td class="col-6">
+                                                        <div class="input-group">
+
+                                                            <div class="input-group-prepend">
+                                                          <span class="input-group-text">  <i class="fa-solid fa-dollar"></i>
+                                                          </span>
+                                                        </div>
+                                                          <input type="text" appDecimalOnly  [(ngModel)]="efectivo" (keyup)="cambios()" class="form-control"   placeholder="0">
+                                                        </div>
+
+                                                    </td>
+                                                    </tr>
+
+                                             <tr  >      
+                                                <td class="col-6 ">                                                        
+
+                                                        <label *ngIf="cam" class="col-form-label">Cambio:</label>
+                                                     <label *ngIf="cam2" class="col-form-label">Debe:</label>
+
+                                                </td>
+
+                                                 <td class="col-6">
+                                                        
+
+                                     <h2 *ngIf="cam"  style="color: blue;" >{{ cambio | currency }}</h2>
+                                     <h2 *ngIf="cam2"  style="color: red;" >{{ debe | currency }}</h2>
+
+
+                                                  </td>
+
+                                                 </tr>
+
+
+
+
+
+                         
+</tbody>
+
+
+
+                                                </table> 
+       
+
+                                            </div>
+                                            <div *ngIf="registrar">
+                                                                                         <br>
+
+                             <div *ngIf="loading2 else l2" > 
+                <div class="col-12 d-flex align-items-center justify-content-center">
+
+                                          <div class="form-group">
+                                          <div class="text-center">
+      <div class="spinner-border " role="status">
+        <span class="sr-only">Cargando...</span>
+      </div>
+      <p>Cargando...</p>
+ </div>
+                                            </div>
+
+
+                                      </div>
+
+
+                                      </div>
+
+             <ng-template #l2>
+
+<div class="d-grid gap-2 col-12 mx-auto">
+
+      <button type="button" class="btn btn-primary  btn-block " (click)="submit()">Registrar Venta</button>
+ </div>
+</ng-template>
+                                            </div>
+
+
+    </div>
+</div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+</section>
+<!-- /.content -->
+
+
+
+
+
+  <!-- modal agregar stock -->
+        <div data-controls-modal="your_div_id"  role="dialog" aria-labelledby="miModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-cli">
+
+  <div class="modal-dialog modal-lg"> <!-- Cambia a modal-sm para un modal pequeño -->
+          <div class="modal-content">
+
+            <div class="card card-warning">
+              <div class="modal-header card-header">
+
+                <h3 class="card-title"><strong>Registrar Cliente</strong></h3>
+              </div>
+                 <form [formGroup]="formCli" >
+
+                 <div class="modal-body">
+
+                
+
+                     <label>Nombre:</label>
+                 <div class="input-group mb-3">
+              
+          <input type="text" class="form-control" id="nombre" formControlName="nombre" placeholder="Nombre">
+                  
+                  </div>
+ <div *ngIf="f.nombre.touched && f.nombre.invalid" class="alert alert-danger">
+                  <div *ngIf="f.nombre.errors.required">*Nombre es requerido.</div>
+                  <div *ngIf="f.nombre.errors.pattern">*El Nombre solo debe contener letras.</div>
+              </div>
+
+                     <label>DUI:</label>
+                 <div class="input-group mb-3">
+            
+      <input type="text" class="form-control" formControlName="dui" id="dui"  mask="00000000-0" placeholder="DUI">
+                  </div>
+                       <div *ngIf="f.dui.touched && f.dui.invalid" class="alert alert-danger">
+                  <div *ngIf="f.dui.errors.required">*DUI es requerido.</div>
+                   <div *ngIf="f.dui.errors.mask">*DUI no valido.</div>
+                  <div *ngIf="f.dui.errors.pattern">*El DUI solo debe contener números.</div>
+              </div>
+
+                      <label >Teléfono:</label>
+                 <div class="input-group mb-3">
+             
+      <input type="text" class="form-control" formControlName="telefono" prefix="+503" mask=" 0000 0000" id="telefono" placeholder="Teléfono">
+                  </div>
+                     <div *ngIf="f.telefono.touched && f.telefono.invalid" class="alert alert-danger">
+                  <div *ngIf="f.telefono.errors.required">*Teléfono es requerido.</div>
+                  <div *ngIf="f.telefono.errors.mask">*Teléfono no valido.</div>
+                  <div *ngIf="f.telefono.errors.pattern">*El Teléfono solo debe contener números.</div>
+              </div>
+
+                    <label >Correo:</label>
+                 <div class="input-group mb-3">
+         
+      <input type="email" class="form-control" id="email" formControlName="email" placeholder="Correo">
+                  </div>
+         <div *ngIf="f.email.touched && f.email.invalid" class="alert alert-danger">
+                  <div *ngIf="f.email.errors.required">*Email es requerido.</div>
+                  <div *ngIf="f.email.errors.email">*El email debe ser válido.</div>
+              </div>
+                    <label >Departamento:</label>
+                 <div class="input-group mb-3">
+         
+    <select class="form-control mr-2"  id="id_departamento"   (change)="changeSelect()" formControlName="id_departamento">
+          <option value="" disabled selected>--Seleccione--</option>
+         <option [value]="d.id_departamento" *ngFor="let d of dpto;">{{d.nombredepto}}</option>
+
+    </select>
+                      </div>
+                           <div *ngIf="f.id_departamento.touched && f.id_departamento.invalid" class="alert alert-danger">
+                  <div *ngIf="f.id_departamento.errors.required">*Seleccione el departamento.</div>
+              </div>
+
+                    <label >Municipio:</label>
+                 <div class="input-group mb-3">
+         
+<select class="form-control mr-2"  id="id_municipios" formControlName="id_municipio">
+          <option value="" disabled selected>--Seleccione--</option>
+                   <option [value]="m.id_municipio" *ngFor="let m of muni;">{{m.nombremunicipio}}</option>
+    </select>
+                  </div>
+   <div *ngIf="f.id_municipio.touched && f.id_municipio.invalid" class="alert alert-danger">
+                  <div *ngIf="f.id_municipio.errors.required">*Seleccione el municipio.</div>
+              </div>
+                    <label >Dirección:</label>
+                 <div class="input-group mb-3">
+         
+      <input type="text" class="form-control" id="direccion" formControlName="direccion" placeholder="Dirección">
+                  </div>
+ 
+   <div *ngIf="f.direccion.touched && f.direccion.invalid" class="alert alert-danger">
+                  <div *ngIf="f.direccion.errors.required">*Dirección es requerida.</div>
+              </div>
+                </div>
+
+                <div *ngIf="loading else l" > 
+                <div class="col-12 d-flex align-items-center justify-content-center">
+
+                                          <div class="form-group">
+                                          <div class="text-center">
+      <div class="spinner-border " role="status">
+        <span class="sr-only">Cargando...</span>
+      </div>
+      <p>Cargando...</p>
+ </div>
+                                            </div>
+
+
+                                      </div>
+
+
+                                      </div>
+
+             <ng-template #l>
+
+
+                              <div class="modal-footer justify-content-between">
+
+                  <button type="submit" [disabled]="!formCli.valid" class="btn btn-info border border-dark" (click)="submit2()"  >Guardar</button>
+                  <button type="reset" class="btn btn-default float-right border border-dark"  (click)="limpiar()" data-dismiss="modal">Volver</button>
+                </div>
+</ng-template>
+                   </form>
+
+        </div>
+      </div>
+
+      </div>
+      </div>
+

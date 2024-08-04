@@ -1,0 +1,132 @@
+<section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Modificar Usuarios</h1>
+          </div>
+          
+
+           <div  class="col-md-6 col-12">
+
+
+
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a routerLink="/dashboard/listado-usuarios">Regresar</a></li>
+                <li class="breadcrumb-item active">Modificar Usuarios</li>
+              </ol>
+            </div>
+      
+             
+
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+
+<div class="hold-transition register-page">
+<div class="register-box " >
+  <div class="card card-outline card-warning formulario">
+    <div class="card-header text-center">
+      <a  class="h1"><b>THERSAN</b></a>
+    </div>
+    <div class="card-body formulario">
+      <p class="login-box-msg"><b>Modificar Usuario</b></p>
+
+      <form [formGroup]="form" (ngSubmit)="submit()">
+                                        <div class="input-group mb-3">
+                                   
+                                            <input type="text" class="form-control border border-dark" placeholder="Usuario"
+                                                  id="name" formControlName="name" [(ngModel)]="user.name">
+                                        </div>
+                                          <div *ngIf="f.name.touched && f.name.invalid" class="alert alert-danger">
+                                     <div *ngIf="f.name.errors.required">*Usuario es requerido.</div>
+                                                             <div *ngIf="f.name.errors.maxlength">*Tamaño del texto no permitdo..</div>
+
+              </div>
+                                                 <div class="input-group mb-3">
+                                    
+                                            <select class="form-control  border border-dark" formControlName="role" [(ngModel)]="user.role">
+                                              <option value="" disabled selected>--Seleccione el Rol--</option>
+                                              <option value="ADMINISTRADOR">ADMINISTRADOR</option>
+                                              <option value="VENDEDOR">VENDEDOR</option>                                             
+                                            </select>
+                                           </div>
+                                                  <div *ngIf="f.role.touched && f.role.invalid" class="alert alert-danger">
+                                     <div *ngIf="f.role.errors.required">*Rol es requerido.</div>
+              </div>
+
+                                           <div class="input-group mb-3">
+                              
+                                            <input type="email" class="form-control border border-dark" placeholder="Correo electrónico"
+                                                  id="email" formControlName="email" [(ngModel)]="user.email">
+                                        </div>
+                                          <div *ngIf="f.email.touched && f.email.invalid" class="alert alert-danger">
+                  <div *ngIf="f.email.errors.required">*Correo electrónico es requerido.</div>
+                  <div *ngIf="f.email.errors.email">*El correo electrónico debe ser valido.</div>
+                                          <div *ngIf="f.email.errors.maxlength">*Tamaño del texto no permitdo..</div>
+
+              </div>
+
+                     
+        
+                                           <div class="input-group mb-3">
+                                    <em>(Dejar en blanco para mantener la misma contraseña)</em>
+
+                                            <input type="password" class="form-control border border-dark" placeholder="Contraseña"
+                                                  id="password" formControlName="password">
+                                        </div>
+                                           <div *ngIf="f.password.touched && f.password.invalid" class="alert alert-danger">
+                  <div *ngIf="f.password.errors.required">*Contraseña es requerida.</div>
+                        <div *ngIf="f.password.errors.minlength">*La contraseña debe tener al menos 6 caracteres</div>
+                                                <div *ngIf="f.password.errors.maxlength">*Tamaño del texto no permitdo..</div>
+
+              </div>
+                                           <div class="input-group mb-3">
+                                 
+                                            <input type="password" class="form-control border border-dark" placeholder="Confirmar Contraseña"
+                                                  id="password2" formControlName="password2">
+                                        </div>
+                                                 <div *ngIf="f.password2.touched && f.password2.invalid" class="alert alert-danger">
+                  <div *ngIf="f.password2.errors.required">*Confirmar contraseña es requerida.</div>
+                        <div *ngIf="f.password2.errors.mustMatch">*Las contraseñas deben coincidir</div>
+              </div>
+                    
+
+      <div *ngIf="loading else l" > 
+    <div class="col-12 d-flex align-items-center justify-content-center">
+
+                                          <div class="form-group">
+                                          <div class="text-center">
+      <div class="spinner-border " role="status">
+        <span class="sr-only">Cargando...</span>
+      </div>
+      <p>Cargando...</p>
+ </div>
+                                            </div>
+                                      </div>
+
+                                      </div>
+
+  
+                                        <ng-template #l>
+        <div class="row">
+          <div class="col-8">
+          
+          </div>
+          <!-- /.col -->
+          <div class="col-4">
+            <button type="submit" [disabled]="!form.valid" class="btn btn-primary btn-block">Guardar</button>
+          </div>
+          <!-- /.col -->
+        </div>
+      </ng-template>
+      </form>
+
+     
+    </div>
+    <!-- /.form-box -->
+  </div><!-- /.card -->
+</div>
+<!-- /.register-box -->
+
+</div>

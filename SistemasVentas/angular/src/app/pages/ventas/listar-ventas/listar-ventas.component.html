@@ -1,0 +1,164 @@
+    
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Ventas</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a routerLink="/dashboard">Inicio</a></li>
+              <li class="breadcrumb-item active">Listado De Ventas</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+
+
+
+
+       <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card card-warning table-responsive">
+              <div class="card-header">
+                    <div class="row">
+          <div class="col-sm-9">
+            <h4 card-title><b>Listado de Ventas</b></h4>
+          </div>
+          <div class="col-sm-3">
+            <button routerLink="/dashboard/registrar-ventas" (click)="regresarpr()"  class="btn btn-block btn-success btn-flat">
+              <i class='fas fa-plus-circle'></i><span> Nueva venta</span>
+            </button>
+          </div>
+        </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body formulario table-responsive">
+
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="display nowrap  table table-bordered table-hover" style="width:100%">
+        <thead class="thead-dark">
+            <tr>
+                <th>#</th>
+
+                <th>Fecha</th>
+                <th>Empleado</th>
+                <th>Cliente</th>
+                <th>Total</th>
+                <th>Acciones</th>
+
+            </tr>
+        </thead>
+        <tbody>
+         <tr *ngFor="let v of venta; index as i">
+                  <th scope="row">{{i+1}}</th>
+
+                <td>{{v.fecha}}</td>
+                <td>{{v.name}}</td>
+                <td>{{v.nombre}}</td>
+                <td>$ {{v.total}}</td>
+                 <td >
+
+                          <button  (click)="ver(v.id_venta)"  data-toggle="modal" data-target="#modal-ver"  class="btn btn-success mr-2" ><i class="fa-solid fa-eye"></i></button>
+ <button  (click)="generateTicket(v.id_venta)"  class="btn btn-info mr-2" >TICKET</button>
+
+                </td>
+         </tr>
+
+
+        
+        </tbody>
+      
+    </table>
+
+       </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+
+    
+    </section>
+
+
+
+
+
+
+
+  <!-- modal -->
+
+        <div data-controls-modal="your_div_id" data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-ver">
+
+        <div class="modal-dialog">
+          <div class="modal-content">
+
+            <div class="card card-info">
+              <div class="modal-header card-header">
+
+                <h1 class="card-title">Ventas</h1>
+              </div>
+
+                 <div class="modal-body ">
+
+
+               <h4 card-title><b>Detalle de la venta</b></h4>
+
+            <div class="overflow-auto">   
+              <div class="table-wrapper-scroll-y my-custom-scrollbar">
+
+<table  class="display nowrap  table table-bordered table-hover" id="idTable">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Productos</th>
+      <th scope="col">Cantidad</th>
+      <th scope="col">Precio</th>
+      <th scope="col">Decuento (%)</th>
+      <th scope="col">Importe</th>
+     
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let d of detalleV index as i">
+      <th scope="row">{{i+1}}</th>
+      <td>{{d.categoria}} {{d.nombre_producto}} {{d.color}} {{d.talla}}</td>
+      <td>{{d.cantidad}}</td>
+      <td>${{d.precio_unitario}}</td>
+      <td>{{d.descuento}}</td>
+      <td>${{d.precio_unitario * d.cantidad * (1 - d.descuento / 100)}}</td>
+
+    </tr>
+  
+  </tbody>
+</table>
+</div>
+</div>
+
+                </div>
+
+
+                              <div class="modal-footer">
+
+                  <button (click)="salir()" class="btn btn-default float-right border border-dark" data-dismiss="modal">Volver</button>
+                </div>
+
+
+        </div>
+      </div>
+
+      </div>
+      </div>
+
